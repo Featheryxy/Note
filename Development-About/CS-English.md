@@ -1,0 +1,89 @@
+# CS-English
+
+user profile: 个人配置文件
+
+>  the shape of a head or face that is seen or drawn from the side
+>
+>  : the shape of something that is seen against a background
+>
+>  : a brief written description that provides information about someone or something
+
+
+
+artifact: 开发时用到的各种组件
+
+>  an artifact is a by-product of software development. It's anything that is created so a piece of software can be developed. This might include things like data models, diagrams, setup scripts — the list goes on.
+
+
+
+console: 控制台
+
+> a surface on which you find the controls for a piece of electrical equipment or a machine
+
+
+
+shell: 壳, 我们壳程序来操作文件系统
+
+> the hard outer covering of something, especially nuts, eggs  and some animals
+
+
+
+route: 路由，路线
+
+>a particular way or direction between places
+
+
+
+parse: 解析，对（句子）作语法分析
+
+> to separate a sentence into grammatical parts, such as subject, verb, etc
+
+
+
+backup file: 备份文件
+
+> (someone or something that provides) support or help, or something that you have arranged in case your main plans equipment, etc
+
+
+
+operator：操作员
+
+> someone whose job is to use and control a machine or vehicle
+
+
+
+operators: 运算符
+
+> +, -, *,  /
+
+
+
+operand：运算数
+
+> a number or quantity that has something done to it in a calculation
+
+
+
+field: 字段，域
+
+> a division of a database
+>
+> an area of activity or interest
+
+
+
+properties: 属性
+
+> an object or objects that belong to someone
+
+
+
+dependency：附属国，依赖
+
+> a country that is supported and governed by another country
+
+
+
+extend：扩大
+
+> to add to something in order to make it bigger or longer

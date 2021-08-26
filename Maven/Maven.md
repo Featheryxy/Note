@@ -1,0 +1,440 @@
+# Maven
+
+## 1 简介
+
+### 1.1 概念
+
+Maven 的正确发音是[ˈmevən]，而不是“马瘟”以及其他什么瘟。 Maven 在美国是一个口语化的词语，代表专家、内行的意思。  
+
+Maven 是一个项目管理工具，
+
+- 它包含了一**个项目对象模型 (POM： Project Object Model)**
+  - 一个 maven 工程都有一个 pom.xml 文件，通过 **pom.xml 文件定义项目的坐标、项目依赖、项目信息、**
+    **插件目标**等。  
+- 一组标准集合
+  - 通过 maven 构建工程有标准的目录结构，有标准的生命周期阶段、依赖管理有标准的坐标定义  
+- 一个**项目生命周期(Project Lifecycle)**
+  - **编译--->测试--->运行--->打包--->安装--->部署**  
+- 一个**依赖管理系统(Dependency Management System)**
+  - 通过 maven 的依赖管理对项目所依赖的 jar 包进行统一管理。  
+- 用来运行定义在生命周期阶段(phase)中插件(plugin)目标(goal)的逻辑。 
+  - maven 管理项目生命周期过程都是基于插件完成的。
+
+### 1.2 作用
+
+1. 依赖管理，jar包管理
+
+   > 传统的项目是将jar包复制到工程中，而Maven通过pom.xml文件中记录的jar包信息，与本地仓库中的jar包建立索引
+
+2. 代码编译
+
+3. 自动单元测试
+
+4. 打包，部署
+
+### 1.3 坐标仓库
+
+https://mvnrepository.com/
+
+## 2 安装
+
+### 2.1 安装
+
+对安装包：apache-maven-3.6.3 进行解压, 得到如下文件夹
+
+```
+├─bin
+├─boot
+├─conf
+│  └─logging
+└─lib
+    ├─ext
+    └─jansi-native
+```
+
+bin:存放了 maven 的命令，比如我们前面用到的 mvn tomcat:run
+boot:存放了一些 maven 本身的引导程序，如类加载器等
+conf:存放了 maven 的一些配置文件，如 setting.xml 文件
+lib:存放了 maven 本身运行所需的一些 jar 包  
+
+### 2.2 环境配置 
+
+需安装 java 环境，安装 JDK1.7 + 版本
+
+```
+MAVEN_HOME: D:\apache-maven-3.6.3
+path: %MAVEN_HOME%\bin
+
+C:\Users\Milo>mvn -v
+Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f)
+Maven home: D:\apache-maven-3.6.3\bin\..
+Java version: 1.8.0_151, vendor: Oracle Corporation, runtime: D:\JavaDev\jdk1.8.0_151\jre
+Default locale: zh_CN, platform encoding: GBK
+OS name: "windows 10", version: "10.0", arch: "amd64", family: "windows"
+```
+
+### 2.2 配置文件
+
+修改配置文件：D:\apache-maven-3.6.3\conf
+
+settings.xml
+
+```xml
+<!--设置本地仓库地址-->
+	<localRepository>F:\MavenRepository</localRepository>
+
+<!--配置阿里云镜像-->
+	<mirror>
+		<id>alimaven</id>
+		<mirrorOf>central</mirrorOf>
+		<name>aliyun maven</name>
+		<url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
+	</mirror>
+```
+
+## 3 使用
+
+### 3.1 仓库分类
+
+- **本地仓库** ：用来存储从远程仓库或中央仓库下载的插件和 jar 包，项目使用的插件或 jar 包，优先从本地仓库查找  
+
+  > 默认仓库地址为${user.dir}/.m2/repository，${user.dir}
+
+- **远程仓库**：如果本地需要插件或者 jar 包，本地仓库没有， 默认去远程仓库下载。  
+
+- **中央仓库**  ：Maven团队自己维护的远程仓库， http://repo1.maven.org/maven2。服务于整个互联网，里面存储了非常全的 jar 包，它包含了世界上大部分流行的开源项目构件  
+
+### 3.2 全局 setting 与用户 setting  
+
+- **全局setting：**  在 maven 安装目录下的有 conf/setting.xml 文件，此 setting.xml 文件用于 maven 的所有 project项目 
+- **用户 setting：**  \${user.dir}/.m2/settings.xml 目录中,${user.dir} 指 windows 中的用户目录。  
+
+**ps:** maven 优先使用用户setting, 若无则使用全局setting
+
+### 3.3 Maven工程目录
+
+```
+├─src
+│  └─main
+│      ├─java       存放项目的.java 文件
+│      ├─resources  存放项目资源文件，如 spring, hibernate 配置文件
+│      └─webapp     如果是普通的 java 项目，那么就没有 webapp 目录。
+│  └─test           项目测试代码
+│          
+├─target            项目输出位置，编译后的 class 文件会输出到此目录
+│
+└─pom.xml           maven 项目核心配置文件
+```
+
+
+
+## 4 Maven 常用命令  
+
+我们可以在 cmd 中通过一系列的 maven 命令来对我们的 maven-helloworld 工程进行编译、测试、运行、打包、安装、部署。  
+
+### 4.1 compile  
+
+```
+mvn compile 将 src/main/java 下的文件编译为 class 文件输出到 target目录下。  
+```
+
+### 4.2 test
+
+```
+ mvn test  执行 src/test/java 下的单元测试类。  
+```
+
+### 4.3 clean
+
+```
+mvn clean  删除 target 目录及内容。
+```
+
+### 4.4 package  
+
+```
+mvn package  将java工程打成 jar 包，将对于web工程打成 war包。输出到target目录下
+```
+
+### 4.5 install
+
+```
+mvn install 将 maven 打成 jar 包或 war 包下载到本地仓库。从运行结果中，可以看出：当后面的命令执行时，前面的操作过程也都会自动执行 
+```
+
+### 4.6 deploy
+
+将打包的文件发布到远程参考,提供其他人员进行下载依赖、
+
+### 4.7 validate
+
+验证工程是否正确，所有需要的资源是否可用。
+
+### 4.7 包地址
+
+PathlocalRepository\groupId\artifactId\version\artifactId-version.jar
+
+```xml
+<!--父项目 pom.xml-->
+    <!-- 映射到本地F:\MavenRepository\com\hundsun\lcpt\lcpt-ta-route\1.4.0-SNAPSHOT-->
+    <groupId>com.hundsun.lcpt</groupId>
+    <artifactId>lcpt-ta-route</artifactId>
+	<version>1.4.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+	<!-- 在1.4.0-SNAPSHOT文件夹下生成 lcpt-ta-route-1.4.0-SNAPSHOT.pom	文件-->
+
+    <modules>
+        <module>ta-route-api</module>
+        <module>ta-route-bootstrap</module>
+    </modules>
+<!--父项目 pom.xml-->
+
+<!--子项目 pom.xml-->
+	<parent>
+        <groupId>com.hundsun.lcpt</groupId>
+        <artifactId>lcpt-ta-route</artifactId>
+        <version>1.4.0-SNAPSHOT</version>
+    </parent>
+
+	<groupId>com.hundsun.lcpt</groupId>     <!-- 可省略，默认继承父项目的groupId -->
+    <artifactId>ta-route-api</artifactId>
+    <version>1.4.0-SNAPSHOT</version>
+    <!-- 映射到本地F:\MavenRepository\com\hundsun\lcpt\ta-route-api\1.4.0-SNAPSHOT\ta-route-api-1.4.0-SNAPSHOT.jar-->
+
+ta-route-api-1.4.0-SNAPSHOT.jar
+该jar包的目录如下，即个人所创建的工程目录
+├─com
+│  └─hundsun
+│      └─lcpt
+│          └─ta
+│              └─route
+│                  └─api
+│                      ├─dto
+│                      └─factory
+└─META-INF
+    └─maven
+        └─com.hundsun.lcpt
+            └─ta-route-api
+<!--子项目 pom.xml-->
+```
+
+## 5 依赖范围
+
+### 5.1 依赖
+
+```xml
+<dependency>
+    <!-- 组件\模块所属的公司或组织名 -->
+    <groupId>junit</groupId>
+    <!-- 组件\模块名称 -->
+    <artifactId>junit</artifactId>
+    <!-- 版本 -->
+    <version>4.9</version>
+    <!-- 依赖范围：单元测试时使用 junit -->
+    <scope>test</scope>
+</dependency>
+```
+
+### 5.2 依赖范围
+
+A 依赖 B，需要在 A 的 pom.xml 文件中添加 B 的坐标，添加坐标时需要指定依赖范围
+
+- **compile：**编译范围，指 A 在编译时依赖 B，此范围为默认依赖范围。 编译范围的依赖会用在
+  编译、测试、运行，由于运行时需要所以编译范围的依赖会被打包。**default**
+-  **provided：** provided 依赖只有在当 JDK 或者一个容器已提供该依赖之后才使用， provided 依
+  赖在编译和测试时需要，在运行时不需要，比如： servlet api 被 tomcat 容器提供。
+-  **runtime：** runtime 依赖在运行和测试系统的时候需要，但在编译的时候不需要。 比如： jdbc
+  的驱动包。由于运行时需要所以 runtime 范围的依赖会被打包。
+-  **test：** test 范围依赖 在编译和运行时都不需要，它们只有在测试编译和测试运行阶段可用，
+  比如： junit。由于运行时不需要所以 test范围依赖不会被打包。
+-  **system：** system 范围依赖与 provided 类似，但是你必须显式的提供一个对于本地系统中 JAR
+  文件的路径， 需要指定 systemPath 磁盘路径， system依赖不推荐使用。  
+- **import：**它只使用在\<dependencyManagement>中,类似于继承父类中的pom，表示从其它的pom中导入dependency的配置。
+
+依赖范围由强到弱的顺序是：compile>provided>runtime>test
+
+## 6 配置文件
+
+### 仓库分类
+
+1. 中央仓库，这是默认的仓库 http://repo1.maven.org/maven2
+2. 镜像仓库，通过 sttings.xml 中的 settings.mirrors.mirror 配置
+3. 全局profile仓库，通过 settings.xml 中的 settings.repositories.repository 配置
+4. 项目仓库，通过 pom.xml 中的 project.repositories.repository 配置
+5. 项目profile仓库，通过 pom.xml 中的 project.profiles.profile.repositories.repository 配置
+6. 本地仓库
+
+### 仓库访问顺序
+
+1. 步骤 1 － 在**本地仓库**中搜索, 如果找不到, 执行步骤 2, 如果找到了则执行其他操作。
+2. 步骤 2 － 在**中央仓库**中搜索, 如果找不到, 并且有一个或多个远程仓库已经设置, 则执行步骤 4, 如果找到了则下载到本地仓库中已被将来引用。
+3. 步骤 3 － 如果**远程仓库（私服）**没有被设置, Maven 将简单的停滞处理并抛出错误（无法找到依赖的文件）。
+4. 步骤 4 － 在一个或多个远程仓库中搜索依赖的文件, 如果找到则下载到本地仓库已被将来引用, 否则 Maven 将停止处理并抛出错误（无法找到依赖的文件）。
+
+本地仓库-----> 中央仓库-------> 远程仓库 ------>抛出错误
+
+本地仓库-----> 镜像仓库 ------> 抛出错误
+
+> 默认中央仓库地址 http://repo1.maven.org/maven2，镜像仓库指的是远程/中央仓库的镜像
+
+本地仓库——>当前工程pom.xml中配置的远程仓库——>setting.xml中配置的远程仓库
+
+### mirror
+
+当第一个mirror中不存在对应的资源时，Maven并不会去第二个mirror中查找。只有当前一个mirror无法连接的时候，才会去找后一个mirror
+
+```xml
+<mirror>
+    <id>alimaven</id>
+    <name>aliyun maven</name>
+    <url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
+    
+    <!--该镜像为中央仓库的镜像，当访问http://repo1.maven.org/maven2时，其实访问的是http://maven.aliyun.com/nexus/content/repositories/central/-->
+    <mirrorOf>central</mirrorOf>
+</mirror>
+
+
+<!--
+<mirrorOf>元素表示是哪个仓库的镜像，mirror Of repository
+
+1.<mirrorOf>*</mirrorOf> 
+匹配所有远程仓库。 这样所有pom中定义的仓库都不生效
+2.<mirrorOf>external:*</mirrorOf> 
+匹配所有远程仓库，使用localhost的除外，使用file://协议的除外。也就是说，匹配所有不在本机上的远程仓库。 
+3.<mirrorOf>repo1,repo2</mirrorOf> 
+匹配仓库repo1和repo2，使用逗号分隔多个远程仓库。 
+4.<mirrorOf>*,!repo1</miiroOf> 
+匹配所有远程仓库，repo1除外，使用感叹号将仓库从匹配中排除。
+
+-->
+```
+
+### mirror和repository
+
+pom.xml 和 setting.xml 中配置的仓库和镜像优先级关系（mirror 优先级高于 repository）: 
+
+repository（setting.xml） < repository（pom.xml） < mirror（setting.xml）
+
+例如, 如果配置了 mirrorOf = *,  则 不管项目的 pom.xml 配置了什么仓库, 最终都会被镜像到 镜像仓库
+
+私服的配置推荐用profile配置而不是mirror
+
+### 第三方部署
+
+将本地jar包打包成指定格式上传到指定服务器中
+
+```xml
+<!--pom.xml这里<id> 和 settings.xml 配置 <id> 对应！-->
+
+<!--settings.xml-->
+<server>
+    <id>releases</id>
+    <username>admin</username>
+    <password>admin123</password>
+</server>
+<server>
+    <id>snapshots</id>
+    <username>admin</username>
+    <password>admin123</password>
+</server>
+
+<!--pom.xml-->
+<!-- 使用分发管理将本项目打成jar包，直接上传到指定服务器 -->
+<distributionManagement>
+    <repository>
+        <id>releases</id>
+        <url>http://localhost:8081/nexus/content/repositories/releases/</url>
+    </repository> 
+    <snapshotRepository>
+        <id>snapshots</id>
+        <url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
+    </snapshotRepository> 
+</distributionManagement>
+```
+
+### 第三方下载
+
+```xml
+<server>
+    <id>snapshots</id>
+    <username>username</username>
+    <password>password</password>
+</server>
+
+</profiles>
+    <profile>
+        <id>dev</id>
+        <repositories>
+            <repository>
+                <id>snapshots</id>
+                <url>http://artifactory.hundsun.com:80/artifactory/bta6.0-mvn-virtual/</url>
+            </repository>
+        </repositories>
+    </profile>
+</profiles>
+
+<activeProfiles>
+    <activeProfile>dev</activeProfile>
+</activeProfiles>
+```
+
+### profile
+
+简介：profile可以定义一系列配置信息，然后指定激活条件。我们可以定义多个profile，然后每个profile对应不同的激活条件和配置信息，从而达到不同环境使用不同配置信息的效果。
+
+定义位置：
+
+- 特定项目的profile配置可以定义在该项目的pom.xml文件中
+
+- 特定用户的profile配置可以定义在.m2目录下的settings.xml中
+
+- 全局profile配置。全局的profile是定义在Maven安装目录下的“con/settings.xml”文件中
+
+  > https://blog.csdn.net/zy103118/article/details/79879879
+
+### dependencyManagement
+
+\<dependencyManagement>与\<dependencies>的区别
+
+\<dependencyManagement>元素用来提供一种**管理依赖版本号**，通常会在一个组织或者项目的最顶层的父POM中看到。**只声明依赖，并不实现引入**，因此**子项目dependencies中需要显式的声明需要用的依赖，不写版本号时，继承父POM中的版本，否则使用子项目中声明的版本，子项目只需写artifactId**
+
+子模块继承之后，提供作用：锁定版本+子module不用写groupId和version，如果子模块中声明了其他版本，则按子模块的版本导入。  
+
+### 热部署
+
+## 7 插件
+
+### 7.1 设置 jdk 编译版本
+
+```xml
+<!-- Target bytecode Version-->
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-compiler-plugin</artifactId>
+  <version>3.1</version>
+  <configuration>
+    <source>1.8</source>
+    <target>1.8</target>
+    <encoding>UTF-8</encoding>
+  </configuration>
+</plugin>
+```
+
+## Jar/War/Pom
+
+- pom工程：maven依赖文件，用在父级工程或聚合工程中，用来做jar包的版本控制。
+
+  - > 打出来可以作为其他项目的maven依赖，在工程A中添加工程B的pom，A就可以使用B中的类。
+
+- war工程：将会打包成war，java web项目, 发布在服务器上的工程。如网站或服务。
+
+  - > 是做好一个web网站后，打成war包部署到服务器。目的是节省资源，提供效率。
+
+- jar工程：将会打包成jar用作jar包使用。
+
+  - 通常是开发时要引用通用类，打成jar包便于存放管理。当你使用某些功能时就需要这些jar包的支持，需要导入jar包。
+
+## BUG
+
+Maven在加载jar包时，如果该目录下有.lastupdate文件，会加载失败，即不加载该jar包
+
