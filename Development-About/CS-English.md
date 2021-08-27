@@ -87,3 +87,24 @@ dependency：附属国，依赖
 extend：扩大
 
 > to add to something in order to make it bigger or longer
+
+
+
+collapse：折叠，倒塌，垮掉
+
+> to fold something into a smaller shape, usually so it can be stored, or (especially of furniture) to fold in this way.
+>
+> to fall down suddenly because of pressure or having no strength or support.
+
+
+
+identity：身份
+
+> who a person is, or the qualities of a person or group that make them different from others
+
+
+
+identifier：标识符
+
+> a person or thing that establishes the identity of someone or something
+
