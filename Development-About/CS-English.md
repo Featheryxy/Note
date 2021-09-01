@@ -108,3 +108,14 @@ identifier：标识符
 
 > a person or thing that establishes the identity of someone or something
 
+
+
+clause： 从句，子句
+
+> a group of words, consisting of a subject and a finite form of a verb 
+
+
+
+aggregate：聚合物
+
+> something formed by adding together several amounts or things
