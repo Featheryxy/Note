@@ -119,3 +119,24 @@ clause： 从句，子句
 aggregate：聚合物
 
 > something formed by adding together several amounts or things
+
+
+
+pull：拖，拉，拽
+
+> to move something towards yourself, sometimes with great physical effort
+
+
+
+push：推，推动
+
+> to use physical pressure of force, especially with your hands , in order to move something into a different position, usually one that is further away from you
+
+
+
+decimal：小数的，十进位的
+
+> relating to or expressed in a system of counting based on the number ten
+
+
+
