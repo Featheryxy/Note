@@ -140,3 +140,6 @@ decimal：小数的，十进位的
 
 
 
+origin
+
+> the beginning or cause of something
