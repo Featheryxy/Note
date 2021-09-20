@@ -2,6 +2,18 @@
 
 apache-tomcat-9.0.36-windows-x64.
 
+### 目录
+
+```markdown
+bin: 存放二进制可执行文件
+conf：server.xml配置整个服务器信息（如端口号，编码格式），web.xml部署描述符文件，该文件种注册了很多MIME类型
+lib
+logs
+temp
+webapps：存放web项目的目录，其中每个文件夹都是一个项目；其中ROOT是一个特殊的项目，在地址栏中没有给出项目目录时，对应的就是ROOT项目
+work：运行时生成的文件，最终运行的文件都在这里。当客户端用户访问一个JSP文件时，Tomcat会通过JSP生成Java文件，然后再编译Java文件生成class文件，生成的Java和class文件都会存放到这个目录下
+```
+
 ### 环境变量设置
 
 CATALINA_HOME
