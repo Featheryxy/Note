@@ -10,9 +10,61 @@ Redis是⼀个速度⾮常快的⾮关系数据库（non-relational database）�
 
 字符串
 
+```shell
+127.0.0.1:6379> set hello world
+OK
+127.0.0.1:6379> get hello
+"world"
+127.0.0.1:6379> del hello
+(integer) 1
+127.0.0.1:6379> get hello
+(nil)
+```
+
+
+
+总结
+
+```
+set key value 设置存储在给定键中的值
+get key 获取存储在给定键中的值
+del key 删除存储在给定键中的值（这个命令可以⽤于所有类型）
+```
+
 ## LIST
 
 列表
+
+```shell
+127.0.0.1:6379> rpush list-key item
+(integer) 1
+127.0.0.1:6379> rpush list-key item2
+(integer) 2
+127.0.0.1:6379> rpush list-key item
+(integer) 3
+127.0.0.1:6379> lrange list-key 0 -1
+1) "item"
+2) "item2"
+3) "item"
+127.0.0.1:6379> lindex list-key 1
+"item2"
+127.0.0.1:6379> lpop list-key
+"item"
+127.0.0.1:6379> lrange list-key 0 -1
+1) "item2"
+2) "item"
+```
+
+总结
+
+```shell
+RPUSH 将给定值推⼊列表的右端
+LRANGE 获取列表在给定范围上的所有值
+LINDEX 获取列表在给定位置上的单个元素
+LPOP 从列表的左端弹出⼀个值，并返回被弹出的值
+```
+
+
 
 ## SET
 
