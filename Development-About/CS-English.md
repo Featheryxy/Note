@@ -143,3 +143,37 @@ decimal：小数的，十进位的
 origin
 
 > the beginning or cause of something
+
+
+
+timeout：暂停，超时
+
+> a short period during a game in some sports when then players stop playing in order to rest, plan what they are going to do next, etc.
+
+
+
+trigger：扳机，触发器
+
+> n: a part of a gun that causes the gun to fire when pressed;
+>
+> n: an event or situation, etc. that causes something to start;
+
+
+
+causes：原因, 导致
+
+> n: the reason why something, especially. something bad, happens;
+>
+> v: to make something happen, especially something bad;
+
+
+
+latch：门闩
+
+> n: a device for keeping a door or gate closed, consisting of a metal bar that fits into a hole and is lifted by pushing down on another bar;
+
+
+
+fetch：[v: 去拿来]
+
+> v: to go to another place to get something or someone and bring it, him, or her back；
