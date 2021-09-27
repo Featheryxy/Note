@@ -9,6 +9,7 @@
 - Ctrl+H：Type hierarchy
 - Ctrl+O：Override
 - Ctrl+I：Implement methods
+- Ctrl+E：Recent files popup
 - Ctrl+Alt+T：Surround with
 - Ctrl+ALt+Left/Right：Navigate back / forward
 - Ctrl+Alt+F：全局查找
