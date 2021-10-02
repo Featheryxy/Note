@@ -177,3 +177,9 @@ latch：门闩
 fetch：[v: 去拿来]
 
 > v: to go to another place to get something or someone and bring it, him, or her back；
+
+
+
+retrieve：[v:找回,检索]
+
+> v: to find and bring back something
