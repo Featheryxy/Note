@@ -195,3 +195,13 @@ starter：[n: 启动器]
 embedded：[adj, 嵌入的]
 
 > adj: fixed into the surface of something
+
+
+
+CLI (Command Line Interface)
+
+
+
+omit: [v. 删除，疏忽] 
+
+> to fail to include or do something
