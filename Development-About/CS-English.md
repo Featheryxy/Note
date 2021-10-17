@@ -204,4 +204,28 @@ CLI (Command Line Interface)
 
 omit: [v. 删除，疏忽] 
 
-> to fail to include or do something
+> v：to fail to include or do something
+
+
+
+archetype: [n: 原型]
+
+> n: a typical example of something, or the original model of something from which others are copied
+
+
+
+annotation: [n: 释文]
+
+> n: a short explanation or note added to a text or image, or the act of    adding short explanations or notes
+
+
+
+phase：[n: 阶段，时期]
+
+> any stage in a series of events or in a process of development
+
+
+
+site: n: 站点，地点
+
+> a place where somethin is, was, or will be built, or where something happened, is happening, or will happen
