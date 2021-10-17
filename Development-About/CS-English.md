@@ -183,3 +183,15 @@ fetch：[v: 去拿来]
 retrieve：[v:找回,检索]
 
 > v: to find and bring back something
+
+
+
+starter：[n: 启动器]
+
+>n: something used to begin something
+
+
+
+embedded：[adj, 嵌入的]
+
+> adj: fixed into the surface of something
