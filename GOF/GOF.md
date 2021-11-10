@@ -115,8 +115,6 @@ public class Main {
 
 ### 角色
 
-![image-20211107144617050](GOF.assets/image-20211107144617050.png)
-
 Target: 目标，所要实现的功能 Print
 
 Clinet: 请求者 Main
@@ -124,3 +122,6 @@ Clinet: 请求者 Main
 Adaptee：被适配者 Banner
 
 Adapter: 适配者
+
+![image-20211107144617050](GOF.assets/image-20211107144617050.png)
+
