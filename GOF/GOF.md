@@ -231,3 +231,9 @@ public class Main {
 1. 定义static修饰的成员变量singleton，并将其初始化为Singleton类的实例。初始化行为仅在类被加载的时候进行一次
 2. Singleton类的构造函数为private，禁止从Singleton类外部调用构造函数
 
+
+
+
+
+### Builder--组装复杂的实例
+
