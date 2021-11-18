@@ -235,5 +235,140 @@ public class Main {
 
 
 
-### Builder--组装复杂的实例
+## Builder--组装复杂的实例
+
+### 角色
+
+- Builder(建造者)：负责定义用于生成实例的接口。Builder中准备了用于生成实例的方法
+- ConcreteBuilder: Builder的实现类
+- Director(监工): 负责使用Builder来生成实例。它并不依赖于ConcreteBuilder, 只调用Builder角色中被定义的方法
+- Client(使用者): 使用Builder
+
+可替换性：一个类不知道知道调用的是哪个子类。
+
+### 代码
+
+```java
+public abstract class Builder {
+    public abstract void makeTitle(String title);
+    public abstract void makeString(String str);
+    public abstract void makeItems(String[] items);
+    public abstract void close();
+}
+
+public class Director {
+    private Builder builder;
+    public Director(Builder builder){
+        this.builder = builder;
+    }
+
+    public void construct(){
+        builder.makeTitle("Greeting");
+        builder.makeString("从早上至下午");
+        builder.makeItems(new String[]{
+                "早上好。",
+                "下午好。"
+        });
+        builder.makeString("晚上");
+        builder.makeItems(new String[]{
+                "晚上好。",
+                "晚安。",
+                "再见"
+        });
+        builder.close();
+    }
+}
+
+public class TextBuilder extends Builder {
+    private StringBuffer buffer = new StringBuffer();           // 文档内容保存在该字段中
+    public void makeTitle(String title) {                       // 纯文本的标题
+        buffer.append("==============================\n");      // 装饰线
+        buffer.append("『" + title + "』\n");                   // 为标题添加『』
+        buffer.append("\n");                                    // 换行
+    }
+    public void makeString(String str) {                        // 纯文本的字符串
+        buffer.append('■' + str + "\n");                       // 为字符串添加■
+        buffer.append("\n");                                    // 换行
+    }
+    public void makeItems(String[] items) {                     // 纯文本的条目
+        for (int i = 0; i < items.length; i++) {
+            buffer.append("　・" + items[i] + "\n");            // 为条目添加・
+        }
+        buffer.append("\n");                                    // 换行
+    }
+    public void close() {                                       // 完成文档
+        buffer.append("==============================\n");      // 装饰线
+    }
+    public String getResult() {                                 // 完成的文档
+        return buffer.toString();                               // 将StringBuffer变换为String
+    }
+}
+
+public class HTMLBuilder extends Builder{
+    private String filename;                                                        // 文件名
+    private PrintWriter writer;                                                     // 用于编写文件的PrintWriter
+    public void makeTitle(String title) {                                           // HTML文件的标题
+        filename = title + ".html";                                                 // 将标题作为文件名
+        try {
+            writer = new PrintWriter(new FileWriter(filename));                     // 生成 PrintWriter
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        writer.println("<html><head><title>" + title + "</title></head><body>");    // 输出标题
+        writer.println("<h1>" + title + "</h1>");
+    }
+    public void makeString(String str) {                                            // HTML文件中的字符串
+        writer.println("<p>" + str + "</p>");                                       // 用<p>标签输出
+    }
+    public void makeItems(String[] items) {                                         // HTML文件中的条目
+        writer.println("<ul>");                                                     // 用<ul>和<li>输出
+        for (int i = 0; i < items.length; i++) {
+            writer.println("<li>" + items[i] + "</li>");
+        }
+        writer.println("</ul>");
+    }
+    public void close() {                                                           // 完成文档
+        writer.println("</body></html>");                                           // 关闭标签
+        writer.close();                                                             // 关闭文件
+    }
+    public String getResult() {                                                     // 编写完成的文档
+        return filename;                                                            // 返回文件名
+    }
+}
+
+public class Main {
+    public static void main(String[] argsArr) {
+        String args = "plain";
+
+//        if (args.length != 1) {
+//            usage();
+//            System.exit(0);
+//        }
+        if (args.equals("plain")) {
+            TextBuilder textbuilder = new TextBuilder();
+            Director director = new Director(textbuilder);
+            director.construct();
+            String result = textbuilder.getResult();
+            System.out.println(result);
+        } else if (args.equals("html")) {
+            HTMLBuilder htmlbuilder = new HTMLBuilder();
+            Director director = new Director(htmlbuilder);
+            director.construct();
+            String filename = htmlbuilder.getResult();
+            System.out.println(filename + "文件编写完成。");
+        } else {
+            usage();
+            System.exit(0);
+        }
+    }
+    public static void usage() {
+        System.out.println("Usage: java Main plain      编写纯文本文档");
+        System.out.println("Usage: java Main html       编写HTML文档");
+    }
+}
+```
+
+## Abstract Factory--将关联零件组成产品
+
+**抽象工厂**的工作就是将**抽象零件**组装成**抽象产品**，我们不关心零件的具体实现，而是只关心接口（API）
 
