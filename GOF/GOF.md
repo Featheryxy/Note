@@ -251,10 +251,6 @@ clone方法定义在java.lang.Object中, q
 Cloneable接口中没有声明任何方法，只是用来标记。称为标记接口
 
 ```
-=======
-
-
-
 
 ## Builder--组装复杂的实例
 
@@ -393,4 +389,26 @@ public class Main {
 
 **抽象工厂**的工作就是将**抽象零件**组装成**抽象产品**，我们不关心零件的具体实现，而是只关心接口（API）
 
->>>>>>> 63dc7d17f55650edc19aee664ab0a4e72c308729
+- AbstractProduct(抽象产品)
+
+  AbstractProduct负责定义AbstractFactory角色生成的抽象零件和产品的接口
+
+- AbstractFactory
+
+  负责定义用于生成抽象产品的接口
+
+- ConcreteProduct
+
+- ConcreteFactory
+
+## Bridge--将类的功能层次结构与实现层次结构分离
+
+**类的层次结构的两个作用**
+
+1. 希望**增加新功能**
+   - 父类具有基本功能
+   - 在子类中增加新的功能
+2. 希望**增加新的实现**时
+   - 父类通过声明抽象方法来定义接口
+   - 子类通过实现具体方法来实现接口
+3. 类的层次接口的混杂与分离
