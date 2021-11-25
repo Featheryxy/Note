@@ -229,3 +229,11 @@ phase：[n: 阶段，时期]
 site: n: 站点，地点
 
 > a place where somethin is, was, or will be built, or where something happened, is happening, or will happen
+
+
+
+precision: 精度
+
+ scale：标度，刻度
+
+> Precision is the number of digits in a number. Scale is the number of digits to the right of the decimal point in a number. For example, the number 123.45 has a precision of 5 and a scale of 2
