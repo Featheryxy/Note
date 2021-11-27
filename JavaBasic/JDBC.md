@@ -203,7 +203,6 @@ void setString(int parameterIndex, String x)
 1. 数据库字段索引从1开始
 
 2. Statement执行时需要带参数sql，而PreparedStatement不需要，但其需要setXXX来替换sql中的问号
-   
 
 # Reference
 

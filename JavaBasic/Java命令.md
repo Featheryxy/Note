@@ -1,15 +1,16 @@
 # Java命令
 
-```java
-// 编译java文件，生成.class文件
+```shell
+java [options] <主类> [args...]
+
+# 编译java文件，生成.class文件
 javac Hello.java
-// 运行
+# 运行
 java Hello
+# cp:classpath 
+java -cp pathToJar
 
-// 参数
-java -option
-java -classpath / -cp
-
+-encoding
 java -jar demo.jar
 ```
 

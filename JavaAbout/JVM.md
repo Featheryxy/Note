@@ -118,8 +118,9 @@ Linking 分为三步 验证、准备、解析
 
   	1. 将常量池内的符号引用转换为直接引用的过程。
    	2. 事实上，解析操作往往会伴随着jvm在执行完初始化之后再执行
-   	3. .符号引用就是一组符号来描述所引用的目标。符号应用的字面量形式明确定义在《java虚拟机规范》的class文件格式中。直接引用就是直接指向目标的指针、相对偏移量或一个间接定位到目标的句柄
-   	4. 解析动作主要针对类或接口、字段、类方法、接口方法、方法类型等。对应常量池中的CONSTANT_Class_info/CONSTANT_Fieldref_info、CONSTANT_Methodref_info等。
+  	2. 事实上，解析操作往往会伴随着jvm在执行完初始化之后再执行
+  	3. .符号引用就是一组符号来描述所引用的目标。符号应用的字面量形式明确定义在《java虚拟机规范》的class文件格式中。直接引用就是直接指向目标的指针、相对偏移量或一个间接定位到目标的句柄
+  	4. 解析动作主要针对类或接口、字段、类方法、接口方法、方法类型等。对应常量池中的CONSTANT_Class_info/CONSTANT_Fieldref_info、CONSTANT_Methodref_info等。
 
 ```java
 public class test {
@@ -259,7 +260,7 @@ SourceFile: "test.java"
   ```java
   public class ClinitTest {
       private int a=1;
-
+  
       public static void main(String[] args) {
           int b = 2;
       }
@@ -444,10 +445,12 @@ public class StringTest {
     public static void main(String[] args) {
         String str = new java.lang.String();
         System.out.println("Hello, World!");
-        // Hello, World!
+        
         
         StringTest stringTest = new StringTest();
         System.out.println(stringTest.getClass().getClassLoader());
+        
+        // Hello, World!
         // sun.misc.Launcher$AppClassLoader@18b4aac2
     }
 }
@@ -1275,7 +1278,6 @@ main方法的字节码  Func func  -------    invokedynamic
       }
   }
   ```
-  
 ## 6 本地方法接口
 
   ```java
