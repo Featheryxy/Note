@@ -90,7 +90,11 @@ n: 捷径
 
 > a route that leads from one place to another and is quicker and more direct than the usual route
 
+### snippet
 
+n: 一条, 一则 (新闻,消息或谈话) 片段
+
+> a small and often interesting piece of news, information, or conversation
 
 ### **route**
 
