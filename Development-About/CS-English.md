@@ -30,6 +30,18 @@ n: 露面
 
 > a surface on which you find the controls for a piece of electrical equipment or a machine
 
+### caret
+
+n 插入符号 ^
+
+> the symbol ^,
+
+
+
+n 光标
+
+> a cursor on a screen that shows where text should be entered 
+
 ## D
 
 ### dependency
@@ -66,6 +78,8 @@ n: 露面
 >
 >  : a brief written description that provides information about someone or something
 
+## P
+
 
 
 
@@ -75,6 +89,12 @@ n: 露面
 ### roaming
 
 n: 漫游
+
+### **route**
+
+ 路由，路线
+
+>a particular way or direction between places
 
 
 
@@ -102,23 +122,23 @@ n: 一条, 一则 (新闻,消息或谈话) 片段
 
 > a small and often interesting piece of news, information, or conversation
 
-### **route**
+### shrink
 
- 路由，路线
+v: 使缩小,变小
 
->a particular way or direction between places
-
-
+> to become smaller, or to make something smaller
 
 ### parse
 
- 解析，对（句子）作语法分析
+ v: 解析，对（句子）作语法分析
 
 > to separate a sentence into grammatical parts, such as subject, verb, etc
 
+### suspend
 
+v: 暂停
 
-
+> to stop something from being active, either temporarily or permanently
 
 ### operator
 

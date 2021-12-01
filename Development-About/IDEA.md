@@ -1,19 +1,5 @@
 # IDEA
 
-## 快捷键
-
-- Alt+Insert ， override/get/set
-    - 只增加一对set和get方法时，使用alt+enter更快，光标在要get的变量上
-    - 而增加多对set和get方法时，使用alt+insert更快，光标在类中
-- Alt+F7：查询哪里使用该类或方法
-- Ctrl+H：Type hierarchy
-- Ctrl+O：Override
-- Ctrl+I：Implement methods
-- Ctrl+E：Recent files popup
-- Ctrl+Alt+T：Surround with
-- Ctrl+ALt+Left/Right：Navigate back / forward
-- Ctrl+Alt+F：全局查找
-
 ## Compile、Make、Build
 
 编译，是将源代码转换为可执行代码的过程。编译需要指定源文件和编译输出的文件路径（输出目录）。Java的编译会将java编译为class文件，将非java的文件（一般成为资源文件、比如图片、xml、txt、poperties等文件）原封不动的复制到编译输出目录，并保持源文件夹的目录层次关系。
