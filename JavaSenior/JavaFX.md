@@ -21,3 +21,11 @@ Scene: 场景
 Node: 交点
 
 > a place where things such as lines join, or where a leaf and stemjoin on a plant
+
+
+
+### 操作
+
+点击按钮是生成新的组件
+
+监听: 数量发生变化时...
