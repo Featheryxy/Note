@@ -450,6 +450,28 @@ repository（setting.xml） < repository（pom.xml） < mirror（setting.xml）
 </plugin>
 ```
 
+## 查看依赖
+
+```
+查看项目的完整依赖树
+mvn dependency:tree
+
+查看依赖树中包含某个groupId和artifactId的依赖链
+mvn dependency:tree -Dincludes=com.alibaba:fastjson
+
+查看依赖树中包含某个groupId的依赖链
+mvn dependency:tree -Dincludes=com.alibaba
+
+查看依赖树中包含某个artifactId的依赖链
+mvn dependency:tree -Dincludes=:fastjson
+
+
+```
+
+
+
+
+
 ## Jar/War/Pom
 
 - pom工程：maven依赖文件，用在父级工程或聚合工程中，用来做jar包的版本控制。

@@ -41,9 +41,17 @@ ORDER By SAGE;
 --  1. select查询列只能是 group by 中出现的字段或 对其他字段使用过了 聚合函数
 --  2. where 作用于表，having 作用于分组
 
-create user 用户名 identified by 口令[即密码];
 
+SQL> @path_to_sql_file
+
+```
+
+### 用户创建与角色赋予
+
+```sql
+create user 用户名 identified by 口令[即密码];
 drop user 用户名 cascade;
+
 
 SQL> create user ot identified by 213213;
 
@@ -57,7 +65,20 @@ SQL> connect ot
 输入口令:
 已连接。
 
-SQL> @path_to_sql_file
+```
 
+
+
+### PLSQL连接Oracle
+
+用户名为 system
+
+```sql
+-- 查询sid
+SQL> select name from v$database;
+
+NAME
+------------------
+ORCL
 ```
 
