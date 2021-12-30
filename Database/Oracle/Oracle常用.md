@@ -82,3 +82,14 @@ NAME
 ORCL
 ```
 
+### 数据库迁移
+
+```shell
+exp xt60sc_P2/handsome@10.20.158.64:1521/ora11g file='E:\xt60sc.dmp';
+
+
+imp XT60ACC_P2/handsome@127.0.0.1:1521/orcl file='E:\Desktop\dump\xt60acc.dmp' ignore=y full=y;
+
+
+```
+
