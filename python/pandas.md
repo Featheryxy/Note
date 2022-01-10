@@ -256,7 +256,7 @@ TypeError: Index does not support mutable operations
 ## 文件
 
 ```
-pd.read_excel(io)
-df | series.to_csv(io, [header=False, index=False])
+pd.read_excel(io, dtype=str)
+df | series.to_csv(io, [header=True, index=True,sep=','])
 ```
 
