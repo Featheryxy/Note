@@ -112,7 +112,7 @@ public class Goods implements  Comparable{
 Comparator接口的使用：定制排序
 
 - 背景
-  当元素的类型没有实现java.lang.Comparable接口而又不方便修改代码，或者实现了java.lang.Comparable接口的排序规则不适合当前的操作，那么可以考虑使用 Comparator 的对象来排序
+  当**元素的类型没有实现java.lang.Comparable接口而又不方便修改代码**，或者**实现了java.lang.Comparable接口的排序规则不适合当前的操作**，那么可以考虑使用 Comparator 的对象来排序
 
 ### 3.2 .重写compare()方法
 
