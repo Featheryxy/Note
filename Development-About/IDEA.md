@@ -56,3 +56,21 @@ import的包无法调用 or 已使用的变量提示未使用，可以进行缓�
 - Show Execution Point：跳转到当前代码所执行的地方
 - Drop Frame：步入方法体之后，想回退到方法体外，点这个按钮后，断点重新回到方法体之外。在继续还是可以再次进到方法内
 - Evaluate Expression：根据输入，执行得到结果
+
+## 常用插件
+
+1. Rainbow Brackets
+2. String Manipulation
+3. Translation
+4. Easy Code 根据数据库自动生成dao, entity
+5. key promoter 
+6. Maven Helper
+7. Alibaba java coding 
+8. Gsonformat json转化实体类 
+9. javadoc  生成注释文档  
+10. generateallsetter 自动生成set代码 
+11. stopcoding
+12. Grep Console: 日志着色控制台显示 
+13. SonarLint  扫描代码的问题，例如 性能，安全和重复问题。新手必备！显著提升代码质量
+14. Theme: Cyan Light Theme
+15. ,
