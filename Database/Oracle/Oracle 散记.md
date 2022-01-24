@@ -28,13 +28,13 @@
 ​	EXCEPTION
 ​	异常处理语句
 ​	END;
-​	
+	
 ​	--IN:输入参数，向存储过程传递值，默认类型，可以不写
 ​	--OUT:输出参数，用于返回结果。
 ​	--IN OUT：作为IN参数向存储过程传递值，同时作为OUT参数返回值。
 ​	--REPLACE：指明若已有同名的存储过程存在，那么将被替换成当前创建的版本。
 ​	--RETURN只能返回单个值，不能返回多个值。
-​	--可以使用DEFAULT关键字为输入参数指定默认值。
+	--可以使用DEFAULT关键字为输入参数指定默认值。
 
 
 
@@ -55,7 +55,7 @@
     select * from t_sys_score where id=15;  --查询id为15的整形数字
 ```
 
-### 2.转义符，对紧随其后出现的字符(单引号)进行转义 
+### 2.转义符，对紧随其后出现的字符(单引号)进行转义
 
 ```sql
     select ' '' ' result from dual; --第二个单引号被作为转义符,第三个单引号被转义.结果为 '
@@ -88,153 +88,9 @@ https://blog.csdn.net/mmake1994/article/details/85982743
 
 
 
-## Bug
 
-```plsql
-create table a (ca int,cb integer,cc long); -- ok
-create table a (ca int(11),cb integer,cc long); -- ORA-00907: 缺失右括号
-
-
--- ORA-01950: 对表空间 'USERS' 无权限
-ALTER USER XT60PUB quota unlimited on users;
-```
-
-
-
-```sql
-   create  or  replace  procedure  p_create_table  
-   is
-   begin
-   Execute  Immediate  'create table create_table(id int)' ;
-   end  p_create_table;
-   
-   SQL>  exec  p_create_table;
- 
-   begin  p_create_table;  end ;
- 
-   ORA-01031: 权限不足
-   ORA-06512: 在 "SUK.P_CREATE_TABLE" , line 3
-   ORA-06512: 在line 1
-   
-   
-   create  or  replace  procedure  p_create_table  
-   Authid Current_User  is
-   begin
-   Execute  Immediate  'create table create_table(id int)' ;
-   end  p_create_table;
- 
-   --再尝试执行：
-   SQL>  exec  p_create_table;
- 
-   PL/SQL  procedure  successfully completed
-```
 
 ## 散记
-
-```sql
-
-请输入用户名:  sys as sysdba
-输入口令:
-
-Oracle是不支持创建自定义模式的，想要创建模式的话只能新建一个用户，每个用户会有一个默认的和用户名相同的模式
-
-create user 用户名 identified by 口令[即密码];
-
-drop user 用户名 cascade;
-
-SQL> create user ot identified by 213213;
-
-用户已创建。
-
-SQL> grant connect, resource, dba to ot;
-
-授权成功。
-
-SQL> connect ot
-输入口令:
-已连接。
-
-SQL> @path_to_sql_file
-
-SQL> connect scott;
-输入口令:
-已连接。
-SQL> select table_name from user_tables order by table_name;
-
-TABLE_NAME
-------------------------------------------------------------
-BONUS
-DEPT
-EMP
-SALGRADE
-```
-
-
-
-
-
-```plsql
-SQL> set linesize 32767
-SQL> set pagesize 1000;
-SQL> select username, account_status from dba_users;
-
-USERNAME                                                     ACCOUNT_STATUS
------------------------------------------------------------- ----------------------------------------------------------------
-MGMT_VIEW                                                    OPEN
-SYS                                                          OPEN
-SYSTEM                                                       OPEN
-DBSNMP                                                       OPEN
-SYSMAN                                                       OPEN
-XT60PUB1                                                     OPEN
-SCOTT                                                        OPEN
-OT                                                           OPEN
-XT60PUB2                                                     OPEN
-XT60PUB
-
-SQL> alter user scott account unlock;
-
-用户已更改。
-
-SQL> alter user scott identified by 213213;
-
-用户已更改。
-
-
-SQL> show user;
-USER 为 "SYSTEM"
-
-
-C:\Users\Milo>sqlplus scott/213213
-
-SQL*Plus: Release 11.2.0.1.0 Production on 星期三 1月 27 17:14:26 2021
-
-Copyright (c) 1982, 2010, Oracle.  All rights reserved.
-
-
-连接到:
-Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production
-With the Partitioning, OLAP, Data Mining and Real Application Testing options
-
-SQL>
-
-SQL> disconnect
-从 Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production
-With the Partitioning, OLAP, Data Mining and Real Application Testing options 断开
-SQL> show user;
-USER 为 ""
-
-SQL> describe dept;
- 名称                                      是否为空? 类型
- ----------------------------------------- -------- ----------------------------
- DEPTNO                                    NOT NULL NUMBER(2)
- DNAME                                              VARCHAR2(14)
- LOC                                                VARCHAR2(13)
- TEST                                               VARCHAR2(64)
- TEST3                                              VARCHAR2(64)
- TEST7                                              VARCHAR2(64)
- TEST8                                              VARCHAR2(64)
- TEST9                                              VARCHAR2(64)
-```
 
 临时变量：只在使用它的SQL语句中有效，值不能保留
 
