@@ -1,5 +1,7 @@
 # PL/SQL
 
+## 简介
+
 PL/SQL是Oracle数据库对SQL语句的扩展，PL/SQL的基本单位叫做块，由三个部分组成：
 
 1. 声明部分
@@ -11,7 +13,7 @@ PL/SQL是Oracle数据库对SQL语句的扩展，PL/SQL的基本单位叫做块�
 - 支持**事务控制**和SQL数据操作命令
 - 它支持SQL的所有数据类型，并扩展了新的数据类型
 - PL/SQL可以**存储在Oracle服务器**中
-- 服务器三的PL/SQL 程序可以通过权限进行控制
+- 服务器上的PL/SQL 程序可以通过权限进行控制
 - Oracle 有自己DBMS包，可以处理数据的控制和定义命令。
 
 ```sql
@@ -33,7 +35,7 @@ SQL> DECLARE
 
 DECLARE v_result NUMBER ( 8, 2 );
 BEGIN
-		v_result := 100 / 6;
+	v_result := 100 / 6;
 	DBMS_OUTPUT.PUT_LINE ( '最后结果是：' || v_result );
 	EXCEPTION 
 		WHEN NO_DATA_FOUND THEN
@@ -42,17 +44,23 @@ END;
 /
 ```
 
-变量命名应该使用下划线连接
+## 书写规范
 
-变量应该加前缀，用以区分数据类型和作用；
+1. 变量命名应该使用**下划线**连接
 
-字符和日期应该使用单引号括起
+2. **变量应该加前缀**，用以区分数据类型和作用；
 
-单行注释：“--”
+3. **字符和日期**应该使用**单引号**括起
 
-多行注释：“/\*...\*/”
+4. 单行注释：“--”
+
+5. 多行注释：“/\*...\*/”
 
 ## 变量的使用
+
+**临时变量**：只在使用它的SQL语句中有效，值不能保留
+
+**已定义变量**：一直保留到被显示地删除、重定义或退出SQL*Plus为止。
 
 ```sql
 -- 声明变量的语法结构
@@ -74,6 +82,52 @@ select var into variable_name from table_name;
 ```
 
 当使用NOT NULL属性时，大括号里的内容必填
+
+```sql
+--  DEF[INE] [variable] | [variable = text]
+
+SQL> define v_deptno=10
+
+SQL> define v_deptno
+DEFINE V_DEPTNO        = "10" (CHAR)
+
+SQL> define -- 查看当前会话所有变量
+DEFINE _DATE           = "27-1月 -21" (CHAR)
+DEFINE _CONNECT_IDENTIFIER = "orcl" (CHAR)
+DEFINE _USER           = "SCOTT" (CHAR)
+DEFINE _PRIVILEGE      = "" (CHAR)
+DEFINE _SQLPLUS_RELEASE = "1102000100" (CHAR)
+DEFINE _EDITOR         = "Notepad" (CHAR)
+DEFINE _O_VERSION      = "Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options" (CHAR)
+DEFINE _O_RELEASE      = "1102000100" (CHAR)
+DEFINE _RC             = "0" (CHAR)
+DEFINE V_DEPTNO        = "10" (CHAR)
+
+SQL> undefine v_deptno;
+
+SQL> select deptno, dname, loc from dept
+  2  where deptno=&v_deptno;
+输入 v_deptno 的值:  10
+原值    2: where deptno=&v_deptno
+新值    2: where deptno=10
+
+    DEPTNO DNAME                        LOC
+---------- ---------------------------- --------------------------
+        10 ACCOUNTING                   NEW YORK
+
+SQL> set verify off
+SQL> /
+输入 v_deptno 的值:  10
+
+    DEPTNO DNAME                        LOC
+---------- ---------------------------- --------------------------
+        10 ACCOUNTING                   NEW YORK
+```
+
+/ 或run  使用斜杠命令运行缓冲区中保存的SQL语句
+
+list/edit  查看/编辑缓冲区中保存的SQL语句
 
 ## 流程控制
 

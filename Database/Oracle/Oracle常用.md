@@ -1,7 +1,7 @@
 ### 登录
 
 ```sql
-SQL> set linesize 32767
+SQL> set linesize 32767;
 SQL> set pagesize 1000;
 
 -- 请输入用户名:  sys as sysdba
@@ -21,7 +21,8 @@ select SYS_CONTEXT('USERENV','CURRENT_SCHEMA') CURRENT_SCHEMA from dual;
 -- 查询用户对应的表空间, DBA_USERS存储所有用户信息
 SELECT * FROM DBA_USERS ;
 
-
+-- 查询sid
+SQL> select name from v$database;
 
 SQL> @path_to_sql_file
 
@@ -70,33 +71,14 @@ SQL> grant connect, resource, dba to ot;
 SQL> connect ot
 输入口令:
 已连接。
-
-```
-
-
-
-### PLSQL连接Oracle
-
-用户名为 system
-
-```sql
--- 查询sid
-SQL> select name from v$database;
-
-NAME
-------------------
-ORCL
 ```
 
 ### 数据库迁移
 
 ```shell
-exp xt60sc_P2/handsome@10.20.158.64:1521/ora11g file='E:\xt60sc.dmp';
+exp root/password@remote_address:1521/ora11g file='E:\db.dmp';
 
-
-imp XT60ACC_P2/handsome@127.0.0.1:1521/orcl file='E:\Desktop\dump\xt60acc.dmp' ignore=y full=y;
-
-
+imp root/password@127.0.0.1:1521/orcl file='E:\Desktop\dump\db.dmp' ignore=y full=y;
 ```
 
 ### 常见BUG
