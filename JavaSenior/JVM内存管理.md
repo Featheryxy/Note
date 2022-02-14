@@ -9,7 +9,7 @@ jmap -heap pid: 查看堆使用情况
 -Xms：初始堆大小
 ```
 
-ava整个堆大小设置，Xmx 和 Xms设置为老年代存活对象的3-4倍，即FullGC之后的老年代内存占用的3-4倍
+java整个堆大小设置，Xmx 和 Xms设置为老年代存活对象的3-4倍，即FullGC之后的老年代内存占用的3-4倍
 
 永久代 PermSize和MaxPermSize设置为老年代存活对象的1.2-1.5倍。
 
