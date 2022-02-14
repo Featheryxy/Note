@@ -6,4 +6,9 @@
 
 该语句必须以分号结尾，否则达不到效果。
 
-### 
+### 登录
+
+以非登录模式进入PL/SQL, 设置Oracle Home路径
+
+![image-20220214162807824](plsql-developer.assets/image-20220214162807824.png)
+
