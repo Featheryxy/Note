@@ -7,6 +7,8 @@ SQL> set pagesize 1000;
 -- 请输入用户名:  sys as sysdba
 -- 输入口令:
 
+sqlplus 用户名/密码@ip地址[:端口]/service_name [as sysdba]
+
 -- 以其他用户登录
 conn scott/213213
 
