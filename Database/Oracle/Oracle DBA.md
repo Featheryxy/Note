@@ -66,6 +66,53 @@ Oracle Database，又名 Oracle RDBMS，简称 Oracle。Oracle 数据库系统�
 
 > 数据库 和 表空间 可以看作是数据文件的高维抽象，是一个逻辑概念
 
+```sql
+-- 查询用户对应的表空间, DBA_USERS存储所有用户信息
+SELECT * FROM DBA_USERS ;
+
+-- 查看数据文件信息
+select t.* from dba_data_files t; 
+
+
+-- 表空间创建
+CREATE TABLESPACE tablespace_name
+DATAFILE filename SIZE size
+[AUTOEXTEND [ON/OFF]] NEXT size
+[MAXSIZE size]
+[PERMANENT|TEMPORARY]
+[EXTENT MANAGEMENT
+[ DICTIONARY | LOCAL
+[ AUTOALLOCATE | UNIFORM. [SIZE integer[K|M]] ] ] ]
+
+·tablespace-name：指定要创建的表空间的名称的关键字。
+·filename：指定在表空间中存放数据⽂件的⽂件名，这⾥还要指出
+⽂件存放的路径。
+·size：指定数据⽂件的⼤⼩。
+·AUTOEXTEND：指定数据⽂件的扩展⽅式，ON代表⾃动扩展，
+OFF代表⾮⾃动扩展。另外，如果要把数据⽂件指定为⾃动扩展，应该
+在NEXT后⾯指定具体的⼤⼩。
+·MAXSIZE：指定数据⽂件为⾃动扩展⽅式时的最⼤值。
+·PERMANENT|TEMPORARY：指定表空间的类型，PERMANENT
+是指永久表空间；TEMPORARY是指临时表空间。在创建表空间时默
+认都是永久表空间。
+·EXTENT MANAGEMENT DICTIONARY|LOCAL：指定表空间的
+管理⽅式，DICTIONARY是指字典管理⽅式；LOCAL是指本地的管理
+⽅式。在创建表空间时默认的管理⽅式是本地管理⽅式。
+
+使⽤本地表空间管理的⽅式可以减少数据字典表的争⽤现
+象，并且也不需要对空间进⾏回收。因此，Oracle推荐使⽤本地表空
+间管理的⽅式创建表空间。
+create tablespace testspace
+datafile testspace.dbf size 1g
+AUTOEXTEND on next 100m
+
+
+-- 重命名
+ALTER TABLESPACE oldname rename to newname;
+```
+
+
+
 表空间是Oracle对物理数据库上相关数据文件（ORA 或者DBF文件）的逻辑映射。一个数据库在逻辑上被划分成一到若干个表空间，每个表空包含了在逻辑上相关联的一组结构。每个数据库至少有一个表空间（称之为system表空间）。每个表空间由同一磁盘上的一个或多个文件组成，这些文件叫数据库文件（datafile）。一个数据文件只能属于一个表空间。
 
 **表空间是数据文件的逻辑映射，一个数据库在逻辑上被分成多个表空间（都包含system表空间）**
