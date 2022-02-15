@@ -102,8 +102,9 @@ OFF代表⾮⾃动扩展。另外，如果要把数据⽂件指定为⾃动扩�
 使⽤本地表空间管理的⽅式可以减少数据字典表的争⽤现
 象，并且也不需要对空间进⾏回收。因此，Oracle推荐使⽤本地表空
 间管理的⽅式创建表空间。
+
 create tablespace testspace
-datafile testspace.dbf size 1g
+datafile 'testspace.dbf' size 1g
 AUTOEXTEND on next 100m
 
 

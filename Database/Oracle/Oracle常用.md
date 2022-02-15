@@ -62,7 +62,7 @@ SELECT * FROM user_role_privs;
 select * from dba_sys_privs where grantee='DBA';
 
 
-SQL> create user ot identified by 213213;
+SQL> create user ot identified by 213213 default tablespace BTADATA temporary tablespace test_temp;
 
 用户已创建。
 

@@ -1,0 +1,10 @@
+o=order by
+w=where
+u=update
+lj=left join
+s=select
+f=from
+df=delete from
+sysarg=select t.*, t.rowid from tbsysarg t;
+sf=D:\PLSQL Developer 14\Template\Custom\sf.tpl
+dbout=D:\PLSQL Developer 14\Template\Custom\dbout.tpl
