@@ -20,3 +20,32 @@
         </dependency>
 ```
 
+
+
+同级目录
+
+```java
+package ###;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.sql.SQLException;
+
+@SpringBootTest(
+        classes = ServerStarter.class
+)
+public class ServerStarterTest {
+    @Autowired
+    private OnlineServiceConfigration configration;
+
+    @Test
+    public void testGetOutBankCodeByProjectNo() throws BizBussinessException {
+        String outBankCode = PubTrustApiFactory.getOutBankCodeByProjectNo("jksfgh");
+        System.out.println(outBankCode);
+    }
+}
+
+```
+
