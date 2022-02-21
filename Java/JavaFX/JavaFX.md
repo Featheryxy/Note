@@ -1,3 +1,7 @@
+javafxc.exe 编译JavaFX Script
+
+
+
 ### 物理抽象
 
 Platform: 平台
