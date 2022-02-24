@@ -128,21 +128,21 @@ https://blog.csdn.net/mmake1994/article/details/85982743
 
 ### 常见BUG
 
-ORA-00907: 缺失右括号
+#### ORA-00907: 缺失右括号
 
 ```sql
 create table a (ca int,cb integer,cc long); -- ok
 create table a (ca int(11),cb integer,cc long); -- ORA-00907: 缺失右括号
 ```
 
-ORA-01950: 对表空间 'USERS' 无权限
+#### ORA-01950: 对表空间 'USERS' 无权限
 
 ```sql
 -- ORA-01950: 对表空间 'USERS' 无权限
 ALTER USER XT60PUB quota unlimited on users;
 ```
 
-ORA-01031: 权限不足
+#### ORA-01031: 权限不足
 
 ```
  create  or  replace  procedure  p_create_table  
@@ -171,4 +171,29 @@ ORA-01031: 权限不足
 
  PL/SQL  procedure  successfully completed
 ```
+
+#### 中文乱码
+
+```sql
+-- 查看数据库字符集
+select userenv('language') from dual 
+/*
+   	USERENV('LANGUAGE')
+1	SIMPLIFIED CHINESE_CHINA.ZHS16GBK
+*/
+
+-- 查看本地字符集
+select * from V$NLS_PARAMETERS
+/*
+   	PARAMETER	VALUE
+1	NLS_LANGUAGE	SIMPLIFIED CHINESE
+2	NLS_TERRITORY	CHINA
+...
+*/
+
+-- 由于NLS_LANGUAGE的value不为AMERICAN_AMERICA.ZHS16GBK
+-- 设置本地环境变量 NLS_LANG，变量值为 AMERICAN_AMERICA.ZHS16GBK
+```
+
+
 
