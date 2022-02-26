@@ -33,3 +33,13 @@ Node: 交点
 点击按钮是生成新的组件
 
 监听: 数量发生变化时...
+
+
+
+### 参考资料
+
+https://blog.csdn.net/godelgnis/article/details/89473896
+
+https://code.makery.ch/zh-cn/library/javafx-tutorial/
+
+https://gitcode.net/mirrors/jfoenixadmin/jfoenix?
