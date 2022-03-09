@@ -74,3 +74,11 @@ import的包无法调用 or 已使用的变量提示未使用，可以进行缓�
 13. SonarLint  扫描代码的问题，例如 性能，安全和重复问题。新手必备！显著提升代码质量
 14. Theme: Cyan Light Theme
 15. ,
+
+## 代码模板
+
+Settings --> Live Templates
+
+导出: 在菜单栏选择 `File` | `Manage IDE Settings` | `Export Settings`
+
+导入：在菜单栏选择 `File` | `Manage IDE Settings` | `Import Settings`

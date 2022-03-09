@@ -1,6 +1,10 @@
 ## 常规操作
 
 ```mysql
+net stop mysql
+
+net start mysql
+
 help select
 
 show databases;
