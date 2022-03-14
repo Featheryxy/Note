@@ -4,8 +4,6 @@
 
 JUL: Java Util Logging是Java原生的日志框架，不用引入第三方jar包
 
-
-
 ```
 Application --> Logger --> Handler --> Formatter
 
