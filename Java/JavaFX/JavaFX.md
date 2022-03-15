@@ -1,6 +1,6 @@
 javafxc.exe 编译JavaFX Script
 
-
+javafx在jdk8,jdk9,jdk10中，但是在jdk11中移除，作为一个新的开源项目在维护
 
 ### 物理抽象
 
