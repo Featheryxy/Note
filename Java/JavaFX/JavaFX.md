@@ -14,6 +14,10 @@ Screen: 银幕
 
 ### 软件抽象
 
+Application：应用
+
+> 
+
 Stage: 舞台，窗口
 
 > the area in a theatre that is often raised above ground level and on which actors or entertainers perform
