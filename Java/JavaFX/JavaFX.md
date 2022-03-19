@@ -32,11 +32,38 @@ Node: 交点
 
 
 
+
+
 ### 操作
 
-点击按钮是生成新的组件
+$$
+属性绑定 \subset 事件监听器 \\
+User Action = {Source Object }
+$$
 
-监听: 数量发生变化时...
+```java
+// 属性绑定
+circle.centerXProperty().bind(scene.widthProperty().divide(2));
+circle.centerYProperty().bind(scene.heightProperty().divide(2));
+
+// 事件监听器
+circle.centerXProperty().addListener(new ChangeListener<Number>() {
+    @Override
+    public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+        System.out.println(String.format("old x: %s, new x %s", oldValue, newValue));
+    }
+});
+
+// 为控件添加事件c（）
+menu1.setOnAction(new EventHandler<ActionEvent>() {
+    @Override
+    public void handle(ActionEvent event) {
+        System.out.println("menu1.setOnAction");
+    }
+});
+```
+
+
 
 
 
