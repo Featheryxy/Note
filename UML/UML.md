@@ -1,4 +1,12 @@
+### 概述
+
+https://www.omg.org/uml/
+
 UML（Unified Modeling Language，统⼀建模语⾔）
+
+箭头方向：知道对方的信息时才能指向对方，
+
+子类继承，扩展了父类，子类指向父类
 
 继承: 这些对象共享⼀些相似的特征，并显出⾃⼰的特性；
 
@@ -81,6 +89,23 @@ Aggregation：是整体和部分的关系，has-a。
 
 只能从语义上区分
 
+空心菱形
+
+```java
+// Address，它是在Person之外创建的，所以即使Person被回收了，Address也不一定马上也会回收
+public class Address{
+    
+}
+public class Person{
+    private Address address;
+    public Person(Address address){
+		this.address = address;
+    }
+}
+```
+
+
+
 ### 组合关系
 
 Compostion：是整体和部分的关系，contains-a。
@@ -88,6 +113,21 @@ Compostion：是整体和部分的关系，contains-a。
 整体对象可以控制部分对象的生命周期，一旦整体对象不存在，部分对象也就不存在
 
 > 如，头和嘴巴的关系
+
+实心菱形
+
+```java
+// Engine的生命周期是与Car一致的
+public class Engine{
+    
+}
+
+public class Car{
+    Engine e = new Engine();
+}
+```
+
+
 
 ### 泛化关系
 

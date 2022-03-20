@@ -2,43 +2,11 @@
 
 UML：https://www.omg.org/uml/
 
-箭头方向：知道对方的信息时才能指向对方，
-
-子类继承，扩展了父类，子类指向父类
-
-
-
-```java
-// composition 组合 实心菱形 part of, 关系更强
-// Engine的生命周期是与Car一致的
-public class Engine{
-    
-}
-
-public class Car{
-    Engine e = new Engine();
-}
-
-// aggregation 聚合 空心菱形 has a 关系一般
-// Address，它是在Person之外创建的，所以即使Person被回收了，Address也不一定马上也会回收
-public class Address{
-    
-}
-public class Person{
-    private Address address;
-    public Person(Address address){
-		this.address = address;
-    }
-}
-```
-
-
-
-
-
 
 
 ## Iterator--一个一个遍历
+
+![image-20220320211607972](E:\GitHubNote\Note\GOF\GOF.assets\image-20220320211607972.png)
 
 ### 角色
 
