@@ -40,8 +40,6 @@ public class Person{
 
 ## Iterator--一个一个遍历
 
-### 
-
 ### 角色
 
 - Iterator(迭代器)：负责定义按顺序逐个遍历元素的接口（API）
