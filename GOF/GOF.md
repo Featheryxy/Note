@@ -57,7 +57,10 @@ public interface Print {
     public abstract void printStrong();
 }
 
-    super(string);
+public class PrintBanner extends Banner implements Print {}
+    
+	public PrintBanner(String string){
+		super(string);
     }
 
     @Override
@@ -101,9 +104,11 @@ Adapter: 适配者
 
 ![image-20211107144617050](GOF.assets/image-20211107144617050.png)
 
-## Template--将具体处理交给子类
+## Template Method--将具体处理交给子类
 
-Template Method: 在父类中定义处理流程的框架，在子类中实现具体处理
+Template Method: 在**父类**中定义**处理流程**的框架（算法），在**子类中实现具体处理**
+
+通过final修饰父类的流程方法，防止子类修改父类的处理流程
 
 ### 角色
 
@@ -113,34 +118,42 @@ ConcreateClass(具体类)
 
 ### 类的层次与抽象类
 
-站在之类的角度
+站在子类的角度
 
-- 在之类中可以使用父类中定义的方法
+- 在子类中可以使用父类中定义的方法
 - 可以通过在子类中增加方法以实现新的功能
-- 在之类中重写父类的方法可以改变程序的行为
+- 在子类中重写父类的方法可以改变程序的行为
 
 站在父类的角度，在父类中声明抽象方法
 
 - 期待子类去实现抽象方法
-- 要求之类去实现抽象方法
+- 要求子类去实现抽象方法
 
 ## Factory Method--将实例的生成交给子类
 
-用Template Method来构建生成实例的工厂
+用Template Method来构建生成实例的工厂，父类决定实例的生成方式，子类负责生成实例
 
 ![image-20211114194600240](GOF.assets/image-20211114194600240.png)
 
-### 生成实例
+### 角色
+
+- ConcreteProduct: 具体的产品
+- ConcreteCreator: 具体的创建者
+- Product: 产品
+- Creator: 创建者，不用new 关键字来生成实例，而是调用生成实例的专用方法来生成实例，防止父类与其他具体类耦合
+
+### Creator生成实例的方法
 
 - 指定抽象方法
 
   ```java
   abstract class Factory{
   	public abstract Product createProduct(String name);
+      ...
   }
   ```
 
-- 为其实现默认处理
+- 为其实现默认处理，不推荐
 
   ```java
   class Factory{
@@ -153,6 +166,8 @@ ConcreateClass(具体类)
 
 - 在其中抛出异常
 
+  如果未在子类总实现该方法，报错
+  
   ```java
   class Factory{
   	public  Product createProduct(String name){
@@ -195,13 +210,13 @@ public class Main {
 }
 ```
 
-1. 定义static修饰的成员变量singleton，并将其初始化为Singleton类的实例。初始化行为仅在类被加载的时候进行一次
+1. 定义**static**修饰的成员变量singleton，并将其初始化为Singleton类的实例。初始化行为仅在**类被加载**的时候进行一次
 2. Singleton类的构造函数为private，禁止从Singleton类外部调用构造函数
 
-<<<<<<< HEAD
+
 ## Prototype--通过复制生成实例
 
-通常我们使用new关键字指定类名来生成实列，但是也有不指定类名来生成实列。如下述情况
+通常我们使用new关键字指定类名来生成实列，但是也有**不指定类名来生成实列**。如下述情况
 
 1. 对象种类繁多，无法将它们整合到一个类中
 
@@ -372,11 +387,20 @@ public class Main {
 
 **类的层次结构的两个作用**
 
-1. 希望**增加新功能**
+1. 希望**增加新功能**，功能层次结构，子类扩展父类
    - 父类具有基本功能
    - 在子类中增加新的功能
-2. 希望**增加新的实现**时
-   - 父类通过声明抽象方法来定义接口
+   
+2. 希望**增加新的实现**时，实现层次结构，子类实现父类
+   
+   如Template method
+   
+   - 父类通过声明**抽象方法**来定义接口（定义流程顺序）
    - 子类通过实现具体方法来实现接口
+   
 3. 类的层次接口的混杂与分离
+
+   将类的**功能层次结构**与实现层次结构分离, 使用Bridge进行连结
+
+## Strategy--整体地替换算法
 
