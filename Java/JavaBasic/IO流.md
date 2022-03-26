@@ -56,20 +56,7 @@ public boolean delete()：删除文件或者文件夹
 
 ```java
 public class FileTest {
-    /*
-    1.如何创建File类的实例
-        File(String filePath)
-        File(String parentPath,String childPath)
-        File(File parentFile,String childPath)
 
-    2.
-    相对路径：相较于某个路径下，指明的路径。
-    绝对路径：包含盘符在内的文件或文件目录的路径
-
-    3.路径分隔符
-     windows:\\
-     unix:/
-     */
     @Test
     public void test1(){
         //构造器1
@@ -353,7 +340,7 @@ Writer          FileWriter (write(char[] cbuf,0,len)           BufferedWriter (w
 
 ### 3.2 read(char[] cbuf)
 
-- read(char[] cbuf): 将字符写入cbuf中，返回每次读入cbuf数组中的字符的个数。如果达到文件末尾，返回-1**
+- read(char[] cbuf): 将字符写入cbuf中，返回每次读入cbuf数组中的字符的个数。如果达到文件末尾，返回-1
 
 ```java
     public void testFileReader1()  {
@@ -574,4 +561,47 @@ public void copyFileWithBuffered(String srcPath,String destPath){
 ## 9 对象流
 
 ## 10 随机存取文件流
+
+
+
+### 小结
+
+```java
+package test;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class IOTest {
+    public static void main(String[] args) throws IOException {
+        File file = new File("F:\\JavaWorkSpace\\src\\test\\iotest.txt");
+
+        FileReader fileReader = new FileReader(file);
+
+//        int data = fileReader.read();
+//        while (data != -1) {
+//            System.out.print((char) data);
+//            data = fileReader.read();
+//        }
+
+//        fileReader.read(cbuf) // 每次会覆盖cbuf中的数据
+        char[] cbuf = new char[5];
+        int len;
+        while ((len = fileReader.read(cbuf)) != -1) {
+            // error
+//            System.out.println(String.format("字符组cbuf长度 %s", len));
+//            for (int i = 0; i < cbuf.length; i++) {
+//                System.out.print(cbuf[i]);
+//            }
+//            System.out.println();
+
+            for (int i = 0; i < len; i++) {
+                System.out.print(cbuf[i]);
+            }
+        }
+    }
+}
+
+```
 
