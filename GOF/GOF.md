@@ -404,3 +404,8 @@ public class Main {
 
 ## Strategy--整体地替换算法
 
+## Composite
+
+容器与内容的一致性
+
+目录条目=文件+文件夹

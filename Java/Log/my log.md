@@ -124,8 +124,6 @@ Maven依赖
 
 ```
 
-
-
 ### Level
 
 OFF 	为最高等级 关闭了日志信息 最大整数
@@ -165,19 +163,20 @@ ALL 	为最低等级，将打开所有级别的日志
 - HTMLLayout：格式化日志输出为HTML表格形式
 
 ```c
-    %m 输出代码中指定的日志信息
-    %p 输出优先级，及 DEBUG、INFO 等
+    %m message 输出代码中指定的日志信息
+    %p priority 输出优先级，及 DEBUG、INFO 等
     %n 换行符（Windows平台的换行符为 "\n"，Unix 平台为 "\n"）
-    %r 输出自应用启动到输出该 log 信息耗费的毫秒数
-    %c 输出打印语句所属的类的全名
+    %c class 输出打印语句所属的类的全名
     %t 输出产生该日志的线程全名
     %d 输出服务器当前时间，默认为 ISO8601，也可以指定格式，如：%d{yyyy年MM月dd日HH:mm:ss}
     %l 输出日志时间发生的位置，包括类名、线程、及在代码中的行数。如：Test.main(Test.java:10)
+        
     %F 输出日志消息产生时所在的文件名称
     %L 输出代码中的行号
+     %r 输出自应用启动到输出该 log 信息耗费的毫秒数
     %% 输出一个 "%" 字符
 * 可以在 % 与字符之间加上修饰符来控制最小宽度、最大宽度和文本的对其方式。如：
-    %5c 输出category名称，最小宽度是5，category<5，默认的情况下右对齐
+    %5c 输出类的全名，最小宽度是5，若名称不足长度< 5，左补空格，category<5，默认的情况下右对齐
     %-5c 输出category名称，最小宽度是5，category<5，"-"号指定左对齐,会有空格
     %.5c 输出category名称，最大宽度是5，category>5，就会将左边多出的字符截掉，<5不会有空格
     %20.30c category名称<20补空格，并且右对齐，>30字符，就从左边交远销出的字符截掉
@@ -212,8 +211,6 @@ ALL 	为最低等级，将打开所有级别的日志
     <version>2.10.0</version>
 </dependency>
 ```
-
-
 
 ### log4j2配置文件
 
@@ -256,8 +253,7 @@ log4j2默认加载classpath下的 log4j2.xml 文件中的配置
         <RollingFile name="RollingFileInfo" fileName="${fileNamePrefix}/${appName}_info.log"
                      filePattern="${filePatternPrefix}/info/${appName}_info-%d{yyyy-MM-dd}-%i.log.gz">
             <!--ThresholdFilter :日志输出过滤-->
-            <!--level="info" :日志级别,onMatch="ACCEPT" :级别在info之上则接受,
-				onMismatch="DENY" :级别在info之下则拒绝-->
+            <!--level="info" :日志级别,onMatch="ACCEPT" :级别在info之上则接受,onMismatch="DENY" :级别在info之下则拒绝-->
             <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout pattern="${patternLayout}"/>
             <!-- Policies :日志滚动策略-->
@@ -266,7 +262,7 @@ log4j2默认加载classpath下的 log4j2.xml 文件中的配置
                 interval="2"：这个参数的含义由filePattern决定，当filePattern中的时间格式为{yyyy-MM-dd}时，代表以2天为间隔；
                               当filePattern中的时间格式为{yyyy-MM-dd HH:mm}时，代表以2分钟为间隔
                 modulate="true": boolean型，说明是否对封存时间进行调制。
-                               -->
+                -->
                 <TimeBasedTriggeringPolicy interval="2" modulate="true"/>
                 <!-- SizeBasedTriggeringPolicy :文件大小滚动策略，大于这个阈值时，会将当前日志文件备份存档 -->
                 <SizeBasedTriggeringPolicy size="300 MB"/>

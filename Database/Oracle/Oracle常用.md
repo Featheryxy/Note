@@ -83,6 +83,14 @@ exp root/password@remote_address:1521/ora11g file='E:\db.dmp';
 imp root/password@127.0.0.1:1521/orcl file='E:\Desktop\dump\db.dmp' ignore=y full=y;
 ```
 
+### 修改表中元组中的片段
+
+```sql
+select '11111' from dual ; 
+
+select substr('12345', 1, 2) ||0||substr('12345', 4) from dual;
+```
+
 ### 引号
 
 #### 一、单引号
@@ -195,5 +203,5 @@ select * from V$NLS_PARAMETERS
 -- 设置本地环境变量 NLS_LANG，变量值为 AMERICAN_AMERICA.ZHS16GBK
 ```
 
-
+### 
 
