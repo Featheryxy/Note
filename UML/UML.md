@@ -61,9 +61,27 @@ UML（Unified Modeling Language，统⼀建模语⾔）
 
 依赖关系--> 关联关系 --> 聚合关系-->组合关系-->泛化关系-->实现关系
 
+依赖关系：在类A的**方法中**（方法参数，局部变量）使用类B
+
+关联关系：在类A的**成员变量**中定义类B
+
+
+
+
+
 ### 依赖关系
 
 Dependency: 在**类A的方法中（方法参数，局部变量）使用类B**，类B的生命周期随着类A方法的执行结束而结束
+
+```java
+public class Person {
+    public void eat(Mouse mouse) {
+        mouse.
+    }
+}
+```
+
+
 
 ### 关联关系
 
@@ -89,7 +107,7 @@ Aggregation：是整体和部分的关系，has-a。
 
 只能从语义上区分
 
-空心菱形
+**空心菱形**
 
 ```java
 // Address，它是在Person之外创建的，所以即使Person被回收了，Address也不一定马上也会回收
@@ -104,8 +122,6 @@ public class Person{
 }
 ```
 
-
-
 ### 组合关系
 
 Compostion：是整体和部分的关系，contains-a。
@@ -114,7 +130,7 @@ Compostion：是整体和部分的关系，contains-a。
 
 > 如，头和嘴巴的关系
 
-实心菱形
+**实心菱形**
 
 ```java
 // Engine的生命周期是与Car一致的
@@ -126,8 +142,6 @@ public class Car{
     Engine e = new Engine();
 }
 ```
-
-
 
 ### 泛化关系
 
