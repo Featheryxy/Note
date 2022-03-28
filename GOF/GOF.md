@@ -414,3 +414,28 @@ public class Main {
 
 
 
+## Chain of Responsibility -- 推卸责任
+
+当服务接收一个请求时，服务暂时无法决定由哪个对象来处理请求。可以将多个对象组成一条职责链，然后按照它们在职责链上的顺序来选择处理请求。
+
+让每个请求处理器只专注处理自己能解决的问题
+
+在对象中聚合相同类产生的不同对象
+
+```java
+public abstract class Support {
+    private String name; // 处理器名称
+    private Support next; // 保存下一个处理器，聚合
+
+    public Support(String name) {
+        this.name = name;
+    }
+    ...
+}
+```
+
+
+
+## Facade -- 简单窗口
+
+Facade ： 建筑物的正面
