@@ -438,4 +438,22 @@ public abstract class Support {
 
 ## Facade -- 简单窗口
 
-Facade ： 建筑物的正面
+Facade ： 建筑物的正面。将**互相关联在一起的错综复杂的类整理出高层接口**（API）
+
+Facade角色本身并没有任何实际的属性，只是利用其他类来完成一个业务
+
+```java
+// 一个工具类的写法，如果一个类没有属性，可以为其声明一个私有构造器
+public class WindowFacade {
+    private WindowFacade() {   // 防止外部new出WindowFacade的实例，所以声明为private方法
+    }
+    // 使用 static修饰
+    public static void makeSuccessWindow(...) {
+		// 调用其他类完成业务
+    }
+}
+```
+
+## Mediator -- 只有一个仲裁者
+
+为什么要在同事中聚合仲裁者？

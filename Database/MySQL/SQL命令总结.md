@@ -40,7 +40,9 @@ where 子句
 group by 列名
 having 条件
 order by 列名1, 列名2, ... [ASC|DESC] -- 默认为ASC
+
 limit [offset], row_count, # offset default=0, 行索引从0开始
+取第二高价格 order by price limit 1, 1 
 
 /*
 select distinct name, sex from tb_students; -- 如果姓名相同、性别不同是不会去重的
