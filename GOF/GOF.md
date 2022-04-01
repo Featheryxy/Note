@@ -425,10 +425,11 @@ public class Main {
 ```java
 public abstract class Support {
     private String name; // 处理器名称
-    private Support next; // 保存下一个处理器，聚合
+    private Support next; // 保存下一个处理器，聚合相同类型的对象
 
-    public Support(String name) {
-        this.name = name;
+    public Support setNext(Support next) {
+        this.next = next;
+        return next;
     }
     ...
 }
@@ -456,4 +457,55 @@ public class WindowFacade {
 
 ## Mediator -- 只有一个仲裁者
 
-为什么要在同事中聚合仲裁者？
+
+
+## Observe -- 发送状态变化通知
+
+也称为Publish-Subscriber模式
+
+当观察对象（Subject）发生改变时回通知观察者(Observer)，**Subject中聚合Observer**
+
+- 利用抽象类和接口从具体类中抽出抽象方法
+- 在将实例作为参数传递至类中，或者在类的字段中保存实例时，不适用具体类型
+
+```java
+package ind.milo.gof.observer;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public abstract class NumberGenerator {
+    // 有序链表，通知时按照观察者的通知顺序来通知观察者
+    private ArrayList<Observer> observers = new ArrayList();
+
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    public void notifyObservers() {
+        Iterator iterator = observers.iterator();
+        while (iterator.hasNext()) {
+            Observer observer = (Observer) iterator.next();
+            // 将当前对象（类的实例对象）作为参数，通知观察者，
+            observer.update(this);
+            
+            // 可以只通知其他信息
+            // observer.update(int number);
+        }
+    }
+
+    // 子类中实现该方法，并且在该方法中 调用 notifyObservers();
+    public abstract void execute();
+    
+    // 定义子类的属性 number
+	public abstract int getNumber();
+}
+
+```
+
+
+
+### ![image-20220331213517389](E:\GitHubNote\Note\GOF\GOF.assets\image-20220331213517389.png)
+
+## Memento -- 保存对象状态
+

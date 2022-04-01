@@ -490,3 +490,90 @@ mvn dependency:tree -Dincludes=:fastjson
 
 Maven在加载jar包时，如果该目录下有.lastupdate文件，会加载失败，即不加载该jar包
 
+https://blog.csdn.net/xl890727/article/details/53942452
+
+Maven错误：was cached in the local repository, resolution will not be reattempted until the update
+
+
+
+将本地Maven仓库中已下载的相关依赖Jar删掉，从新build update工程即可.!
+
+
+
+```
+configure your Maven clients’ settings.xml file with the following value: <updatePolicy>always</updatePolicy>
+```
+
+
+
+### 将所有依赖打成一个jar包
+
+```xml
+<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>cn.xx.Aes.xxEncode</mainClass>
+						</manifest>
+						<manifestEntries>
+							<Class-Path>.</Class-Path>
+						</manifestEntries>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+————————————————
+版权声明：本文为CSDN博主「漫天雪_昆仑巅」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/vtopqx/article/details/80321685
+```
+
+### 本地jar包依赖
+
+```xml
+<dependency>
+    	<groupId>xxxx</groupId>
+    	<artifactId>xxxxxx</artifactId>
+    	<version>1.0.0.1-SNAPSHOT</version>
+    	<scope>system</scope>
+    	<systemPath>E:/Eclipse_WorkPlace/isp/lib/xxxxr-1.0.0.1-SNAPSHOT.jar</systemPath>
+</dependency>
+————————————————
+版权声明：本文为CSDN博主「漫天雪_昆仑巅」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/vtopqx/article/details/72795762
+```
+
