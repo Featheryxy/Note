@@ -509,3 +509,157 @@ public abstract class NumberGenerator {
 
 ## Memento -- 保存对象状态
 
+
+
+角色：
+
+- Originator (生成者)：
+
+  1. Originator 角色会在保存自己的最新状态时生成Memento角色。
+  2. 使用Memento来恢复至生成该Memento角色时的状态
+
+- Memento (纪念品)：保存了Originator 角色的内部信息
+
+  > 是否向外部公开信息：
+  >
+  > 宽接口：暴露所有信息，使用public 修饰
+  >
+  > 窄接口：
+
+- Caretaker （负责人）：当Caretaker 角色想要保存当前的Originator 角色的状态时，会通知Originator 角色。撤销时同理。负责保存 Memento 角色
+
+  
+
+![image-20220402225420603](E:\GitHubNote\Note\GOF\GOF.assets\image-20220402225420603.png)
+
+
+
+ ```java
+ /**
+   * 保存Gamer的用户状态
+   */
+ public class Memento {
+     int money;
+     ArrayList fruits;
+ 
+     Memento(int money, ArrayList fruits) {
+         this.money = money;
+         this.fruits = fruits;
+     }
+     ...
+ }    
+  
+ /**
+   * 
+   */
+ public class Gamer {
+     private int money;
+     private ArrayList fruits = new ArrayList();
+ 
+     private Random random = new Random();
+     private static String[] fruitsname = {
+             "苹果", "葡萄", "香蕉", "橘子"
+     };
+ 
+     // 拍摄快照
+     public Memento createMemento() {
+         Memento memento = new Memento(money, fruits);
+         return memento;
+     }
+ 
+     // 撤销
+     public void restoreMemento(Memento memento) {
+         this.money = memento.money;
+         this.fruits = memento.getFruits();
+     }
+ 	...
+ }
+ 
+ /**
+ * 负责何时拍摄快照和恢复
+ */
+ public class Main {
+     public static void main(String[] args) {
+         Gamer gamer = new Gamer(100);
+         Memento memento = gamer.createMemento();
+ 
+         if(){
+         	memento = gamer.createMemento();
+         }
+         if(){
+         	gamer.restoreMemento(memento);
+         }
+     }
+ }
+ 
+ ```
+
+## State -- 用类表示状态
+
+角色：
+
+- State(状态)：State角色表示状态，定义了根据不同状态进行不同处理的接口（API）,该API是那些处理内容依赖于状态的方法的集合
+- ConcreteState(具体的状态)：表示各个具体的状态，实现了State接口
+- Context：表示当前状态的ConcreteState角色。定义了供外部调用者使用State模式的接口
+
+![image-20220403100120514](GOF.assets/image-20220403100120514.png)
+
+![image-20220403095133644](GOF.assets/image-20220403095133644.png)
+
+
+
+## Flyweight -- 共享对象，避免浪费
+
+通过尽量共享实例来避免创造实例
+
+角色：
+
+- Flyweight (轻量级)：表示要共享的实例
+- FlyweightFactory：用户生成并保存Flyweight，
+- Client: Client 使用FlyweightFactory 生成 Flyweight 
+
+
+
+注：
+
+1. 如果修改了一个共享对象，所有使用该共享对象的地方都会受到影响
+2. 不要让共享对象被垃圾回收期回收了
+3. 减少了内存的占用和通过new关键字创建实例所花费的时间
+
+
+
+```java
+// Flyweight 
+public class BigChar {
+    private char charname;
+    private String fontdate;
+    ...
+}
+
+public class BigCharFactory {
+    //用于保存已经生成的BigChar实例
+    private HashMap<String, BigChar> pool = new HashMap();
+    
+    // 单例模式
+    private static BigCharFactory singleton = new BigCharFactory();
+
+    private BigCharFactory() {
+
+    }
+   
+     // 生成（共享）BigChar类的实例
+    public synchronized BigChar getBigChar(char charName) {
+        BigChar bigChar = (BigChar) pool.get("" + charName);
+        if (bigChar == null) {
+            bigChar = new BigChar(charName);
+            pool.put("" + charName, bigChar);
+        }
+        return bigChar;
+    }
+}
+
+
+```
+
+## Proxy -- 只在必要时生成实例
+
