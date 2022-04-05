@@ -1,23 +1,34 @@
 # 设计模式
 
+设计模式的作用就是帮助我们编写可复用的类
+
+不要只使用具体类来编程，优先使用抽象类和接口来编程，从而弱化类之间的耦合，进而使得类更加容易作为组件而被再次使用
+
 UML：https://www.omg.org/uml/
 
+## 1 Iterator -- 一个一个遍历
 
+用于在数据集合中按照顺序遍历集合
 
-## Iterator--一个一个遍历
+1. 迭代器需要迭代集合中的元素，所以要聚合要迭代的集合
+2. 迭代器可以拥有多个（向前迭代等）
+3. 不需要 deleteIterator
 
-![image-20220320211607972](E:\GitHubNote\Note\GOF\GOF.assets\image-20220320211607972.png)
-
-### 角色
+### 1.1 角色
 
 - Iterator(迭代器)：负责定义按顺序逐个遍历元素的接口（API）
 - Concretelterator(迭代器的实现类)
-- Aggregate(集合)
-- ConcreateAggregate
+- Aggregate(集合)：表示拥有迭代器的集合
+- ConcreateAggregate：具体的迭代器实现
 
 ![image-20211114010753060](GOF.assets/image-20211114010753060.png)
 
-## Adapter--代码复用
+### 1.2 相关设计模式
+
+- Visitor：在元素遍历时进行处理
+- Factory Method：在生成Iterator的实例时可能会使用Factory Method
+
+## 2 Adapter -- 代码复用
 
 Adapter模式会对现有的类进行适配，生成新的类，也成为Wrapper模式
 
@@ -663,3 +674,36 @@ public class BigCharFactory {
 
 ## Proxy -- 只在必要时生成实例
 
+只在需要使用某个功能时才将其初始化，
+
+在现实生活中，应当是本人将事情委托给代理人负责，而在设计模式中则是反过来的
+
+角色：
+
+- Client 请求中：使用Proxy模式的角色
+
+- Subject 主题：Subject角色定义了使Proxy角色和RealSubject角色之间具有一致性的接口，所以Client角色不必在意它使用的究竟时Proxy还是RealSubject
+
+- Proxy 代理人：proxy角色会尽量处理来自Client角色的请求。只有当自己不能处理时，才会将工作交给RealSubject角色。
+- RealSubject 实际的主体：实现与Proxy相同的接口Subject, 只有在Proxy无法胜任工作时出场
+
+![image-20220403231225303](GOF.assets/image-20220403231225303.png)
+
+## Command -- 命令也是类
+
+
+
+角色：
+
+- Command 命令：负责定义命令的接口
+- ConcreteCommand ：Command 接口的实现类
+- Receiver 命令接收者：是Command角色执行命令时的对象
+
+- Client 请求者：负责生成 ConcreteCommand  角色并分配 Receiver 
+- Invoker 发动者：开始执行命令的角色，调用在Command 角色中定义的接口
+
+![image-20220404153751745](GOF.assets/image-20220404153751745.png)
+
+## Interpreter -- 语法规则也是类
+
+EBNF ( Extended Backus–Naur Form 巴科斯范式)：描述语法的一种形式体系，是一种典型的元语言
