@@ -1,8 +1,18 @@
 # 设计模式
 
-设计模式的作用就是帮助我们编写可复用的类
+设计模式的作用就是帮助我们**编写可复用的类，减少代码的书写量**
 
-不要只使用具体类来编程，优先使用抽象类和接口来编程，从而弱化类之间的耦合，进而使得类更加容易作为组件而被再次使用
+不要只使用具体类来编程，**优先使用抽象类和接口来编程**，从而弱化类之间的耦合，进而使得类更加容易作为组件而被再次使用
+
+通过**定义接口来表明我只使用接口中的方法**，但是可以通过强制类型转换来使用实现类中的方法
+
+```java
+List list = new ArrayList();
+
+((ArrayList)list).MethodOnlyInArrayList
+```
+
+继承与委托，前者使用父类方法，后者将其他类进行聚合
 
 UML：https://www.omg.org/uml/
 
@@ -10,7 +20,7 @@ UML：https://www.omg.org/uml/
 
 用于在数据集合中按照顺序遍历集合
 
-1. 迭代器需要迭代集合中的元素，所以要聚合要迭代的集合
+1. **迭代器**需要迭代集合中的元素，所以**要聚合要迭代的集合**
 2. 迭代器可以拥有多个（向前迭代等）
 3. 不需要 deleteIterator
 
@@ -28,50 +38,54 @@ UML：https://www.omg.org/uml/
 - Visitor：在元素遍历时进行处理
 - Factory Method：在生成Iterator的实例时可能会使用Factory Method
 
+
+
+
+
 ## 2 Adapter -- 代码复用
 
 Adapter模式会对现有的类进行适配，生成新的类，也成为Wrapper模式
 
-> 不修改已有的代码，扩展功能
+1. 不修改已有的代码，扩展功能
+2. 通过现有的方法（充分测试过的方法）构造自己的方法群，减少通过自己写新的方法而产生新的的Bug
 
 Adapter模式有以下两种
 
 - 类适配器模式（使用继承的适配器）
+
+  ```java
+   public Adatper extends Adaptee implements Target
+  ```
+
 - 对象适配器模式（使用委托的适配器）
 
-### 类适配器模式
+  ```java
+   public Adatper {
+       private Adaptee adaptee
+   }
+  ```
 
-![image-20211107140623776](GOF.assets/image-20211107140623776.png)
+  
 
-PrintBanner 为适配器，使Banner能够适用于Print
+### 2.1 角色
+
+Target: 目标，所要实现的功能 Print
+
+Clinet: 请求者 Main
+
+Adaptee：被适配者 
+
+Adapter: 适配者
+
+![image-20211107144617050](GOF.assets/image-20211107144617050.png)
+
+### 2.2 Core Code
 
 ```java
-public class Banner {
-    private String string;
-
-    public Banner(String string){
-        this.string = string;
-    }
-
-    public void showWithParen(){
-        System.out.println("("+string+")");
-    }
-
-    public void showWithAster(){
-        System.out.println("*"+string+"*");
-    }
-}
-
-public interface Print {
-    public abstract void printWeak();
-
-    public abstract void printStrong();
-}
-
-public class PrintBanner extends Banner implements Print {}
-    
-	public PrintBanner(String string){
-		super(string);
+// 继承
+public class PrintBanner extends Banner implements Print{
+    public PrintBanner(String string){
+        super(string);
     }
 
     @Override
@@ -86,48 +100,69 @@ public class PrintBanner extends Banner implements Print {}
 }
 
 
-public class Main {
-    public static void main(String[] args) {
-        Print p = new PrintBanner("Hello");
-        p.printWeak();
-        p.printStrong();
-        // (Hello)
-		// *Hello*
+// 委托
+public class PrintBanner extends Print{
+    private Banner banner;
+
+    public PrintBanner(String string){
+        this.banner = new Banner(string);
+    }
+
+    @Override
+    public void printWeak() {
+        banner.showWithParen();
+    }
+
+    @Override
+    public void printStrong() {
+        banner.showWithAster();
     }
 }
 ```
 
-### 对象适配器模式
+### 2.3 相关设计模式
 
-```java
+- Bridge: Adapter 用于连接接口（API）不同的类，而Bridge模式用于连接类的功能层次结构于实现层次结构
+- Decorator: Adapter 用于填补不同接口API之间的缝隙，而Decorator则是在不改变接口API的前提下增加功能
 
-```
-
-### 角色
-
-Target: 目标，所要实现的功能 Print
-
-Clinet: 请求者 Main
-
-Adaptee：被适配者 Banner
-
-Adapter: 适配者
-
-![image-20211107144617050](GOF.assets/image-20211107144617050.png)
-
-## Template Method--将具体处理交给子类
+## 3 Template Method -- 将具体处理交给子类
 
 Template Method: 在**父类**中定义**处理流程**的框架（算法），在**子类中实现具体处理**
 
+只能使用抽象类，不能使用接口，接口中无法实现方法
+
 通过final修饰父类的流程方法，防止子类修改父类的处理流程
 
-### 角色
+### 3.1 角色
 
-AbstractClass(抽象类)
+- AbstractClass(抽象类):：负责实现模板方法，负责声明在模板方法中所使用到的抽象方法，这些抽象方法由子类ConcreateClass实现
+- ConcreateClass(具体类)：负责实现父类AbstractClass中定义的抽象方法
 
-ConcreateClass(具体类)
+![image-20220406213401264](GOF.assets/image-20220406213401264.png)
 
-### 类的层次与抽象类
+### 3.2 Core Code
+
+```java
+public abstract class AbstractDisplay {
+    public abstract void open();
+    public abstract void print();
+    public abstract void close();
+    public final void display(){
+        open();
+        for (int i=0; i<5; i++){
+            print();
+        }
+        close();
+    }
+}
+```
+
+### 3.3 相关设计模式
+
+- Factory Method：将Template Method模式用于生成实例
+- Strategy：在Template Method中，可以使用继承改变程序的行为，而Strategy使用委托改变程序的行为，前者改变部分程序，而后者用于替换整个算法
+
+### 3.4 类的层次与抽象类
 
 站在子类的角度
 
@@ -140,11 +175,11 @@ ConcreateClass(具体类)
 - 期待子类去实现抽象方法
 - 要求子类去实现抽象方法
 
-## Factory Method--将实例的生成交给子类
+## 4 Factory Method -- 将实例的生成交给子类
 
 用Template Method来构建生成实例的工厂，父类决定实例的生成方式，子类负责生成实例
 
-![image-20211114194600240](GOF.assets/image-20211114194600240.png)
+
 
 ### 角色
 
@@ -152,6 +187,8 @@ ConcreateClass(具体类)
 - ConcreteCreator: 具体的创建者
 - Product: 产品
 - Creator: 创建者，不用new 关键字来生成实例，而是调用生成实例的专用方法来生成实例，防止父类与其他具体类耦合
+
+![image-20211114194600240](GOF.assets/image-20211114194600240.png)
 
 ### Creator生成实例的方法
 
