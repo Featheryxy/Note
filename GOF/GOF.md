@@ -12,7 +12,7 @@ List list = new ArrayList();
 ((ArrayList)list).MethodOnlyInArrayList
 ```
 
-继承与委托，前者使用父类方法，后者将其他类进行聚合
+优先使用委托，增加耦合性，继承与委托，前者使用父类方法，后者将其他类进行聚合,
 
 构造函数不能被继承，只能使用super()
 
@@ -576,9 +576,11 @@ public class Main {
   - 在Builder中，Director角色通过聚合Builder角色中的复制方法向外部提供可以简单生成实例的接口
   - Facade：通过组合内部模块向外部提供可以简单调用的结构
 
-## Abstract Factory--将关联零件组成产品
+## 8 Abstract Factory -- 将关联零件组成产品
 
 **抽象工厂**的工作就是将**抽象零件**组装成**抽象产品**，我们不关心零件的具体实现，而是只关心接口（API）
+
+### 8.1 角色
 
 - AbstractProduct(抽象产品)
 
@@ -592,24 +594,134 @@ public class Main {
 
 - ConcreteFactory
 
-## Bridge--将类的功能层次结构与实现层次结构分离
+![image-20220409145427989](GOF.assets/image-20220409145427989.png)
+
+### 8.3 相关的设计模式
+
+- Builder模式：
+  - Abstract Factory 模式通过调用抽象产品的接口来组装抽象产品，
+  - Builder 模式则是分阶段地制定复杂实例
+- Factory Method：Abstract Factory 模式中零件和产品的生成会使用到Factory method
+- Composite：Abstract Factory 在制作产品时会使用Composite
+- Singleton：Abstract Factory的具体工厂会使用 Singleton模式
+
+### 8.4 生成实例的方法
+
+1. new
+2. clone
+3. newInstance `Class.forName(classname).newInstance()`
+
+## 9 Bridge -- 将类的功能层次结构与实现层次结构分离
+
+将类的功能层次结构与实现层次结构分离，可用于分离核心功能与衍生功能（使用核心功能），在衍生功能类中聚合核心功能类
 
 **类的层次结构的两个作用**
 
-1. 希望**增加新功能**，功能层次结构，子类扩展父类
+1. 希望**增加新功能**，功能层次结构，**子类扩展父类**
    - 父类具有基本功能
    - 在子类中增加新的功能
    
-2. 希望**增加新的实现**时，实现层次结构，子类实现父类
+2. 希望**增加新的实现**时，实现层次结构，**子类实现父类**
    
-   如Template method
+   如 Template method
    
    - 父类通过声明**抽象方法**来定义接口（定义流程顺序）
    - 子类通过实现具体方法来实现接口
    
-3. 类的层次接口的混杂与分离
+3. 类的**层次接口的混杂与分离**
 
    将类的**功能层次结构**与实现层次结构分离, 使用Bridge进行连结
+
+### 9.1 角色
+
+- Abstraction：类功能层次结构的最上层，聚合Implementor，保存其实例，使用其功能
+- RefinedAbstraction：在Abstraction角色上增加新的功能
+- Implementor 实现者：类的实现层次结构的最上层，定义了用于实现 Abstraction 角色的接口
+- ConcreteImplementor 
+
+![image-20220409155002126](GOF.assets/image-20220409155002126.png)
+
+### 9.2 Core Code
+
+```java
+public class Display {
+    private DisplayImpl impl;
+    public Display(DisplayImpl impl) {
+        this.impl = impl;
+    }
+    public void open() {
+        impl.rawOpen();
+    }
+    public void print() {
+        impl.rawPrint();
+    }
+    public void close() {
+        impl.rawClose();
+    }
+    public final void display() {
+        open();
+        print();                    
+        close();
+    }
+}
+
+public class CountDisplay extends Display {
+    public CountDisplay(DisplayImpl impl) {
+        super(impl);
+    }
+    public void multiDisplay(int times) {       // 循环显示times次
+        open();
+        for (int i = 0; i < times; i++) {
+            print();
+        }
+        close();
+    }
+}
+
+public abstract class  DisplayImpl {
+    public abstract void rawOpen();
+    public abstract void rawPrint();
+    public abstract void rawClose();
+}
+
+public class StringDisplayImpl extends DisplayImpl {
+    private String string;                              // 要显示的字符串
+    private int width;                                  // 以字节单位计算出的字符串的宽度
+    public StringDisplayImpl(String string) {           // 构造函数接收要显示的字符串string
+        this.string = string;                           // 将它保存在字段中
+        this.width = string.getBytes().length;          // 把字符串的宽度也保存在字段中，以供使用。
+    }
+    public void rawOpen() {
+        printLine();
+    }
+    public void rawPrint() {
+        System.out.println("|" + string + "|");         // 前后加上"|"并显示
+    }
+    public void rawClose() {
+        printLine();
+    }
+    private void printLine() {
+        System.out.print("+");                          // 显示用来表示方框的角的"+"
+        for (int i = 0; i < width; i++) {               // 显示width个"-"
+            System.out.print("-");                      // 将其用作方框的边框
+        }
+        System.out.println("+");                        // 显示用来表示方框的角的"+"
+    }
+}
+
+```
+
+### 9.3 相关设计模式
+
+- Template Method :在其使用Bridge, 父类调用抽象方法，而子类实现抽象方法
+- Abstract Factory：ConcreteImplementor  可以使用抽象工厂
+- Adapter:
+  - Bridge：将类的功能层次结构与实现层次结构分离
+  - Adapter：结合功能相似，但是接口不同的类
+
+
+
+
 
 ## Strategy--整体地替换算法
 
