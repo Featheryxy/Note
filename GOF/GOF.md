@@ -14,6 +14,8 @@ List list = new ArrayList();
 
 继承与委托，前者使用父类方法，后者将其他类进行聚合
 
+构造函数不能被继承，只能使用super()
+
 UML：https://www.omg.org/uml/
 
 ## 1 Iterator -- 一个一个遍历
@@ -179,18 +181,58 @@ public abstract class AbstractDisplay {
 
 用Template Method来构建生成实例的工厂，父类决定实例的生成方式，子类负责生成实例
 
+使框架与具体加工分离，即实例生成的流程顺序和具体的实例生成方法隔离
 
+### 4.1 角色
 
-### 角色
+- Product: 抽象类产品，定义了在 Factory Method中生成的那些实例所持有的接口，具体的实现由子类ConcreteProduct决定
+
+- Creator: 创建者，Creator 对ConcreteCreator一无所知，只要调用Product 角色和生成实例的方法。
+
+  不用new 关键字来生成实例，而是调用生成实例的专用方法来生成实例，防止父类与其他具体类耦合。
 
 - ConcreteProduct: 具体的产品
-- ConcreteCreator: 具体的创建者
-- Product: 产品
-- Creator: 创建者，不用new 关键字来生成实例，而是调用生成实例的专用方法来生成实例，防止父类与其他具体类耦合
 
-![image-20211114194600240](GOF.assets/image-20211114194600240.png)
+- ConcreteCreator: 具体的创建者，负责生成具体的产品
 
-### Creator生成实例的方法
+  
+
+![image-20220407132341322](GOF.assets/image-20220407132341322.png)
+
+### 4.2 Core Code 
+
+```java
+package milo.Factory;
+
+public abstract class Factory {
+    public final Product create(String owner){
+        Product p = createProduct(owner);
+        registerProduct(p);
+        return p;
+    }
+    // 通过使用抽象类Product使框架和加工隔离,即实例生成的流程顺序和具体的实例生成方法隔离
+    protected abstract Product createProduct(String owner);
+    protected abstract void registerProduct(Product product);
+}
+
+package milo.Factory;
+
+public abstract class Product {
+    ...
+}
+// --------------------------------------------------
+package milo.idcard
+
+public class IDCard extends Product {
+    private String owner;
+	// 只能在本包中使用，隐性强制使用Factory来生成实例
+    IDCard(String owner){
+        System.out.println("制作"+owner+"的ID卡");
+        this.owner = owner;
+    }
+```
+
+### 4.3 Creator 生成实例的方法
 
 - 指定抽象方法
 
@@ -225,11 +267,30 @@ public abstract class AbstractDisplay {
   // 如果未在子类中实现该方法，程序报错
   ```
 
-## Singleton--只有一个实例
+### 4.4 相关的设计模式
 
-Singleton类只会生成一个实例。
+- Template Method：抽象工厂中生成实例的方法就是一个 Template Method
+- Singleton 模式：可以将Singleton 模式用于扮演 Creator 或 ConcreteCreator，因为再程序中没必要存在多个Creator角色
+- Composite模式：将 Composite 用于 Product 角色或（ConcreteProduct）
+
+- Iterator 模式：生成 Interator 的实例时可以使用Factory Method
+
+## 5 Singleton--只有一个实例
+
+**Singleton类只会生成一个实例。** =  私有构造器 + 静态方法获取实例
+
+1. 定义**static**修饰的成员变量singleton，并将其初始化为Singleton类的实例。初始化行为仅在**类被加载**的时候进行一次
+2. Singleton类的构造函数为private，禁止从Singleton类外部调用构造函数
+
+
+
+### 5.1 角色
+
+
 
 ![image-20211114203435250](GOF.assets/image-20211114203435250.png)
+
+### 5.2 Core Code 
 
 ```java
 public class Singleton {
@@ -258,42 +319,124 @@ public class Main {
 }
 ```
 
-1. 定义**static**修饰的成员变量singleton，并将其初始化为Singleton类的实例。初始化行为仅在**类被加载**的时候进行一次
-2. Singleton类的构造函数为private，禁止从Singleton类外部调用构造函数
+### 5.3 相关设计模式
+
+多数情况下，以下模式只需要一个实例：
+
+- AbstractFactroy
+- Builder
+- Facade
+- Prototype
 
 
-## Prototype--通过复制生成实例
+## 6 Prototype--通过复制生成实例
 
 通常我们使用new关键字指定类名来生成实列，但是也有**不指定类名来生成实列**。如下述情况
 
-1. 对象种类繁多，无法将它们整合到一个类中
+1. **对象种类繁多，无法将它们整合到一个类中**
 
-2. 难以根据类生成实列，生成实列的过程太过复杂
+2. 难以根据类生成实列，**生成实列的过程太过复杂**
 
-3. 解耦框架与生成的实例
+3. **解耦框架与生成的实例**，与Factory method相似
 
    > 想要让生成实例的框架不依赖于具体的类，先“注册”一个“原型”实例，然后通过复制该实例来生成新的实例。
 
+### 6.1 角色
+
+- Prototype 原型：负责定义复制实例的方法接口
+- ConcretePrototype：实现Prototype 接口，编写具体的clone方法
+- Client 使用者
+
+![image-20220409102349539](GOF.assets/image-20220409102349539.png)
+
+### 6.2 Core Code
+
+- Product 和 Manager位于 framwork包下
+- Product  定义了复制功能，Manager **依赖**于 Product 接口来实现复制实例
+
+```java
+package framwork;
+
+public interface Product extends Cloneable{
+    public abstract void use(String s);
+    public abstract Product createClone();
+}
+
+package framwork;
+
+public class Manager {
+    // showcase定义为private，且该类没有访问该属性的方法
+    private HashMap showcase = new HashMap();
+    public void register(String name, Product product){
+        showcase.put(name, product);
+    }
+
+    public Product create(String protoname){
+        Product p = (Product) showcase.get(protoname);
+        return p.createClone();
+    }
+}
+// -----------------------------------------------------------
+package prototype;
+
+public class MessageBox implements Product {
+
+    @Override     // 产品功能
+    public void use(String s) {
+		...
+    }
+
+    @Override  
+    public Product createClone() {
+        Product p = null;
+        try {
+            p = (Product)clone();
+        }catch (CloneNotSupportedException e){
+            e.printStackTrace();
+        }
+        return p;
+    }
+}
+
+```
+
+### 6.3 相关设计模式 
+
+- Flyweight: Prototype 可以生成一个与当前实例完全相同的实例，而Flyweght模式可以再不同的地方使用同一个实例
+
+  > Prototype 中的 HashMap 对外没有开放，而Flyweight对外开放
+
+- Memento 模式可以保存当前实例的状态，以实现快照和撤销功能
+
+- Composite 以及 Decorator: 在使用这两种模式时，需要动态地创建复制实例，可以使用Prototype
+
+### 6.4 clone
 
 
 ```
-clone方法定义在java.lang.Object中, q
+clone方法定义在java.lang.Object中,浅复用，只能对字段进行复制，如果字段中保存的是对象或数组，则需要重写clone方法
 Cloneable接口中没有声明任何方法，只是用来标记。称为标记接口
-
 ```
 
-## Builder--组装复杂的实例
+## 7 Builder -- 组装复杂的实例
 
-### 角色
+组装复杂结构的实例
+
+### 7.1 角色
+
+- Client(使用者): 使用Builder
+- Director(监工): 负责使用Builder来生成实例。它并不依赖于ConcreteBuilder, 只调用Builder角色中被定义的方法
 
 - Builder(建造者)：负责定义用于生成实例的接口。Builder中准备了用于生成实例的方法
 - ConcreteBuilder: Builder的实现类
-- Director(监工): 负责使用Builder来生成实例。它并不依赖于ConcreteBuilder, 只调用Builder角色中被定义的方法
-- Client(使用者): 使用Builder
 
-可替换性：一个类不知道知道调用的是哪个子类。
+**可替换性：一个类不知道知道调用的是哪个子类**。
 
-### 代码
+>  Client只知道Director 但是不知道Builder；Director 知道Builder，但是不知道具体是哪一个Builder。这种不可见性实现模块之间的解耦，增加了模块的可复用性
+
+![image-20220409111640856](GOF.assets/image-20220409111640856.png)
+
+### 7.2 Core Code
 
 ```java
 public abstract class Builder {
@@ -414,6 +557,24 @@ public class Main {
     }
 }
 ```
+
+### 7.3 相关设计模式
+
+- Template Method：
+
+  - 在Builder模式中，Director角色控制builder
+  - 而在Template Method中，父类控制子类
+
+  > 有没有必要继承父类？有，则使用 Template Method
+
+- Compostie：有时候Builder生成的实例构成了Composite模式
+
+- Abstract Factory: 都用于生成复制的实例
+
+- Facade：
+
+  - 在Builder中，Director角色通过聚合Builder角色中的复制方法向外部提供可以简单生成实例的接口
+  - Facade：通过组合内部模块向外部提供可以简单调用的结构
 
 ## Abstract Factory--将关联零件组成产品
 
