@@ -91,6 +91,12 @@ select '11111' from dual ;
 select substr('12345', 1, 2) ||0||substr('12345', 4) from dual;
 ```
 
+### 查询所有列名
+
+```java
+SELECT column_name FROM user_tab_columns where table_name = upper('表名') 
+```
+
 ### 引号
 
 #### 一、单引号

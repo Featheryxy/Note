@@ -719,21 +719,50 @@ public class StringDisplayImpl extends DisplayImpl {
   - Bridge：将类的功能层次结构与实现层次结构分离
   - Adapter：结合功能相似，但是接口不同的类
 
+## 10 Strategy--整体地替换算法
+
+整体替换算法，能够以不同的算法解决同一个问题
+
+### 10.1 角色
+
+- Strategy 策略：负责决定实现策略所必须的接口
+- ConcreteStrategy 
+- Context 上下文：负责使用Strategy 角色，保存了ConcreteStrategy 实例，并使用ConcreteStrategy 角色去实现角色需要
+
+![image-20220410123431883](GOF.assets/image-20220410123431883.png)
 
 
 
-
-## Strategy--整体地替换算法
-
-## Composite
+## 11 Composite
 
 容器与内容的一致性
 
 目录条目=文件+文件夹
 
-## Decorator--装饰边框与被装饰物的一致性
+树结构的数据结构都使用与Composite模式
 
+### 11.1 角色
 
+- Leaf 树叶：表示内容的角色，该角色中不能放入其他对象
+- Composite 复合物：表示容器的角色，可以在其放入Leaf he  Composite
+- Commponent：使Leaf 和Composite 角色具有一致性的角色
+- Client：使用Composite 
+
+![image-20220410140816751](GOF.assets/image-20220410140816751.png)
+
+### 11.2 Core Code
+
+### 11.3 相关设计模式
+
+- Command：使用Command模式编写宏命令时使用了Composite
+- Visitor：可以使用Visitor模式访问Composite模式中的递归结构
+- Decorator： 
+  - Composite使容器和内容一致
+  - Decorator 使装饰框和内容具有一致性
+
+## 12 Decorator--装饰边框与被装饰物的一致性
+
+![image-20220410144427732](GOF.assets/image-20220410144427732.png)
 
 ## Chain of Responsibility -- 推卸责任
 
