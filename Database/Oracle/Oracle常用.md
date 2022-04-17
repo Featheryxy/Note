@@ -30,6 +30,17 @@ SQL> @path_to_sql_file
 
 ```
 
+### 备份表
+
+```sql
+create table  table_name_copy
+as
+select * from table_name;
+
+insert into table_name
+select * from table_name_copy
+```
+
 ### Group By
 
 ```sql
