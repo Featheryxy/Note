@@ -6,7 +6,7 @@
 
 
 ```mysql
-1. ALTER TABLE table_name MODIFY [COLUMN]  column_name data_type constraints; -- mysql 替换所有的
+1. ALTER TABLE table_name MODIFY [COLUMN]  column_name data_type constraints ; -- mysql 替换所有的
 2. ALTER TABLE table_name MODIFY column_name data_type constraints; -- oracle 只修改改变的部分
 ```
 
