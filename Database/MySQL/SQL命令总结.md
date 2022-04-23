@@ -1,3 +1,9 @@
+## 多表关联
+
+1. 先找关联关系，一对多还是多对多，
+2. 寻找关联字段，大多都是主键关联
+3. 
+
 ## 常规操作
 
 ```mysql
@@ -37,11 +43,13 @@ select [all|distinct] 列名1 [as 别名], 列名2, ...
 from [左表 [inner[left|right outer]] join 右表]
 on 条件
 where 子句
-group by 列名
+group by 列名1, 列名2
 having 条件
 order by 列名1, 列名2, ... [ASC|DESC] -- 默认为ASC
 
 limit [offset], row_count, # offset default=0, 行索引从0开始
+limit 2, 1
+limit 1 offset 2
 取第二高价格 order by price limit 1, 1 
 
 /*
@@ -49,11 +57,6 @@ select distinct name, sex from tb_students; -- 如果姓名相同、性别不同
 -- distinct 只能写在所有查询字段的前面
 -- distinct 对后面所有的字段均起作用, 
 
-group by`：可以包含任意数目的列，可以嵌套
-  - 如果分组列中具有`NULL`值，则`NULL`作为一个分组返回。如果有多行`NULL`值，将其分为一组
-  - 必须出现在`where`子句之后，`order by` 子句之前
-- `where`过滤行，指定行对应的条件，`having`过滤分组，指定分组对应的条件
-- `where`在数据分组前过滤，`having`在数据分组后过滤
 */
 
 -- SQL执行顺序
@@ -116,6 +119,30 @@ end
 # 如果 when中的求值表达式为假，跳到下一个when子句中。
 # 如果 when中的求值表达式都为假，执行ELSE中的子句，返回表达式的值
 ```
+
+## Group by
+
+1. 改变查询维度， 将低维（n）提高到高维（1）， 并统计低维数据
+
+```sql
+student(s_id, s_name, class)
+
+-- 从class角度统计 低纬数据student 
+select * from student group by class; 
+
+```
+
+
+
+group by`：可以包含任意数目的列，可以嵌套
+  - 如果分组列中具有`NULL`值，则`NULL`作为一个分组返回。如果有多行`NULL`值，将其分为一组
+  - 必须出现在`where`子句之后，`order by` 子句之前
+- `where`过滤行，指定**行**对应的条件，`having`过滤分组，指定**分组**对应的条件
+- `where`在数据分组前过滤，`having`在数据分组后过滤
+
+
+
+
 
 ## 插入
 
@@ -259,5 +286,20 @@ current_date
 AVG(), COUNT(), MAX(), MIN(), SUM()
 COUNT(*) # 统计表的函数，包括列值为`NULL`的行
 COUNT(column) # 对特定列统计函数，不包括列值为`NULL`的行
+```
+
+### XOR
+
+```sql
+SELECT name,population,area
+FROM world
+WHERE (area > 3000000 AND population <=250000000)
+OR (area<=3000000 AND population>250000000)
+
+
+select name, population , area 
+from world 
+where  (area > 3000000 and population <= 250000000) 
+or (population > 250000000 and area <= 3000000)
 ```
 
