@@ -152,7 +152,9 @@ insert [IGNORE] into 表名 values(值1，值2，...);
 # IGNORE:忽略重复数据/唯一索引
 
 # 插入特定列值
-insert into 表名(列名1， 列名2，...) values(值1，值2，DEFAULT,...);
+insert into 表名(列名1， 列名2，...) 
+values(值1，值2，DEFAULT,...), 
+values(值1，值2，DEFAULT,...);
 
 # 从其他表复制数据，列名数量相同
 insert into 表名(列名1， 列名2，...) 
@@ -239,7 +241,13 @@ alter table 表名1
 add constraint 外键名(fk_表名1_表名2)
 foreign key(列名1) references 表名2(列名2)
 
-
+ALTER TABLE 表名 ADD 列名/索引/主键/外键等；
+ALTER TABLE 表名 DROP 列名/索引/主键/外键等；
+ALTER TABLE 表名 ALTER 仅用来改变某列的默认值；
+ALTER TABLE 表名 RENAME 列名/索引名 TO 新的列名/新索引名；
+ALTER TABLE 表名 RENAME TO/AS 新表名;
+ALTER TABLE 表名 MODIFY 列的定义但不改变列名；
+ALTER TABLE 表名 CHANGE 列名和定义都可以改变。
 
 mysql> alter table vendors add vend_phone char(20);
 Query OK, 0 rows affected (0.07 sec)
