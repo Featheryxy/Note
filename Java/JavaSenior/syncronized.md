@@ -94,6 +94,9 @@ public class Test03Orderliness {
 
 ## Java内存模型(JMM)
 
+Java内存模型是一套在多线程读写共享数据时，对共享数据的可见性、有序性、和原子性的规则和保
+障, 使**缓存中的数据和内存中的数据保持一致**
+
 ### 缓存
 
 CPU的运算速度和内存的访问速度相差比较大。这就导致CPU每次操作内存都要耗费很多等待时间。内存的读写速度成为了计算机运行的瓶颈。于是就有了在CPU和主内存之间增加缓存的设计。最靠近CPU的缓存称为L1，然后依次是 L2，L3和主内存
@@ -218,7 +221,7 @@ public class Demo02_Uninterruptible {
 }
 ```
 
-### ReentrantLock可中断
+ReentrantLock可中断
 
 ```java
 package cn.itcast.test;
