@@ -208,3 +208,37 @@ void setString(int parameterIndex, String x)
 
 https://zh.wikipedia.org/wiki/Java%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5
 
+
+
+##  Service/DAO层方法命名规约
+
+获取单个或多个对象的方法用get做前缀
+getObject
+getObjectById
+getObjectByUkey
+getObjectProperty
+getObjectPropertyList
+获取多个对象的方法用list做前缀（不含分页）
+listAll
+listAllBy
+listAllByXXX
+获取统计值的方法用count做前缀
+count
+countBy
+countByXXX
+插入的方法用save做前缀
+saveObject
+saveObjectList
+删除的方法用remove（推荐）或delete做前缀
+removeObject
+removeObjectById
+removeObjectList
+修改的方法用update做前缀
+updateObject
+updateObjectList
+查询的方法用find做前缀（含分页）
+findAll
+findBy
+findByXXX
+findByCondition
+findByConditionWithPage
