@@ -1,6 +1,14 @@
-javafxc.exe 编译JavaFX Script
+# JavaFX
+
+javafxc.exe 编译 JavaFX Script
 
 javafx在jdk8,jdk9,jdk10中，但是在jdk11中移除，作为一个新的开源项目在维护
+
+以树状架构的方式组合物件,各节点称为Node, Node分为一下三类
+
+- Root: 最上层容器
+- Parent: 置放组件的容器
+- Leaf: 容器中的组件
 
 ### 物理抽象
 
@@ -54,13 +62,26 @@ circle.centerXProperty().addListener(new ChangeListener<Number>() {
     }
 });
 
-// 为控件添加事件c（）
+// 为事件添加事件处理器
 menu1.setOnAction(new EventHandler<ActionEvent>() {
     @Override
     public void handle(ActionEvent event) {
         System.out.println("menu1.setOnAction");
     }
 });
+
+cleanBtn.addEventHandler(ActionEvent.ACTION, sayHello);
+
+// 事件与处理器分离
+EventHandler<ActionEvent> sayHello = new EventHandler<ActionEvent>() {
+    @Override
+    public void handle(ActionEvent event) {
+        System.out.println("say Hello");
+    }
+};
+cleanBtn.setOnAction(sayHello);
+
+
 ```
 
 
