@@ -88,4 +88,92 @@ num = 2;
 
 多个线程抢夺锁来获得执行同步代码块的权力
 
-synchronized的特性
+
+
+同步代码块: 由synchronized标注的代码
+
+```java
+synchronized (Demo01.class) {
+    System.out.println("我是run"); // 该方法内部也有synchronized
+    test01();
+}
+```
+
+那么一块代码由多个synchronized标注时, 假设一个线程已经抢夺到了锁, 他进入内部同步代码块,发现还需要获得锁,如果他已经获得锁后再也无法获得锁,那么这个线程就会在这卡死,这显然不正确, 所以当一个线程或的锁后,他还可以获的锁, 使他还可以进入同步代码块中,这就是synchronized的可重入性.
+
+如果一个线程已经获得了锁,那么其他线程还能获得锁吗?如果能,那该线程就是可被中断的,否则,不可被中断, synchronized标识的代码不可被中断
+
+
+
+
+
+那么synchronized的特性都有哪些呢
+
+1. 可重入性,线程可以多次获得同一个锁
+2. 不可中断性, 一个线程获得锁后，另一个线程想要获得锁，该线程必须处于阻塞或等待状态，如果第一个线程不释放锁，第二个线程会一直阻塞或等待，不可被中断.
+
+
+
+synchronized原理
+
+
+
+synchronized的锁对象会关联一个锁monitor, 这个monitor不是我们主动创建的,是JVM的线程执行到这个同步代码块,发现锁对象没有monitor就会创建monitor
+
+```
+synchronized 编译成字节码后
+
+monitorenter
+
+代码逻辑
+
+monitorexit
+```
+
+那么什么是锁呢?锁就是monitor
+
+monitor对象的属性主要有:
+
+```c++
+ObjectMonitor() {
+    _header = NULL;
+    _count = 0;
+    _waiters = 0，
+    _recursions = 0; // 线程的重入次数
+    _object = NULL;  // 存储该monitor的对象
+    _owner = NULL;   // 标识拥有该monitor的线程
+    _WaitSet = NULL; // 处于wait状态的线程，会被加入到_WaitSet
+    _WaitSetLock = 0 ;
+    _Responsible = NULL;
+    _succ = NULL;
+    _cxq = NULL;     // 多线程竞争锁时的单向列表
+    FreeNext = NULL;
+    _EntryList = NULL; // 处于block状态的线程，会被加入到该列表
+    _SpinFreq = 0;
+    _SpinClock = 0;
+    OwnerIsThread = 0;
+}
+```
+
+1. _owner：初始时为NULL。当有线程占有该monitor时，owner标记为该线程的唯一标识。当线程释放monitor时，owner又恢复为NULL。owner是一个临界资源，JVM是通过CAS操作来保证其线程安全的。
+2. \_cxq：竞争队列，所有请求锁的线程首先会被放在这个队列中（单向链接）。\_cxq是一个临界资源，JVM通过CAS原子指令来修改\_cxq队列。修改前\_cxq的旧值填入了node的next字段，\_cxq指向新值（新线程）。因此_cxq是一个后进先出的stack（栈）。
+3. \_EntryList：_cxq队列中有资格成为候选资源的线程会被移动到该队列中。
+4. _WaitSet：因为调用wait方法而被阻塞的线程会被放在该队列中。
+
+_owner: 竞争到锁的线程
+
+_WaitSet：处于等待状态的线程
+
+_EntryList：处于阻塞状态的线程
+
+
+
+### synchronized与Lock的区别
+
+1. synchronized是关键字，而Lock是一个接口。
+2. synchronized会自动释放锁，而Lock必须手动释放锁。
+3. synchronized是不可中断的，Lock可以中断也可以不中断。
+4. 通过Lock可以知道线程有没有拿到锁，而synchronized不能。
+5. synchronized能锁住方法和代码块，而Lock只能锁住代码块。
+6. Lock可以使用读锁提高多线程读效率。
+7. synchronized是非公平锁，ReentrantLock可以控制是否是公平锁。
