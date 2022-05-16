@@ -65,7 +65,7 @@ import的包无法调用 or 已使用的变量提示未使用，可以进行缓�
 4. Easy Code 根据数据库自动生成dao, entity
 5. key promoter 
 6. Maven Helper
-7. Alibaba java coding 
+7. Alibaba java coding 代码规范
 8. Gsonformat json转化实体类 
 9. javadoc  生成注释文档  
 10. generateallsetter 自动生成set代码 
