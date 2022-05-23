@@ -210,7 +210,7 @@ https://zh.wikipedia.org/wiki/Java%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5
 
 
 
-##  Service/DAO层方法命名规约
+# Service/DAO层方法命名规约
 
 获取单个或多个对象的方法用get做前缀
 getObject
