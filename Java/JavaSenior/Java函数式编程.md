@@ -66,9 +66,23 @@ f (rate) (price ) 和 g (price) (rate) 为偏应用 函数
 
 
 
+本质是方法,但是一个方法可以是函数式的，只要它满足纯函数的要求
+
+- 它不能修改函数外的任何东西。外部观测不到内部的任何变化 。
+- 它不能修改自己的参数 。
+- 它不能抛出错误或异常 。
+- 它必须返回 一个值 。
+- 只要调用它的参数相同，结果也必须相同。
 
 
 
+所有的实例方法都可以通过在参数里增加外围类(enclosing class ）的类型而变成一个静态方法。
+
+```java
+public static int applyTax3(FunctionalMethods x , int a) {
+    return a I 100 * 100 + x . percent3 ;
+}
+```
 
 
 
