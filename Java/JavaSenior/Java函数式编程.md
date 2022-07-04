@@ -86,6 +86,6 @@ public static int applyTax3(FunctionalMethods x , int a) {
 
 
 
-
+创建静态和实例变量的默认值为 null
 
 Java 8 in Action
