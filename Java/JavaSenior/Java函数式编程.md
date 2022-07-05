@@ -21,9 +21,11 @@
 
 
 
-象(image)集: 
+### 数学中的函数
 
-### 数学种的函数
+象(image)集: 在定义域里存在对应元素的陪域元素集被称为函数的像
+
+
 
 函数:函数定义域（ function domain ）的源集（ source set ）和被称为函数陪域（也function codomain ）的目标集（ target set ）之间的关系 
 
@@ -82,10 +84,16 @@ f (rate) (price ) 和 g (price) (rate) 为偏应用 函数
 public static int applyTax3(FunctionalMethods x , int a) {
     return a I 100 * 100 + x . percent3 ;
 }
+
+f(x) = x^2 + 2
+    
+    
 ```
 
 
 
+## 待办
 
+静态引用
 
 Java 8 in Action
