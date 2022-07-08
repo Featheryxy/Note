@@ -78,9 +78,11 @@ f (rate) (price ) 和 g (price) (rate) 为偏应用 函数
 - 它必须返回 一个值 。
 - 只要调用它的参数相同，结果也必须相同。
 
-
-
 所有的实例方法都可以通过在参数里增加外围类(enclosing class ）的类型而变成一个静态方法。
+
+
+
+隐式参数：定义在方法外的参数，如实例方法访 问类属性可以视为一个外围类实例的隐式参数。
 
 ```java
 public static int applyTax3(FunctionalMethods x , int a) {
@@ -89,7 +91,70 @@ public static int applyTax3(FunctionalMethods x , int a) {
 
 f(x) = x^2 + 2
     
-    
+```
+
+可以把不访 问 外围类实例的方法安全地标记为静态方法。访问外围类实例的那些方法也可以被标记为静态方法，只需显式地标记它们的隐式参数（外围类实例）
+
+```java
+public class Payment {
+    public final CreditCard cc;
+    public final int amount;
+
+
+    public Payment(CreditCard cc, int amount) {
+        this.cc = cc;
+        this.amount = amount;
+    }
+
+    // cc 为隐式参数, 可以将cc所属的对象作为函数的变量传入，使其成为显式参数
+    public Payment combine1(Payment other) throws Exception {
+        if (cc.equals(other.cc)) {
+            return new Payment(cc, amount + other.amount);
+        } else {
+            throw new Exception("Can't combine ");
+        }
+    }
+
+    //
+    public static Payment combine2(Payment payment1, Payment payment2) throws Exception {
+        if (payment1.cc.equals(payment2.cc)) {
+            return new Payment(payment1.cc, payment1.amount + payment2.amount);
+        } else {
+            throw new Exception("Can't combine ");
+        }
+    }
+
+    public void test() throws Exception {
+        // 类内调用
+        combine2(this, new Payment(null, 1));
+    }
+
+    public static void main(String[] args) throws Exception {
+        Payment p0 = new Payment(null, 1);
+        Payment p1 = new Payment(null, 1);
+        Payment p2 = new Payment(null, 1);
+        Payment p3 = new Payment(null, 1);
+
+        // 对象标记，隐式
+        p0.combine1(p1).combine1(p2);
+
+        // 函数标记，显式
+        Payment newPayment = combine2(combine2(combine2(p0 , p1 ) , p2) , p3 );
+    }
+}
+
+class test {
+    public void test1() throws Exception {
+        // 类外调用
+        Payment newPayment = Payment.combine2(null, null) ;
+    }
+}
+
+@Data
+@NoArgsConstructor
+class CreditCard {
+
+}
 ```
 
 
