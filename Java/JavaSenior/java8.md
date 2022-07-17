@@ -129,34 +129,35 @@ Optional\<T\>对象：对T类型对象的封装，或者表示不是任何对象
 
 
 1. ```java
-   	Author author = getAuthor(); 
-   
-   	// author 为空不报错
-   	Optional<Author> author = Optional.ofNullable(author);`
-   
+    Author author = getAuthor(); 
+       
+    	// author 为空不报错
+    	Optional<Author> author = Optional.ofNullable(author);`
+       
        // 不推荐 author 为空报错
        Optional.of(author);
        // 封装 null 对象
        Optional.empty();
-   
+       
        // 会先去判断是否为空，不为空才会去执行消费代码，优雅避免空指针
-   	Optional.ifPresent();
-   	// 判断数据是否存在，空则返回false，否则true
-   	Optional.isPresent() 
+    	Optional.ifPresent();
+    	// 判断数据是否存在，空则返回false，否则true
+    	Optional.isPresent() 
            
        // 不推荐，当Optional的get方法为空时会出现异常
-   	Optional.get();
-   	Optional.orElseGet();
+    	Optional.get();
+    	Optional.orElseGet();
        Optional.orElseThrow()
-   	
-   	// filter
+    	
+    	// filter
       author.filter(author -> author.getAge() > 18)
           .ifPresent(author -> System.out.println(author.getName()));
-   
-   	// map
-   	Optional<List<Book>> books = author.map(author -> author.getBookList());
-   
-   
+       
+    	// map
+    	Optional<List<Book>> books = author.map(author -> author.getBookList());
+    ```
+
+
    	// 推荐用法
        // 1. 当可选值存在时，对该值操作, 不返回任何值。否则不操作
        optionalValue.ifPresent(v -> Process v);
@@ -175,3 +176,11 @@ Optional\<T\>对象：对T类型对象的封装，或者表示不是任何对象
    ```
 
 
+
+   ```
+
+
+
+
+
+Optional.
