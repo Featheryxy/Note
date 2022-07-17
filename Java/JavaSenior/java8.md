@@ -170,9 +170,13 @@ Optional\<T\>对象：对T类型对象的封装，或者表示不是任何对象
    	Optional<Boolean> isDone =optionalValue.map(v -> Process v);
        // 3. 当可选值不存在时，产生替代值
        Optional.orElse();
-          
+         
         Optional.orElseGet();
         Optional.orElseThrow();
+   
+   	// 封装一个可能为null的对象，如果obj != null,则执行Optional.of(obj), 否则 Optional.emp
+   	Optional.ofNullable(obj); 
+   	
    ```
 
 
