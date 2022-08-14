@@ -128,7 +128,7 @@ Optional\<T\>对象：对T类型对象的封装，或者表示不是任何对象
 
 
 
-1. ```java
+```java
     Author author = getAuthor(); 
        
     	// author 为空不报错
@@ -155,36 +155,47 @@ Optional\<T\>对象：对T类型对象的封装，或者表示不是任何对象
        
     	// map
     	Optional<List<Book>> books = author.map(author -> author.getBookList());
-    ```
-
 
    	// 推荐用法
        // 1. 当可选值存在时，对该值操作, 不返回任何值。否则不操作
        optionalValue.ifPresent(v -> Process v);
-   	
    	if(optionalValue.isPresent()){
+
            value = optionalValue.get();
+
            Process value;
+
        }
        // 2. 当可选值存在时，对该值操作, 返回true。否则返回false
    	Optional<Boolean> isDone =optionalValue.map(v -> Process v);
        // 3. 当可选值不存在时，产生替代值
+
        Optional.orElse();
-         
-        Optional.orElseGet();
-        Optional.orElseThrow();
-   
+    Optional.orElseGet();
+    Optional.orElseThrow();
+
    	// 封装一个可能为null的对象，如果obj != null,则执行Optional.of(obj), 否则 Optional.emp
    	Optional.ofNullable(obj); 
-   	
-   ```
+
+```
 
 
 
-   ```
+​         xi'shu
 
+## 时间
 
+java.time
 
+java.util.Date与UNIX中月份从0开始,年份从1900开始计算, 而java.time月份从1开始
 
+### 时间线
 
-Optional.
+一个Instant对象表示时间轴三的一点, 原点规定为1970年1月1日的午夜.从原点开始,时间按照每天86400秒进行计算.
+
+Duration是两个时点之间的间隔时间
+
+### 本地日期
+
+- 本地日期/时间: 表示一个日期/或一天中的时间 如:2022-08-13
+- 带时区的时间
