@@ -78,8 +78,6 @@ Linux下其他其他目录的用途如下：
 /usr 最庞大的目录，要用到的应用程序和文件几乎都在这个目录 
 ```
 
-[linux](http://sizhxy.com/ClassCenter/ClassDetail-31.html)的usr目录的全称
-
 很长一段时间,我都认为是user的意义,最近才知道,原来不是 ,这里留下摆渡知道的解释,方便后来人:
 
  usr是user的缩写，是曾经的HOME目录，然而现在已经被/home取代了，现在usr被称为是Unix System Resource，即Unix系统资源的缩写。
@@ -121,7 +119,7 @@ Linux下其他其他目录的用途如下：
 1. 个别命令使用不遵循此格式
 2.  当有多个选项时， 可以写在一起 ls -a -l  等价于 ls -la 
 3.  简化选项与完整选项
-   -a 等于 --all 
+      -a 等于 --all 
 
 ### 2.2 目录处理命令： ls
 
@@ -394,7 +392,7 @@ $ head -n 20 /etc/services
 $ tail -n 18 /etc/services
 ```
 
-### 2.17 文件处理命令： ln 
+### 2.17 文件处理命令： ln
 
 ```
 命令名称： ln
@@ -1569,7 +1567,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
 #### 1 安装位置
 
 -  RPM包安装位置
-  是安装在默认位置中 
+    是安装在默认位置中 
 
   ```
   /etc/ 			配置文件安装目录
@@ -1646,6 +1644,8 @@ systemctl daemon-reload
 ## 1 Shell概述
 
 ### 1.1 Shell是什么
+
+shell 就是一个程序，它接受从键盘输入的命令，然后把命令传递给操作系统去执行
 
 - Shell是一个命令行解释器，它为用户提供了一个向Linux内核发送请求以便运行程序的界面系统级程序，用户可以用Shell来启动、挂起、停止甚至是编写一些程序。 
 - 硬件 --> 内核 --> Shell**命令解释器** --> 外层应用程序

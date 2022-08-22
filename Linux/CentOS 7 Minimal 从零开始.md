@@ -1,4 +1,18 @@
-# 联网
+```shell
+[milo@localhost ~]$
+[当前用户名@主机名 目前所在目录] 提示字符
+
+~   当前用户目录
+/   根目录
+#   root用户提示符, 超级用户权限
+$   一般用户提示符
+
+
+```
+
+
+
+### 联网
 
 虚拟机设置为NAT模式
 
@@ -6,10 +20,21 @@
 
 如果`ip addr `无网卡信息, 则修改/etc/sysconfig/network-scripts/ifcfg-ens33文件, 将ONBOOT设置为yes 来启动网卡
 
+### 帮助命令
+
+```shell
+man [-k] [命令或配置文件] # manual, 命令的具体参数及使用方法
+-k 只记得部分命令关键字的场合，我们可通过man -k来搜索
+
+whatis [命令] # 简要说明
+info [命令] # 详细的介绍
+which [命令] # 命令在哪个位置
+
+```
 
 
 
-# yum
+###  yum
 
 ```shell 
 yum [option] [查询工作项目] [相关参数]
@@ -30,7 +55,7 @@ yum list updates: 列出可升级的软件
 yum list isntalled: 列出已安装的软件
 ```
 
-# 目录
+### 目录
 
 ```shell
 mkdir [目录名]：make directories
@@ -50,7 +75,7 @@ rm -rf: 删除文件夹及下面所有文件
 
 
 
-# tar
+### tar
 
 ```shell
 压缩：tar [-z-j-J][cv] [-f 待建立的文件名]
@@ -75,13 +100,29 @@ ps：-z-j-J只能使用一个
 
 
 
-# 常用
+###  常用
 
 ```shell
+空格 翻页
+q   退出
+
+回车 一行一行浏览
+Ctrl + f 键 （f 的英文全拼为：forward）下一页
+Ctrl + b 键 （b 的英文全拼为：backward) 上一页
+gg				 到第一行
+G				 到最后一行
+
 su - [usr]: 切换到user用户下
 
 grep [option] [指定字串] [文件]: 在文件中搜寻字串匹配的行并输出
 -i: 不区分大小写
 -v: 排除指定字串
+
+
+date # 日期与时间
+cal # 日历
+df # 磁盘剩余空间
+free # 内存
+
 ```
 

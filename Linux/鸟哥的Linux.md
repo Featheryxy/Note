@@ -22,13 +22,7 @@
 
 ```shell
 
-[milo@localhost ~]$
-[当前用户名@主机名 目前所在目录] 提示字符
 
-~   当前用户目录
-/   根目录
-#   root用户提示符
-$   一般用户提示符
 
 [milo@localhost network-scripts]$ cd ~
 [milo@localhost ~]$ pwd
