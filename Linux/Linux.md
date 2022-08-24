@@ -135,7 +135,7 @@ Linux下其他其他目录的用途如下：
 	-d （directory）查看目录本身属性 
     -h （human） 人性化显示
     -i （iNode） 文件的id节点号
-	-t  (time) 按修改时间时降序排列	
+	-t  (time) 按修改时间降序排列	
 	-r  (reverse) 反转
 ls -l /etc 查看/etc下的文件信息
 ls -ld /etc 查看/etc文件本身信息

@@ -110,7 +110,8 @@ x ---- 1
 
 0 ---- 什么都不执行
 
-文件的执行主要看文件的权限，而不看文件名。通常我们使用*.sh表示批处理文件（scripts）;*.tar为压缩文件
+文件的执行主要看文件的权限，而不看文件名。
+通常我们使用*.sh表示批处理文件（scripts）;*.tar为压缩文件
 
 pwd # print working directory: 显示当前工作目录
 cd # change directory
