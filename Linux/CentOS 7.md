@@ -1,3 +1,5 @@
+### 常用
+
 ```shell
 [milo@localhost ~]$
 [当前用户名@主机名 目前所在目录] 提示字符
@@ -7,18 +9,16 @@
 #   root用户提示符, 超级用户权限
 $   一般用户提示符
 
+command [-options] parameter1 parameter1 ...
+ 指令       选项      参数1       参数2	   	
 
+使用反斜杠(\) 跳脱[Enter]符号，使指令连续到下一行。
+PS: \ 后立刻接特殊符号
 ```
 
 
 
-### 联网
 
-虚拟机设置为NAT模式
-
->  NAT使用VMnet8网卡，当主机通网时，该机也可通网。默认情况下和物理机同一网络中的其它机器不能访问虚拟机，但虚拟机可以访问其它物理机。可以修改NAT设置，添加主机IP：主机端口与虚拟机IP: 虚拟机端口
-
-如果`ip addr `无网卡信息, 则修改/etc/sysconfig/network-scripts/ifcfg-ens33文件, 将ONBOOT设置为yes 来启动网卡
 
 ### 帮助命令
 
@@ -55,9 +55,75 @@ yum list updates: 列出可升级的软件
 yum list isntalled: 列出已安装的软件
 ```
 
-### 目录
+### 目录与文件
+
+- 隐藏文件：以 “.” 字符开头的文件名。这仅表示，ls 命令不能列出它们，用 ls -a 命令就可以了
+- Linux 没有“文件扩展名”的概念
+- 文件名可能包含空格，标点符号，但标点符号仅限使用“.”，“－”，下划线
 
 ```shell
+ls [dictory1] [dictory2]# list：显示目录文件
+-a （all）显示所有文件，包括隐藏文件（以 . 开头）
+-l （long）详细信息显示
+-d （directory）查看目录本身属性 
+-h （human） 人性化显示
+-i （iNode） 文件的id节点号
+-t  (time) 按修改时间降序排列	
+-r  (reverse) 反转
+ls -l /etc 查看/etc下的文件信息
+ls -ld /etc 查看/etc文件本身信息
+
+[root@localhost ~]# ls -al
+total 28
+dr-xr-x---.  2 	 	   root    root      135      Aug  4 17:27 .
+dr-xr-xr-x. 17 	  	   root    root      224      Aug  4 16:49 ..
+...
+-rw-r--r--.  1 	  	   root    root      100      Dec 29  2013 .cshrc
+-rw-r--r--.  1 	  	   root    root      129      Dec 29  2013 .tcshrc
+[   权限  ] [硬链接数目][拥有者] [所属用户组][文件大小]  [最后修改修改日期]    [文件名称]
+
+文件大小默认以bytes为单位
+.tcshrc 表示该文件是隐藏文件
+
+-           rw-            r--          r--
+[文件类型][文件拥有者权限][文件所属群组权限][其他人权限]
+
+文件类型：
+d 目录
+- 文件
+	1. ASSII 文件，可以使用cat查看
+	2. binary 文件，可执行文件（scripts），如cat
+	3. 数据格式文件（data）, 拥有特定格式的文件
+l 连结档link file，相当于Windows下的快捷方式
+b 可供存储的接口设备（可随机存取装置）
+c 串行端口设备，如键盘，鼠标（一次性读取装置）
+
+权限：
+| r    | 读   | 可以查看文件内容 | 列出目录中的内容       |
+| w    | 写   | 可以修改文件内容 | 在目录中创建，删除文件 |
+| x    | 执行 | 可以执行文件     | 进入目录               |
+
+权限的数字表示
+r ---- 4
+w ---- 2
+x ---- 1
+
+0 ---- 什么都不执行
+
+文件的执行主要看文件的权限，而不看文件名。通常我们使用*.sh表示批处理文件（scripts）;*.tar为压缩文件
+
+pwd # print working directory: 显示当前工作目录
+cd # change directory
+cd [/path] # /path
+cd [./path] # . 工作目录   ./可省略 等价 cd path
+cd [..] # .. 工作目录的父目录
+cd # 回到home目录
+cd - # 更改工作目录到先前的工作目录
+
+file [dictory] # 确定文件类型
+less [dictory] # 浏览文件内容
+
+
 mkdir [目录名]：make directories
 rmdir [目录名]: remove empty directories
 mv [原文件或目录] [目标目录]: 剪切文件、改名

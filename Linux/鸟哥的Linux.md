@@ -92,44 +92,7 @@ su - username  切换用户
 Password:
 Last login: Wed Aug  4 17:26:56 CST 2021 on tty1
 
-[root@localhost ~]# ls -al
-total 28
-dr-xr-x---.  2 	  root   root   135     Aug  4 17:27 .
-dr-xr-xr-x. 17 	  root   root   224     Aug  4 16:49 ..
-...
--rw-r--r--.  1 	  root   root   100     Dec 29  2013 .cshrc
--rw-r--r--.  1 	  root   root   129     Dec 29  2013 .tcshrc
-[   权限  ] [连结][拥有者] [群组][文件大小]  [修改日期]    [文件名称]
 
-文件大小默认以bytes为单位
-.tcshrc 表示该文件是隐藏文件
-
--           rw-            r--          r--
-[文件类型][文件拥有者权限][文件所属群组权限][其他人权限]
-
-文件类型：
-d 目录
-- 文件
-	1. ASSII 文件，可以使用cat查看
-	2. binary 文件，可执行文件（scripts），如cat
-	3. 数据格式文件（data）, 拥有特定格式的文件
-l 连结档link file，相当于Windows下的快捷方式
-b 可供存储的接口设备（可随机存取装置）
-c 串行端口设备，如键盘，鼠标（一次性读取装置）
-
-权限：
-| r    | 读   | 可以查看文件内容 | 列出目录中的内容       |
-| w    | 写   | 可以修改文件内容 | 在目录中创建，删除文件 |
-| x    | 执行 | 可以执行文件     | 进入目录               |
-
-权限的数字表示
-r ---- 4
-w ---- 2
-x ---- 1
-
-0 ---- 什么都不执行
-
-文件的执行主要看文件的权限，而不看文件名。通常我们使用*.sh表示批处理文件（scripts）;*.tar为压缩文件
 ```
 
 
