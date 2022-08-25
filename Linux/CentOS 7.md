@@ -245,6 +245,7 @@ Ctrl-z # 停止一个进程, 隐藏到后端. 终端发送一个叫做 TSTP（Te
 command & # 在后端启动任务
 jobs # 
 fg [jobspec] # foreground 前台 显示到前台 jobspec = %1
+kill %1 jobspec
 kill [-signal] PID... # 默认情况下，终端发送 TERM（Terminate，终止）信号给程序
 kill -l # 显示所有信号
 killall [-u user] [-signal] name...# 给匹配特定程序或用户名的多个进程发送信号
