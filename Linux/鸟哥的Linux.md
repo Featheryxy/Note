@@ -22,20 +22,6 @@
 
 ```shell
 
-
-
-[milo@localhost network-scripts]$ cd ~
-[milo@localhost ~]$ pwd
-/home/milo
-
-[milo@localhost ~]$ command [-options] parameter1 parameter1 ...
-					  指令       选项      参数1       参数2	   	
-
-使用反斜杠(\) 跳脱[Enter]符号，使指令连续到下一行。
-PS: \ 后立刻接特殊符号
-
-
-
 clear or Ctrl+L  清屏 
 [tab] 命令补全，文件补齐 
 Ctrl+c  中断目前程序

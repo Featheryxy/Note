@@ -129,53 +129,50 @@ Optional\<T\>对象：对T类型对象的封装，或者表示不是任何对象
 
 
 ```java
-    Author author = getAuthor(); 
-       
-    	// author 为空不报错
-    	Optional<Author> author = Optional.ofNullable(author);`
-       
-       // 不推荐 author 为空报错
-       Optional.of(author);
-       // 封装 null 对象
-       Optional.empty();
-       
-       // 会先去判断是否为空，不为空才会去执行消费代码，优雅避免空指针
-    	Optional.ifPresent();
-    	// 判断数据是否存在，空则返回false，否则true
-    	Optional.isPresent() 
-           
-       // 不推荐，当Optional的get方法为空时会出现异常
-    	Optional.get();
-    	Optional.orElseGet();
-       Optional.orElseThrow()
-    	
-    	// filter
-      author.filter(author -> author.getAge() > 18)
-          .ifPresent(author -> System.out.println(author.getName()));
-       
-    	// map
-    	Optional<List<Book>> books = author.map(author -> author.getBookList());
+// 推荐用法
+// 1. 当可选值存在时，对该值操作, 不返回任何值。否则不操作
+optionalValue.ifPresent(v -> Process v);
+// 等价于
+if(optionalValue.isPresent()){
+    value = optionalValue.get();
+    Process value;
+}
+// 2. 当可选值存在时，对该值操作, 返回true。否则返回false
+Optional<Boolean> isDone =optionalValue.map(v -> Process v);
+// 3. 当可选值不存在时，产生替代值或抛出异常
+Optional.orElse();
+Optional.orElseGet();
+Optional.orElseThrow();
 
-   	// 推荐用法
-       // 1. 当可选值存在时，对该值操作, 不返回任何值。否则不操作
-       optionalValue.ifPresent(v -> Process v);
-   	if(optionalValue.isPresent()){
+// 封装一个可能为null的对象，如果obj != null,则执行Optional.of(obj), 否则 Optional.emp
+Optional.ofNullable(obj); 
 
-           value = optionalValue.get();
+Author author = getAuthor(); 
 
-           Process value;
+// author 为空不报错
+Optional<Author> author = Optional.ofNullable(author);`
 
-       }
-       // 2. 当可选值存在时，对该值操作, 返回true。否则返回false
-   	Optional<Boolean> isDone =optionalValue.map(v -> Process v);
-       // 3. 当可选值不存在时，产生替代值
+// 不推荐 author 为空报错
+Optional.of(author);
+// 封装 null 对象
+Optional.empty();
 
-       Optional.orElse();
-    Optional.orElseGet();
-    Optional.orElseThrow();
+// 会先去判断是否为空，不为空才会去执行消费代码，优雅避免空指针
+Optional.ifPresent();
+// 判断数据是否存在，空则返回false，否则true
+Optional.isPresent() 
 
-   	// 封装一个可能为null的对象，如果obj != null,则执行Optional.of(obj), 否则 Optional.emp
-   	Optional.ofNullable(obj); 
+// 不推荐，当Optional的get方法为空时会出现异常
+Optional.get();
+Optional.orElseGet();
+Optional.orElseThrow()
+
+// filter
+author.filter(author -> author.getAge() > 18)
+    .ifPresent(author -> System.out.println(author.getName()));
+
+// map
+Optional<List<Book>> books = author.map(author -> author.getBookList());
 
 ```
 

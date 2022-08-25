@@ -10,7 +10,7 @@
 $   一般用户提示符
 ```
 
-### 命令形式
+### 命令
 
 ```shell
 command [-options] parameter1 parameter1 ...
@@ -18,17 +18,39 @@ command [-options] parameter1 parameter1 ...
 
 使用反斜杠(\) 跳脱[Enter]符号，使指令连续到下一行。
 PS: \ 后立刻接特殊符号
+
+command1; command2; command3... # 按顺序执行 command1，command2，command3... 如cd /; ll
+
+alias # 查看所有定义在系统环境中的别名
+alias [-p] [name[=value] ...] # 为命令起别名
+unalias # 删除别名
+[ta6@10 /]$ alias foo='cd /usr; ls; cd -'
+[ta6@10 /]$ foo
+bin  etc  games  include  lib  lib64  libexec  local  sbin  share  src  tmp
+/
+[ta6@10 /]$ unalias foo
+[ta6@10 /]$ type foo
+-bash: type: foo: 未找到
+
+uname -srm # c
 ```
 
 ### 帮助命令
 
 ```shell
-man [-k] [命令或配置文件] # manual, 命令的具体参数及使用方法
--k 只记得部分命令关键字的场合，我们可通过man -k来搜索
+type [command] # 显示命令的类型， 可以寻找是否存在改命令
+which [命令] # 显示一个可执行程序的位置, 只对可执行程序有效，不包括内建命令和命令别名
+whatis [命令] # 显示非常简洁的命令说明
 
-whatis [命令] # 简要说明
+help [command] # shell 内建命令的帮助
+man [-k] [命令或配置文件] # manual, 显示程序手册页，命令的具体参数及使用方法,难阅读
+-k # 只记得部分命令关键字的场合，我们可通过man -k来搜索
+apropos # 显示适当的命令 等价于 man [-k]
+
+[demo@localhost ~]$ mkd 双击tab 
+mkdict    mkdir     mkdosfs   mkdumprd
+
 info [命令] # 详细的介绍
-which [命令] # 命令在哪个位置
 ```
 
 ### 系统目录
@@ -146,7 +168,7 @@ cd - # 更改工作目录到先前的工作目录
 
 file [dictory] # 确定文件类型
 less [dictory] # 浏览文件内容
-
+zless [dictory] # 可以显示由 gzip 压缩的文本文件的内容
 
 mkdir [目录名1] [目录名2] # make directories
 rmdir [目录名]: remove empty directories
