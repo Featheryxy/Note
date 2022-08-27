@@ -47,7 +47,7 @@ man [-k] [命令或配置文件] # manual, 显示程序手册页，命令的具�
 -k # 只记得部分命令关键字的场合，我们可通过man -k来搜索
 apropos # 显示适当的命令 等价于 man [-k]
 
-[demo@localhost ~]$ mkd 双击tab 
+[demo@localhost ~]$ mkd 双击tab # 查看已mkd为开头的命令
 mkdict    mkdir     mkdosfs   mkdumprd
 
 info [命令] # 详细的介绍
@@ -301,25 +301,109 @@ N # 低优先级进程。一个低优先级进程（一个“nice”进程）只
 
 
 
-###  yum
+###  软件包管理
 
 ```shell 
-yum [option] [查询工作项目] [相关参数]
+yum [options] command [package ...]
+yum search package_name # 在yum服务器上查找包
+yum -y install package_name 
+yum list updates # 列出可升级的软件
+yum erase package_name # 卸载软件
+yum list installed 等于 rpm -qa # 列出已安装的软件
+rpm -q package_name # 是否安装了一个软件包
+yum info package_name # 显示所安装软件包的信息
+rpm -qf file_name # 查找安装了某个文件的软件包
 
-[option]
--y: 自动yes
+[options]
+-y # 自动回答yes
 --installroot=/some/path: 自定义安装路径
 
 [查询工作项目] [相关参数]
 search:
 list: 列出yum服务器上提供的所有软件 rpm -qa
-info: 查看软件功能 rpm -qai
-install:
-update:
-remove: 卸载
 
-yum list updates: 列出可升级的软件
+
 yum list isntalled: 列出已安装的软件
+```
+
+### 网络系统
+
+Listening: 监听状态（即等待接入请求）的套接字
+
+```shell
+ifconfig # interface configure 网卡名称 IP地址
+ping id_address
+traceroute id_address # 路由跟踪,显示数据包到主机间的路径
+
+netstat # 显示网络相关信息
+netstat -a # 列出所有当前的连接
+netstat -at #  -t 选项列出 TCP 协议的连接
+netstat -au #  -u 选项列出 UDP 协议的连接
+netstat -an # numeric 直接使用IP地址，而不通过域名服务器
+netstat -tnl # -t 只列出监听中的连接, 不能使用-a, 
+netstat -tnlp # -p 查看进程信息, netstat 必须运行在 root 权限之下，不然它就不能得到运行在 root 权限下的进程名，而很多服务包括 http 和 ftp 都运行在 root 权限之下
+netstat -tlep # -ep 同时查看进程名和用户名,  -n 和 -e 选项一起使用，User 列的属性就是用户的 ID 号，而不是用户名
+netstat -s # 列出所有网络包的统计情况
+netstat -rn # 显示Routing Table
+```
+
+
+
+```shell
+[root@VM-0-12-centos ~]# ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.17.0.12  netmask 255.255.240.0  broadcast 172.17.15.255
+        inet6 fe80::5054:ff:fe26:7351  prefixlen 64  scopeid 0x20<link>
+        ether 52:54:00:26:73:51  txqueuelen 1000  (Ethernet)
+        RX packets 2152519  bytes 497701765 (474.6 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1904673  bytes 295675469 (281.9 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 440  bytes 56320 (55.0 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 440  bytes 56320 (55.0 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        
+ eth0，是以太网接口，和第二个，叫做 lo，是内部回环网络接口，它是一个虚拟接口 
+ 
+[root@VM-0-12-centos ~]# netstat -rn
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+0.0.0.0         172.17.0.1      0.0.0.0         UG        0 0          0 eth0
+169.254.0.0     0.0.0.0         255.255.0.0     U         0 0          0 eth0
+172.17.0.0      0.0.0.0         255.255.240.0   U         0 0          0 eth0
+
+第二行显示了目的地 169.254.0.0。IP 地址以零结尾是指网络，而不是独立主机，所以这个目的地意味着局域网中的任何一台主机
+下一个字段，Gateway，是网关（路由器）的名字或 IP 地址，用它来连接当前的主机和目的地的网络。若这个字段显示一个星号，则表明不需要网关。
+```
+
+### SFTP
+
+FTP（它的原始形式）以明码形式发送帐号的姓名和密码
+
+SFTP（Secure File Transfer Protocol，安全文件传输协议） 
+
+```shell
+1. 连接远程服务器
+sftp remote_user@remote_host
+2. 使用端口进行连接
+sftp -P remote_port remote_user@remote_host
+3. 从远程服务器拉取文件
+get /path/remote_file
+get -r ./. # 拉取远程的 当前目录下的 所有 子目录及里面的 文件
+4. 上传本地文件到服务器
+put local_file
+5. 查看远程服务器目录内容
+ls
+6.查看本地目录内容
+lls  # l = local
+7.执行本地 Shell 命令
+![command]
 ```
 
 
@@ -380,11 +464,20 @@ free # 内存
 ### 缩写
 
 ```shell
--f # force
--v # verbose
+-c # continue 持续输出
 -d # directory
+-e # extend 扩展信息
+-f # force
+-i # interface
+-r # route 
+
+-s # state 状态信息 statistics 统计信息
+-v # verbose
+-l # listing
+-n # numeric 数字的
+-p # process 进程 programs 程序
+
 ps # process status
-s #
 TTY # Teletype 电传打字机 终端
 up # 持续
 q # quit

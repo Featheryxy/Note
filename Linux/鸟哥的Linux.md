@@ -30,19 +30,8 @@ Ctrl+d  End Of File, EOF or End Of Input, 可代替exit
 shift+page up 向上翻页
 shift+page down 向下翻页
 
-command --help 简要说明
-man command (man: manual) 详细说明
-info command 详细说明,以分页形式展示
 
 
-查看已ca为开头的命令
-[milo@localhost /]$ ca[tab][tab]
-cacertdir_rehash     cache_writeback      case
-cache_check          cal                  cat
-cache_dump           ca-legacy            catchsegv
-cache_metadata_size  caller               catman
-cache_repair         capsh
-cache_restore        captoinfo
 
 ----------------------------------------------------------
 [milo@localhost ~]$ man date
