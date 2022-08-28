@@ -1,3 +1,5 @@
+bash 是最初 Unix 上由 Steve Bourne 写成 shell 程序 sh 的增强版
+
 ### 界面
 
 ```shell
@@ -233,12 +235,23 @@ ln -s fun fun-sym
 
 当系统启动的时候，内核先把一些它自己的活动初始化为进程，然后运行一个叫做 init 的程序。init，依次地，再运行一系列的称为 init 脚本的 shell 脚本（位于/etc），它们可以启动所有的系统服务。其中许多系统服务以守护（daemon）程序的形式实现，守护程序仅在后台运行，没有任何用户接口 (User Interface)。这样，即使我们没有登录系统，至少系统也在忙于执行一些例行事务。一个程序可以发动另一个程序被表述为一个父进程可以产生一个子进程。系统分配给每个进程一个数字，这个数字叫做进程 (process) ID 或 PID。PID 号按升序分配，init 进程的 PID 总是 1.内核也对分配给每个进程的内存和就绪状态进行跟踪以便继续执行这个进程。像文件一样，进程也有所有者和用户 ID，有效用户 ID，等等。
 
+用户使用shell将我们输入的指令与Kernel沟通
 
+每一个进程都有一个唯一的PID来标识
+
+程序（program)：通常为binary program, 放置再存储媒介中
+
+进程（process）：程序被触发后，执行者的权限与属性、程序代码和所需数据等被加载到内存中，操作系统并给予这个内存内的单元一个标识符（PID）
+
+子进程：在父进程中创建新的进程， 拥有PPID(Parent PID)，杀死子进程，过一段时间可能会新起一个同名但是不同PID的子进程，所以删除进程时应删除父进程
+
+一个service需要一个daemon进程，通常以{xxx}d命名
 
 ```shell
 ps  # (process status) 查看进程,只是列出与当前终端会话相关的进程
 ps x # 展示所有进程，不管它们由什么终端（如果有的话）控制
 ps aux # 显示属于每个用户的进程信息.
+ps -ef # 显示属于每个用户的进程信息.
 top # 以进程活动顺序显示连续更新的系统进程列表。（默认情况下，每三秒钟更新一次）
 Ctrl-c # 终止一个程序. 终端发送一个叫做 INT（Interrupt, 中断）的信号给程序
 Ctrl-z # 停止一个进程, 隐藏到后端. 终端发送一个叫做 TSTP（Terminal Stop,终端停止）的信号给程序
@@ -289,6 +302,25 @@ Z # 一个死进程或“僵尸”进程。这是一个已经终止的子进程�
 < # 一个高优先级进程。这可能会授予一个进程更多重要的资源，给它更多的 CPU 时间。进程的这种属性叫做 niceness。具有高优先级的进程据说是不好的（less nice），因为它占用了比较多的 CPU 时间，这样就给其它进程留下很少时间。
 N # 低优先级进程。一个低优先级进程（一个“nice”进程）只有当其它高优先级进程被服务了之后，才会得到处理器时间。
 
+只查阅当前bash的进程
+[milo@localhost /]$ ps -l
+F S   UID    PID   PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
+0 S  1000  22764  22762  0  80   0 - 28886 do_wai pts/1    00:00:00 bash
+0 S  1000  36246  22764  0  80   0 - 28917 do_wai pts/1    00:00:00 bash
+0 R  1000  36531  36246  0  80   0 - 38331 -      pts/1    00:00:00 ps
+UID/PID/PPID: 该进程被该UID所拥有/进程的PID号/该进程的父进程PID号
+C: CPU使用率，%
+PRI/NI: Priority/Nice 的缩写,代表此进程被CPU所执行的优先级，数值越小代表该进程越快被CPU执行。
+ADDR/SZ/WCHAN:都与内存有关，ADDR 是kernel function，指出该进程在内存的哪个部分，如果是个
+running的进程，一般显示[-]; /SZ 该进程占用的内存；/WCHAN 该进程是否运作，[-]表示运作中
+TTY:登入者的终端机位置，若为远程登录则使用动态终端接口(pts/n); .
+CMD: 触发此进程的程序指令
+TIME:使用掉的CPU时间，注意，是此进程实际花费CPU运作的时间，而不是系统时间;
+
+F: 进程标志
+	- 4：此进程的权限为root
+	- 1：此子进程仅进行复制（fork）而没有实际执行（exec）
+	
 [root@VM-0-12-centos ~]# top &
 [2] 13493
 任务控制 (job control), shell 告诉我们再后台(background)已经启动了任务号 (job number) 为 2（“［2］”），PID 为 13493 的程序
@@ -345,6 +377,7 @@ netstat -tnlp # -p 查看进程信息, netstat 必须运行在 root 权限之下
 netstat -tlep # -ep 同时查看进程名和用户名,  -n 和 -e 选项一起使用，User 列的属性就是用户的 ID 号，而不是用户名
 netstat -s # 列出所有网络包的统计情况
 netstat -rn # 显示Routing Table
+wget [URL] # 非交互网络下载器
 ```
 
 
@@ -382,11 +415,34 @@ Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
 下一个字段，Gateway，是网关（路由器）的名字或 IP 地址，用它来连接当前的主机和目的地的网络。若这个字段显示一个星号，则表明不需要网关。
 ```
 
+### SSH
+
+SSH: Secure Shell 
+
+- 认证远端主机是否为它所知道的那台主机（这样就阻止了所谓的“中间人”的攻击）
+- 它加密了本地与远程主机之间所有的通讯信息
+
+组成
+
+1. SSH 服务端运行在远端主机上，在端口 22 上监听收到的外部连接
+2. SSH 客户端用在本地系统中，用来和远端服务器通信
+
+> 大多数 Linux 发行版自带一个提供 SSH 功能的软件包，叫做 OpenSSH. 一些发行版默认包含客户端和服务端两个软件包（例如 Red Hat）
+
+```shell
+ssh remote-sys # 以当前用户连接远端主机
+ssh user@remote-sys # 以user用户连接远端主机
+```
+
 ### SFTP
 
 FTP（它的原始形式）以明码形式发送帐号的姓名和密码
 
 SFTP（Secure File Transfer Protocol，安全文件传输协议） 
+
+> sftp 在OpenSSH包下?
+>
+>  sftp 不需要远端系统中运行 FTP 服务端。它仅仅需要 SSH 服务端。这意味着任何一台能用 SSH 客户端连接的远端机器，也可当作类似于 FTP 的服务器来使用
 
 ```shell
 1. 连接远程服务器
@@ -406,9 +462,19 @@ lls  # l = local
 ![command]
 ```
 
+### 查找文件
 
+```shell
+locate [file_name] # 通过名字来查找文件
+find [file_name] # 在一个目录层次结构中搜索文件
+xargs # 从标准输入生成和执行命令行
+touch # 更改文件时间
+stat# 显示文件或文件系统状态
+```
 
-
+> locate 数据库由另一个叫做 updatedb 的程序创建。通常，这个程序作为一个定时任务（jobs）周期性运转；也就是说，一个任务在特定的时间间隔内被 cron 守护进程执行。大多数装有 locate的系统会每隔一天运行一回 updatedb 程序。因为数据库不能被持续地更新，所以当使用 locate 时，你会发现目前最新的文件不会出现。为了克服这个问题，通过更改为超级用户身份，在提示符下运行 updatedb 命令，可以手动运行 updatedb 程序。
+>
+> /tmp下的文件不在文件资料库下
 
 ### tar
 
@@ -431,6 +497,22 @@ lls  # l = local
 ps：-z-j-J只能使用一个
 
 
+```
+
+### 正则表达式
+
+
+
+```shell
+grep # global regular expression prin 在文本文件中查找一个指定的正则表达式，并把匹配行输出到标准输出
+grep [options] regex [file...]
+-i # 忽略大小写。不会区分大小写字符。也可用--ignore-case 来指定。
+-v # 不匹配。通常，grep 程序会打印包含匹配项的文本行。这个选项导致 grep 程序只会打印不包含匹配项的文本行。也可用--invert-match 来指定。
+-c # 打印匹配的数量（或者是不匹配的数目，若指定了-v 选项），而不是文本行本身。也可用--count 选项来指定。
+-l # 打印包含匹配项的文件名，而不是文本行本身，也可用--files-with-matches 选项来指定。
+-L # 相似于-l 选项，但是只是打印不包含匹配项的文件名。也可用--files-without-match 来指定。
+-n # 在每个匹配行之前打印出其位于文件中的相应行号。也可用--line-number 选项来指定。
+-h # 应用于多文件搜索，不输出文件名。也可用--no-filename 选项来指定。
 ```
 
 
@@ -483,5 +565,6 @@ up # 持续
 q # quit
 h # help human
 fg # foreground 前台
+grep # global regular expression print
 ```
 
