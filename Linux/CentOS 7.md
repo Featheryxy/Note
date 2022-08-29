@@ -417,6 +417,8 @@ Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
 
 ### SSH
 
+SSH 协议替代了 telnet（端口 23）和 ftp（端口21）两个协议的，使用22端口
+
 SSH: Secure Shell 
 
 - 认证远端主机是否为它所知道的那台主机（这样就阻止了所谓的“中间人”的攻击）
