@@ -78,9 +78,27 @@ n 光标
 >
 >  : a brief written description that provides information about someone or something
 
+## G
+
+#### round
+
+整数的；用整数表示的；
+
+> (of a number) whole or complete; 
+>
+> 2.8 to the nearest round number is 3;
+
+
+
 ## P
 
+### precision
 
+精度
+
+> Precision is the number of digits in a number. 
+>
+> For example, the number 123.45 has a precision of 5 and a scale of 2
 
 
 
@@ -366,11 +384,7 @@ n: 站点，地点
 
 
 
-### precision
 
-精度
-
-> Precision is the number of digits in a number. 
 
 ### scale
 

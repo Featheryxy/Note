@@ -47,3 +47,10 @@ ZONE=public
 service network restart
 ```
 
+### 联网
+
+虚拟机设置为NAT模式
+
+>  NAT使用VMnet8网卡，当主机通网时，该机也可通网。默认情况下和物理机同一网络中的其它机器不能访问虚拟机，但虚拟机可以访问其它物理机。可以修改NAT设置，添加主机IP：主机端口与虚拟机IP: 虚拟机端口
+
+如果`ip addr `无网卡信息, 则修改/etc/sysconfig/network-scripts/ifcfg-ens33文件, 将ONBOOT设置为yes 来启动网卡

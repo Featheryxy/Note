@@ -6,7 +6,7 @@
 
 
 ```mysql
-1. ALTER TABLE table_name MODIFY [COLUMN]  column_name data_type constraints; -- mysql 替换所有的
+1. ALTER TABLE table_name MODIFY [COLUMN]  column_name data_type constraints ; -- mysql 替换所有的
 2. ALTER TABLE table_name MODIFY column_name data_type constraints; -- oracle 只修改改变的部分
 ```
 
@@ -55,3 +55,23 @@
 ```
 
 https://blog.csdn.net/mmake1994/article/details/85982743
+
+### group by
+
+```sql
+-- o
+select university, avg(question_cnt)  avg_question_cnt, avg(answer_cnt) avg_answer_cnt
+from user_profile 
+group by university
+having avg(question_cnt) < 5 or avg(answer_cnt) < 20;
+
+-- mysql
+select
+    university,
+    avg(question_cnt) as avg_question_cnt,
+    avg(answer_cnt) as avg_answer_cnt
+from user_profile
+group by university
+having avg_question_cnt<5 or avg_answer_cnt<20
+```
+
