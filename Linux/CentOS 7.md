@@ -96,6 +96,9 @@ info [命令] # 详细的介绍
 usr是user的缩写，是曾经的HOME目录，然而现在已经被/home取代了，现在usr被称为是Unix System Resource，即Unix系统资源的缩写。
 ```
 
+- 软件包目录：/opt/setups
+- 解压后软件包目录: /usr/program
+
 ### 文件类型
 
 ```shell
@@ -335,6 +338,9 @@ F: 进程标志
 
 ###  软件包管理
 
+- RPM(RedHat Package Manage)
+- YUM(Yellow dog Updater Modified)：解决了RPM的属性依赖问题，通过依赖rpm软件包管理器，实现了rpm软件包管理器在功能上的扩展，因此yum是不能脱离rpm而独立运行的
+
 ```shell 
 yum [options] command [package ...]
 yum search package_name # 在yum服务器上查找包
@@ -342,7 +348,7 @@ yum -y install package_name
 yum list updates # 列出可升级的软件
 yum erase package_name # 卸载软件
 yum list installed 等于 rpm -qa # 列出已安装的软件
-rpm -q package_name # 是否安装了一个软件包
+rpm -qa package_name # 是否安装了一个软件包
 yum info package_name # 显示所安装软件包的信息
 rpm -qf file_name # 查找安装了某个文件的软件包
 
@@ -548,6 +554,7 @@ free # 内存
 ### 缩写
 
 ```shell
+-a # all
 -c # continue 持续输出
 -d # directory
 -e # extend 扩展信息
@@ -560,7 +567,7 @@ free # 内存
 -l # listing
 -n # numeric 数字的
 -p # process 进程 programs 程序
-
+-q # query 查询
 ps # process status
 TTY # Teletype 电传打字机 终端
 up # 持续
