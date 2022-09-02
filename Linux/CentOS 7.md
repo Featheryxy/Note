@@ -53,6 +53,16 @@ apropos # 显示适当的命令 等价于 man [-k]
 mkdict    mkdir     mkdosfs   mkdumprd
 
 info [命令] # 详细的介绍
+
+
+1 用户命令
+2 程序接口内核系统调用
+3 C 库函数程序接口
+4 特殊文件，比如说设备结点和驱动程序
+5 文件格式
+6 游戏娱乐，如屏幕保护程序
+7 其他方面
+8 系统管理员命令
 ```
 
 ### 系统目录
@@ -421,6 +431,31 @@ Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
 下一个字段，Gateway，是网关（路由器）的名字或 IP 地址，用它来连接当前的主机和目的地的网络。若这个字段显示一个星号，则表明不需要网关。
 ```
 
+### SHELL环境
+
+shell 在 shell 会话中保存着大量信息， 这些信息被称为环境变量。一些程序会根据环境变量来调整他们的行为。可以使用`echo $环境变量命` 来打印变量值。
+
+环境存放下面两种信息
+
+- shell 变量：bash 存放的少量数据
+- 环境变量
+
+```shell
+printenv # 只显示环境变量
+set # 可以显示shell 变量和环境变量
+export [-fnp][变量名称]=[变量设置值] # 设置或显示环境变量,仅限于该次登陆操作
+source FILENAME # 用于保留、更改当前shell中的环境变量,在当前shell中运行execute命令。
+echo $PATH # 打印可执行程序路径，由冒号分开的目录列表，当你输入可执行程序名后，会搜索这个目录列表。
+```
+
+当我们登录系统后，bash 程序启动，并且会读取一系列称为启动文件的配置脚本，这些文件定义了默认的可供所有用户共享的 shell 环境。然后是读取更多位于我们自己家目录中的启动文件，这些启动文件定义了用户个人的shell 环境。
+
+1. /etc/profile 应用于所有用户的全局配置脚本。
+2. ˜/.bash_profile 用户个人的启动文件。可以用来扩展或重写全局配置脚本中的设置。
+3. ˜/.bash_login 如果文件 ˜/.bash_profile 没有找到，bash 会尝试读取这个脚本
+4. ˜/.profile 如果文件 ˜/.bash_profile 或文件 ˜/.bash_login 都没有找到，bash 会试图读取这个文件。这是基于 Debian 发行版的默认设置，比方说 Ubuntu。
+5. ˜/.bashrc 用户个人的启动文件。可以用来扩展或重写全局配置脚本中的设置。
+
 ### SSH
 
 SSH 协议替代了 telnet（端口 23）和 ftp（端口21）两个协议的，使用22端口
@@ -575,5 +610,7 @@ q # quit
 h # help human
 fg # foreground 前台
 grep # global regular expression print
+
+^ # Ctrl
 ```
 
