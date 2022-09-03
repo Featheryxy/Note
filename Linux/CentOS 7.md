@@ -456,6 +456,55 @@ echo $PATH # 打印可执行程序路径，由冒号分开的目录列表，当�
 4. ˜/.profile 如果文件 ˜/.bash_profile 或文件 ˜/.bash_login 都没有找到，bash 会试图读取这个文件。这是基于 Debian 发行版的默认设置，比方说 Ubuntu。
 5. ˜/.bashrc 用户个人的启动文件。可以用来扩展或重写全局配置脚本中的设置。
 
+### echo
+
+```shell
+echo (1)             - display a line of text
+echo * #  打印当前目录下的文件 shell 在 echo 命令被执行前把 “*” 展开成了当前工作目录下的文件名字
+echo .* # 打印当前目录下以.开头的文件或目录
+echo $((expression)) # 只支持整数
+echo 报头{}附言 
+echo $变量名
+echo "*" # 只打印*, 双引号表示使用普通字符,但是$，\ (反斜杠），和 ‘（倒引号）除外
+双引号(" "): 只展开 $，\ (反斜杠），和 ‘（倒引号）
+单引号(' '): 禁止所有的展开
+转义字符(\): 1. 阻止展开特殊字符 2. 控制码, 如\b \n \r \t 如  echo -e "time's\r\n up "
+[root@VM-0-12-centos ~]#  echo Front-{A,B,C}-Back
+Front-A-Back Front-B-Back Front-C-Back
+
+[root@VM-0-12-centos ~]#  echo Number_{1..5}
+Number_1 Number_2 Number_3 Number_4 Number_5
+
+# 删除多余的空格
+[root@VM-0-12-centos /]# echo this is a            text
+this is a text
+
+单词分割机制会在单词中寻找空格，制表符，和换行符，并把它们看作单词之间的界定符。这意味着无引用的空格，制表符和换行符都不是文本的一部分，它们只作为分隔符使用。由于它们把单词分为不同的参数.如果我们加上双引号,，内嵌的空格也不会被当作界定符，它们成为参数的一部分。一旦加上双引号，我们的命令行就包含一个带有一个参数的命令。
+
+
+[root@VM-0-12-centos /]# echo $(cal)
+September 2022 Su Mo Tu We Th Fr Sa 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+[root@VM-0-12-centos /]# echo "$(cal)"
+   September 2022
+Su Mo Tu We Th Fr Sa
+             1  2  3
+ 4  5  6  7  8  9 10
+11 12 13 14 15 16 17
+18 19 20 21 22 23 24
+25 26 27 28 29 30
+
+没有引用的命令替换导致命令行包含 38 个参数
+在第二个例子中，命令行只有一个参数，参数中包括嵌入的空格和换行符。
+
+[root@VM-0-12-centos /]# echo "dolloar $5.00"
+dolloar .00
+[root@VM-0-12-centos /]# echo "dolloar \$5.00"
+dolloar $5.00
+
+```
+
+
+
 ### SSH
 
 SSH 协议替代了 telnet（端口 23）和 ftp（端口21）两个协议的，使用22端口
