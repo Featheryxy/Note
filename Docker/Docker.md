@@ -327,8 +327,7 @@ SIZE：镜像大小
 
   很重要的要说明的一点: **Docker容器后台运行,就必须有一个前台进程**.
   容器运行的命令如果不是那些一直挂起的命令（比如运行top，tail），就是会自动退出的。
-  这个是docker的机制问题,比如你的web容器,我们以nginx为例，正常情况下,我们配置启动服务只需要启动响应的service即可。例如  service nginx start。  但是,这样做,nginx为后台进程模式运行,就导致docker前台没有运行的应用， 这样的容器后台启动后,会立即自杀因为他觉得他没事可做了.
-  所以，最佳的解决方案是,将你要**运行的程序以前台进程的形式运行**
+  这个是docker的机制问题,比如你的web容器,我们以nginx为例，正常情况下,我们配置启动服务只需要启动响应的service即可。例如  service nginx start。  但是,这样做,nginx为后台进程模式运行,就导致docker前台没有运行的应用， 这样的容器后台启动后,会立即自杀因为他觉得他没事可做了.  所以，最佳的解决方案是,将你要**运行的程序以前台进程的形式运行**
 
 - docker ps [OPTIONS] -------- 列出当前所有正在运行的容器
 
@@ -1273,8 +1272,8 @@ a8ea48378d9b        11 minutes ago      /bin/sh -c #(nop)  ENV MYPATH=/usr/local
     [root@localhost mydocker]# docker ps
     CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
     
-    ```
-  
+```
+
 - ENTRYPOINT
 
   - docker run之后的参数会被 当做参数传递给ENTRYPOINT, 之后形成新的命令组合
