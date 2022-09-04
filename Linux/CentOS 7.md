@@ -53,6 +53,16 @@ apropos # 显示适当的命令 等价于 man [-k]
 mkdict    mkdir     mkdosfs   mkdumprd
 
 info [命令] # 详细的介绍
+
+
+1 用户命令
+2 程序接口内核系统调用
+3 C 库函数程序接口
+4 特殊文件，比如说设备结点和驱动程序
+5 文件格式
+6 游戏娱乐，如屏幕保护程序
+7 其他方面
+8 系统管理员命令
 ```
 
 ### 系统目录
@@ -95,6 +105,9 @@ info [命令] # 详细的介绍
 
 usr是user的缩写，是曾经的HOME目录，然而现在已经被/home取代了，现在usr被称为是Unix System Resource，即Unix系统资源的缩写。
 ```
+
+- 软件包目录：/opt/setups
+- 解压后软件包目录: /usr/program
 
 ### 文件类型
 
@@ -335,6 +348,9 @@ F: 进程标志
 
 ###  软件包管理
 
+- RPM(RedHat Package Manage)
+- YUM(Yellow dog Updater Modified)：解决了RPM的属性依赖问题，通过依赖rpm软件包管理器，实现了rpm软件包管理器在功能上的扩展，因此yum是不能脱离rpm而独立运行的
+
 ```shell 
 yum [options] command [package ...]
 yum search package_name # 在yum服务器上查找包
@@ -342,7 +358,7 @@ yum -y install package_name
 yum list updates # 列出可升级的软件
 yum erase package_name # 卸载软件
 yum list installed 等于 rpm -qa # 列出已安装的软件
-rpm -q package_name # 是否安装了一个软件包
+rpm -qa package_name # 是否安装了一个软件包
 yum info package_name # 显示所安装软件包的信息
 rpm -qf file_name # 查找安装了某个文件的软件包
 
@@ -415,7 +431,83 @@ Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
 下一个字段，Gateway，是网关（路由器）的名字或 IP 地址，用它来连接当前的主机和目的地的网络。若这个字段显示一个星号，则表明不需要网关。
 ```
 
+### SHELL环境
+
+shell 在 shell 会话中保存着大量信息， 这些信息被称为环境变量。一些程序会根据环境变量来调整他们的行为。可以使用`echo $环境变量命` 来打印变量值。
+
+环境存放下面两种信息
+
+- shell 变量：bash 存放的少量数据
+- 环境变量
+
+```shell
+printenv # 只显示环境变量
+set # 可以显示shell 变量和环境变量
+export [-fnp][变量名称]=[变量设置值] # 设置或显示环境变量,仅限于该次登陆操作
+source FILENAME # 用于保留、更改当前shell中的环境变量,在当前shell中运行execute命令。
+echo $PATH # 打印可执行程序路径，由冒号分开的目录列表，当你输入可执行程序名后，会搜索这个目录列表。
+```
+
+当我们登录系统后，bash 程序启动，并且会读取一系列称为启动文件的配置脚本，这些文件定义了默认的可供所有用户共享的 shell 环境。然后是读取更多位于我们自己家目录中的启动文件，这些启动文件定义了用户个人的shell 环境。
+
+1. /etc/profile 应用于所有用户的全局配置脚本。
+2. ˜/.bash_profile 用户个人的启动文件。可以用来扩展或重写全局配置脚本中的设置。
+3. ˜/.bash_login 如果文件 ˜/.bash_profile 没有找到，bash 会尝试读取这个脚本
+4. ˜/.profile 如果文件 ˜/.bash_profile 或文件 ˜/.bash_login 都没有找到，bash 会试图读取这个文件。这是基于 Debian 发行版的默认设置，比方说 Ubuntu。
+5. ˜/.bashrc 用户个人的启动文件。可以用来扩展或重写全局配置脚本中的设置。
+
+### echo
+
+```shell
+echo (1)             - display a line of text
+echo * #  打印当前目录下的文件 shell 在 echo 命令被执行前把 “*” 展开成了当前工作目录下的文件名字
+echo .* # 打印当前目录下以.开头的文件或目录
+echo $((expression)) # 只支持整数
+echo 报头{}附言 
+echo $变量名
+echo "*" # 只打印*, 双引号表示使用普通字符,但是$，\ (反斜杠），和 ‘（倒引号）除外
+双引号(" "): 只展开 $，\ (反斜杠），和 ‘（倒引号）
+单引号(' '): 禁止所有的展开
+转义字符(\): 1. 阻止展开特殊字符 2. 控制码, 如\b \n \r \t 如  echo -e "time's\r\n up "
+[root@VM-0-12-centos ~]#  echo Front-{A,B,C}-Back
+Front-A-Back Front-B-Back Front-C-Back
+
+[root@VM-0-12-centos ~]#  echo Number_{1..5}
+Number_1 Number_2 Number_3 Number_4 Number_5
+
+# 删除多余的空格
+[root@VM-0-12-centos /]# echo this is a            text
+this is a text
+
+单词分割机制会在单词中寻找空格，制表符，和换行符，并把它们看作单词之间的界定符。这意味着无引用的空格，制表符和换行符都不是文本的一部分，它们只作为分隔符使用。由于它们把单词分为不同的参数.如果我们加上双引号,，内嵌的空格也不会被当作界定符，它们成为参数的一部分。一旦加上双引号，我们的命令行就包含一个带有一个参数的命令。
+
+
+[root@VM-0-12-centos /]# echo $(cal)
+September 2022 Su Mo Tu We Th Fr Sa 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
+[root@VM-0-12-centos /]# echo "$(cal)"
+   September 2022
+Su Mo Tu We Th Fr Sa
+             1  2  3
+ 4  5  6  7  8  9 10
+11 12 13 14 15 16 17
+18 19 20 21 22 23 24
+25 26 27 28 29 30
+
+没有引用的命令替换导致命令行包含 38 个参数
+在第二个例子中，命令行只有一个参数，参数中包括嵌入的空格和换行符。
+
+[root@VM-0-12-centos /]# echo "dolloar $5.00"
+dolloar .00
+[root@VM-0-12-centos /]# echo "dolloar \$5.00"
+dolloar $5.00
+
+```
+
+
+
 ### SSH
+
+SSH 协议替代了 telnet（端口 23）和 ftp（端口21）两个协议的，使用22端口
 
 SSH: Secure Shell 
 
@@ -546,6 +638,7 @@ free # 内存
 ### 缩写
 
 ```shell
+-a # all
 -c # continue 持续输出
 -d # directory
 -e # extend 扩展信息
@@ -558,7 +651,7 @@ free # 内存
 -l # listing
 -n # numeric 数字的
 -p # process 进程 programs 程序
-
+-q # query 查询
 ps # process status
 TTY # Teletype 电传打字机 终端
 up # 持续
@@ -566,5 +659,7 @@ q # quit
 h # help human
 fg # foreground 前台
 grep # global regular expression print
+
+^ # Ctrl
 ```
 
