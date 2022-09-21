@@ -7,10 +7,11 @@ java [options] <主类> [args...]
 javac Hello.java
 # 运行
 java Hello
-# cp:classpath 
-java -cp pathToJar
 
--encoding
+# cp:classpath 
+# -d 编译文件输出路径
+java -d out_dir -encoding gb2312 -cp pathToJar Hello
+
 java -jar demo.jar
 ```
 
