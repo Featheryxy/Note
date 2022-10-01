@@ -25,11 +25,17 @@
 
 ### 数学中的函数
 
+函数:函数定义域（ function domain ）的源集（ source set ）和被称为函数陪域（也function codomain ）的目标集（ target set ）之间的关系 
+
+函数定义域 --> 函数陪域
+
+源集 --> 目标集
+
 象(image)集: 在定义域里存在对应元素的陪域元素集被称为函数的像
 
 
 
-函数:函数定义域（ function domain ）的源集（ source set ）和被称为函数陪域（也function codomain ）的目标集（ target set ）之间的关系 
+
 
 逆函数:函数未必会有逆函数 C inverse function ） 。 如果 $f^{-1}(x)$是一个从 A 到 B(A 为定义域，B 为陪域）的函数，它的逆函数为 C 1 (x), B 为定义域而 A 为陪域
 
@@ -39,12 +45,19 @@
 
 复合函数: 函数就像积木，可以复合为其他函数 。函数 f 和 q 的复合函数标记为 f。g,读作 f round g 。
 $$
+f。g = f(g(x)) = f.compose(g) = g.andThen(f) \\
+
 f(x)= x + 2 并且 g(x)=x*2 \\
  则 f 。g(x)=f(g(x)) = x*2+2
 $$
 多参函数: 一个函数是源集和目标集之间的关系。它并不是多个源集与一个目标集之间的关系。 一个函数不允许有多个参数 。
 $$
-f(x , y) = x + y
+\because f(x , y) = x + y \\
+\because g(y) = x+y \\
+\therefore f(x, y) = g(y) \\
+\because f(x, y) = f(x)(y) \\
+\therefore f(x)(y) = g(y) \\
+\therefore g = f(x) ,将函数f应用到x上得到g，再将g应用到y上得到g(y) = x + y
 $$
 
 
@@ -78,11 +91,20 @@ f (rate) (price ) 和 g (price) (rate) 为偏应用 函数
 - 它必须返回 一个值 。
 - 只要调用它的参数相同，结果也必须相同。
 
+ ```java
+   public add(int a, int b){
+       a = 3;
+       b = 5;
+       return a+b
+   }
+   // 这是一个函数，值传递，没有改变函数外的值，永远返回8.不依赖方法参数
+ ```
+
+
+
 所有的实例方法都可以通过在参数里增加外围类(enclosing class ）的类型而变成一个静态方法。
 
-
-
-隐式参数：定义在方法外的参数，如实例方法访 问类属性可以视为一个外围类实例的隐式参数。
+隐式参数：定义在方法外的参数，如实例方法访问类属性可以视为一个外围类实例的隐式参数。
 
 ```java
 public static int applyTax3(FunctionalMethods x , int a) {
