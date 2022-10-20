@@ -2,25 +2,34 @@ Java是面向对象语音，所以必须要创建一个类，由类的实例对�
 
 Java 是强类型语言，必须声明参数类型
 
-lambda表达式: (参数类型 变量，……) -> 表达式。
-
- 如果参数类型可被推导，则参数类型可被省略，如果没有参数或只有一个参数，小括号也可省略
+样板代码模糊了代码本意
 
 
 
-函数式接口 只包含一个抽象方法的接口
+## Lambda
 
-Lambda表达式 函数式接口的实例
+**函数式接口**： 只包含一个抽象方法的接口，用来表示 Lambda 表达式的类型，程序员只要定义了改接口的参数类型，那么在Lambda 表达式中不需要重复定义参数类型
 
+**Lambda表达式**： 函数式接口的实例，
 
+- 形式：(参数类型 变量，……) -> {表达式}， 
 
-方法引用：传递给其他代码的操作已经有实现的方法
+- 省略参数类型：如果参数类型可被推导，则参数类型可被省略。
+- 省略小括号：如果没有参数或只有一个参数，小括号也可省略。
+- 省略大括号：只有一行表达式时
+
+**final**：一个 lambda 访问的局部变量必须是 final 的，自 Java 8 起，从匿名类或是 lambda 访问的元素都是隐式 final 的，即Lambda 表达式引用的是值，而不是变量
+
+**方法引用**：当 lambda 的实现是一个单参的方法调用时
 
 ```java
 button.setOnAction(event -> System.out.println(event));
 
-// 方法引用, 使用 :: 来分隔方法名和 （对象或类）的名字
+// 方法引用, 使用 :: 来分隔对象和方法名
 button.setOnAction(System.out::println);
+方法引用：用于替换这个 lambda 的语法
+Function<Double, Double> sin = Math::sin;
+Function<Double, Double> sin2 = a -> Math.sin(a);
 
 对象 :: 实例方法
 类 :: 静态方法
@@ -29,7 +38,7 @@ this :: 方法
 super :: 方法    
 ```
 
-构造器引用
+**构造器引用**
 
 ```java
 Button[] buttons = stream.toArray(Button[] :: new)
@@ -38,13 +47,17 @@ Button[] buttons = stream.toArray(Button[] :: new)
 
 一个内部类可以访问任何有效的final局部变量
 
-接口中的默认方法:如果在接口中定义一个抽象方法, 那么该抽象需要在所有的实现类中实现该方法. 如果子类数量太多,那么要在所有的实现类中实现该方法则显得不现实,所以可以为顶层接口定义默认方法供所有实现类使用
+**接口中的默认方法**：如果在接口中定义一个抽象方法, 那么该抽象需要在所有的实现类中实现该方法. 如果子类数量太多，那么要在所有的实现类中实现该方法则显得不现实, 所以可以为顶层接口定义默认方法供所有实现类使用。
 
 
+
+## Stream
 
 对于流来说,我们不需要告诉流怎么做,只要告诉流做什么就行
 
+惰性求值：只描述 Stream，最终不产生新集合的方法，方法返回值为stream
 
+及早求值：从 Stream 产生值的方法，
 
 操作Stream流的三个阶段
 
@@ -86,9 +99,19 @@ lambda表达式中的参数可以是任意合法变量名，代表流中的每�
 
 每一次中间操作都会将收集到的值到一个新的流
 
-- filter
+- filter：流中保留为true的值
+- map： 能把一个对象转换成另外一个对象来作为流中的元素
+- flatMap：可以将多个stream合并成一个stream
 
-- map:相当于对数据进行一个操作，可以自定义返回值等
+```java
+    public void flatMapCharacters() {
+        // BEGIN flatmap_characters
+List<Integer> together = Stream.of(asList(1, 2), asList(3, 4))
+                               .flatMap(numbers -> numbers.stream())
+                               .collect(toList());
+
+assertEquals(asList(1, 2, 3, 4), together);
+```
 
 - distinct:返回一个具有相同顺序，且流中无重复元素的新流，注意（该方法依赖的Object的equals方法来判断是否是相同对象，所以要重写equals方法，否则只有对象地址一样时才会被认为是重复）
 
@@ -98,7 +121,7 @@ lambda表达式中的参数可以是任意合法变量名，代表流中的每�
 
 - skip:跳过流中的前n个元素，返回剩下的元素
 
-- flatMap: map能把一个对象转换成另外一个对象来作为流中的元素，而flatMap可以把一个对象转换成多个对象作为流中的元素
+  
 
 ### 终结操作（聚合方法）
 
@@ -107,7 +130,7 @@ lambda表达式中的参数可以是任意合法变量名，代表流中的每�
 - min&max:返回的是option对象，这里和sorted一样，得指定比较规则
 - collect:把当前流转换成一个集合（list, set, map）
 
-  - Collectors.toList()
+  - Collectors.toList() ：	`List<String> collected = Stream.of("a", "b", "c") .collect(Collectors.toList()); `
   - Collectors.toSet()
   - Collectors.toMap(key, value)
 
@@ -118,9 +141,22 @@ lambda表达式中的参数可以是任意合法变量名，代表流中的每�
 - noneMatch:是否都不符合，都不符合则为true
 - findAny:获取流中的任意一个元素，该方法无法保证获取的是流中的第一个元素，一旦匹配到就返回。速度比findFirst块
 - findFirst:获取流中的第一个元素
-- reduce:对流中的数据按照你制定的计算方式计算出一个结果，并返回一个Optional描述归约值（如果有）
+- reduce：对流中的数据按照你制定的计算方式计算出一个结果，并返回一个Optional描述归约值（如果有）
 
+​		
 
+```java
+int count = Stream.of(1, 2, 3).reduce(0, (acc, element) -> acc + element);
+// 等价于
+int acc = 0;
+for (Integer element : asList(1, 2, 3)) {
+	acc = acc + element;
+}
+```
+
+装箱：将基本类型包装成为一个对象。反之称为拆箱
+
+装箱和拆箱都需要额外的计算开销，为了提高性能，Stream 类的某些方法对基本类型和装箱类型做了区分。在命名上有明确的规范。如果方法返回类型为基本类型，则在基本类型前加 To，如`ToLongFunction`；如果参数是基本类型，则不加前缀只需类型名即可，如`LongFunction`；如果高阶函数使用基本类型，则在操作后加后缀 To 再加基本类型，如 `mapToLong`。这些基本类型都有与之对应的 Stream，以基本类型名为前缀，如 `LongStream`
 
 ## Optional
 

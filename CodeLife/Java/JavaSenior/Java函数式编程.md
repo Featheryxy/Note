@@ -1,9 +1,14 @@
 ## 概念
 
-```
-// 将函数f应用于值value上, i.e.: f(x)
-f.apply(value)
+```java
+// 将函数f应用于值x上, i.e.: f(x)
+f.apply(x)
 函数中不要返回null，可以返回一个标记值
+
+方法y当 lambda 的实现是一个单参的方法调用时，用于替换这个 lambda 的语法
+Function<Double, Double> sin = Math::sin;
+Function<Double, Double> sin2 = a -> Math.sin(a);
+
 名称不重要，类型才重要
 or else 否则
 flat 平坦的
@@ -194,20 +199,13 @@ class CreditCard {
 
 
 
-当 lambda 的实现是一个**单参**的方法调用时，用于替换这个 lambda 的语法
 
-```java
-    Function<Double, Double> sin = Math::sin;
-    Function<Double, Double> sin2 = a -> Math.sin(a);
-
-```
 
 一个 lambda 访问的局部变量必须是 final 的 , 自 Java 8 起，从匿名类或是 lambda 访问的元素都是隐式 final 的
 
 仅使用一次的函数可以被定义为匿名实例。
 
-在函数式编程里，函数是被当作数据来对待的 。它们可以作为
-参数传递给其他函数，可以被函数返回，也可以用于操作
+在函数式编程里，函数是被当作数据来对待的 。它们可以作为参数传递给其他函数，可以被函数返回，也可以用于操作
 
 不要相信名称，名称和类型可能没有任何关系 。 务必相信类型 。 类型从不撒谎。 类型是你的好朋友！
 
