@@ -12,7 +12,7 @@ UML（Unified Modeling Language，统⼀建模语⾔）
 
 - 部分作为整体的成员对象，是整体和部分的关系 part of
 
-  - 组合关系 contains a：整体对象可以控制成员对象的生命周期
+  - 组合关系 contains a：部分和整体是共存亡
   - 聚合关系 has a：成员对象的生命周期独立于整体对象
 
 - 在**类A的方法（非构造方法）中使用类B**
