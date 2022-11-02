@@ -2,7 +2,7 @@
 
 ## 1 简介
 
-Redis (REmote DIctionary Server) 是用 C 语言开发的一个开源的高性能键值对（ key-value）数据库。  
+Redis (Remote DIctionary Server) 是用 C 语言开发的一个开源的高性能键值对（ key-value）数据库。  
 
 **Redis优点**
 
