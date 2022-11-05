@@ -577,3 +577,35 @@ configure your Maven clients’ settings.xml file with the following value: <upd
 原文链接：https://blog.csdn.net/vtopqx/article/details/72795762
 ```
 
+### 依赖冲突
+
+存在相同依赖不同版本时进行依赖调节
+
+依赖调节原则：
+
+1. 路径最近者优先
+2. 第一声明者优先
+
+```
+mvn 命令查看冲突
+
+进入项目的pom.xml文件的目录下
+mvn dependency:tree
+
+mvn -Dverbose dependency:tree
+
+mvn -Dverbose dependency:tree -Doutput=路径
+
+IntelliJ 查看冲突
+安装Maven Helper
+打开pom 文件，查看DependencyAnalyzer
+
+omitted for conflict with 版本号
+因与…有冲突而省略
+
+冲突解决
+使用exclusion排除
+使用依赖管理指定版本号
+
+```
+
