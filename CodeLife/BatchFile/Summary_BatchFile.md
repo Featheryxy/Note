@@ -20,8 +20,10 @@ start xxx.bat 开启新的命令行窗口
 
 SET 显示当前环境变量
 SET [variable=[string]]   变量定义与赋值
-SET /P variable=[promptString]
+SET /P variable=[promptString] 等号左右不能空格
 %variable%  变量取值
+goto 找不到相应的标签段而直接退出
+goto :标签名
 ```
 
 # 目录
