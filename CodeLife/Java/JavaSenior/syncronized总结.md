@@ -10,7 +10,7 @@
 工作内存与主内存的同步主要经过如下步骤
 
 ```
-线程A先lock 工作内存中的变量 --> 线程A read 主内存 --> load --> use --> assign --> store --> write -- unlock
+线程A先lock 主内存中的变量 --> 线程A read 主内存 --> load --> use --> assign --> store --> write -- unlock
 1. 如果对一个变量执行lock操作，将会清空工作内存中此变量的值
 2. 对一个变量执行unlock操作之前，必须先把此变量同步到主内存
 ```
