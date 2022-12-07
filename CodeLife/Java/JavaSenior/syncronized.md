@@ -575,11 +575,11 @@ ObjectMonitor() {
 同时JVM中也维护着global locklist。当线程需要ObjectMonitor对象时，首先从线程自身的free表中申请，若存在则使用，若不存在则从global list中申请。
 ObjectMonitor的数据结构中包含：\_owner、\_WaitSet和\_EntryList，它们之间的关系转换可以用下表示：
 
+_EntryList：处于阻塞状态的线程， 没有获得到锁
+
 _owner: 竞争到锁的线程
 
-_WaitSet：处于等待状态的线程
-
-_EntryList：处于阻塞状态的线程
+_WaitSet：处于等待状态的线程，获得到锁后释放
 
 ### monitor 锁竞争
 
@@ -604,7 +604,7 @@ _EntryList：处于阻塞状态的线程
 
 当某个持有锁的线程执行完同步代码块时，会进行锁的释放，给其它线程机会执行同步代码，在HotSpot中，通过退出monitor的方式实现锁的释放，并通知被阻塞的线程，具体实现位于ObjectMonitor的exit方法中
 
-1. 退出同步代码块时会让_recursions减1，当_recursions的值减为0时，说明线程释放了锁。
+1. 退出同步代码块时会让_recursions减1，当_**recursions的值减为0时，说明线程释放了锁**。
 
 2. 根据不同的策略（由QMode指定），从cxq或EntryList中获取头节点，通过ObjectMonitor::ExitEpilog 方法唤醒该节点封装的线程，唤醒操作最终由unpark完成
 3. 被唤醒的线程会执行锁竞争
@@ -692,7 +692,7 @@ CAS这种机制我们也可以将其称之为乐观锁。综合性能较好！
 
 ### Java对象的布局
 
-在JVM中，对象在内存中的布局分为三块区域：对象头、实例数据和对齐填充
+在JVM中，**对象在内存中的布局分为三块区域：对象头、实例数据和对齐填充**
 
 #### 对象头
 
