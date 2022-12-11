@@ -2,7 +2,15 @@
 
 final关键字可以用来修饰类，变量， 方法，参数
 
+1. 防止引用被篡改
 
+   > ```java
+   > static final Object lock = new Object();
+   > 防止锁对象被修改造成线程安全问题
+   > 
+   > static final int count = 0;
+   > 常量：在编译时进行宏替换
+   > ```
 
 ### static
 
