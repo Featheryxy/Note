@@ -10,7 +10,7 @@ Java 是强类型语言，必须声明参数类型
 
 **函数式接口**： 只包含一个抽象方法的接口，用来表示 Lambda 表达式的类型，程序员只要定义了改接口的参数类型，那么在Lambda 表达式中不需要重复定义参数类型
 
-**Lambda表达式**： 函数式接口的实例，
+**Lambda表达式**： 函数式接口的实例，匿名内部类的简写
 
 - 形式：(参数类型 变量，……) -> {表达式}， 
 
@@ -143,7 +143,7 @@ assertEquals(asList(1, 2, 3, 4), together);
 - findFirst:获取流中的第一个元素
 - reduce：对流中的数据按照你制定的计算方式计算出一个结果，并返回一个Optional描述归约值（如果有）
 
-​		
+	​		
 
 ```java
 int count = Stream.of(1, 2, 3).reduce(0, (acc, element) -> acc + element);
