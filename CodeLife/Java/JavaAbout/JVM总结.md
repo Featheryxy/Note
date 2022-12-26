@@ -50,11 +50,12 @@ java程序.java--（编译javac）-->字节码文件.class-->类装载子系统�
 
 #### ClassLoader
 
-BootStrap ClassLoader
+BootStrap ClassLoader 引导类加载器
 
 1. **加载java的核心库**（JAVA_HOME/jre/lib/rt.jar/resources.jar或sun.boot.class.path
 2. 不继承自java.lang.ClassLoader,没有父加载器
 
-ClassLoader
+Extension ClassLoader 扩展类加载器，加载/jdk/jre/lib/ext下的类
 
-1. 派生于ClassLoader类
+System ClassLoader 系统类加载器：搜索CLASSPATH中指明的路径和JVR文件
+
