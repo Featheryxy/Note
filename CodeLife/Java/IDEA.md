@@ -82,3 +82,7 @@ Settings --> Live Templates
 导出: 在菜单栏选择 `File` | `Manage IDE Settings` | `Export Settings`
 
 导入：在菜单栏选择 `File` | `Manage IDE Settings` | `Import Settings`
+
+## ModuleFileDir
+
+Run/Debug Configurations --> + --> Application --->Edit configuration templates ---> Working directory  --> insert ModuleFileDir
