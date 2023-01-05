@@ -1,16 +1,28 @@
-IoC：Inversion of Control  控制反转 
 
-- 轻量级容器（ Lightweight Container) 
-- 依赖注入（ Dependency Injection） 
-- Don’t call us, we will call you. 
+
+Spring是一个一站式的轻量级的java开发框架，核心是控制反转（IOC）和面向切面（AOP），针对于开发的WEB层(springMvc)、业务层(Ioc)、持久层(jdbcTemplate)等都提供了多种配置解决方案；
+
+![](SpringLifeTree.png)上层模块依赖下层模块，同层模块相互独立
+
+
+
+
+
+
+
+
+
+Spring 提供了IOC容器实现，帮助我们以依赖注入的方式管理对象之间的依赖关系。
+
+
+
+
 
 面向切面编程（Aspect Oriented Programming， AOP） 
 
 项目对象模型 (POM： Project Object Model)，一组标准集合，一个项目生命周期(Project Lifecycle)，一个依赖管理系统(Dependency Management System)，和用来运行定义在生命周期阶段(phase)中插件(plugin)目标(goal)的逻辑。 
 
-*DAO*(Data Access Object) 数据访问对象是一个面向对象的数据库接口
-
-EJB是的Enterprise Java Beans
+DAO(Data Access Object) 数据访问对象是一个面向对象的数据库接口
 
 依赖注入（Dependency Injection， DI） 
 
@@ -26,7 +38,10 @@ IoC 容器（或者简称 IoC 容器）， 通过注解来装配 Bean 到 Spring
 
 
 
-
+dependency injection
+passing in objects into your constructor without you having to explicitly create or pass them.
+注解代替xml
+Spring Boot is simply a configuration framework for the Spring framework.
 
 
 
@@ -148,3 +163,16 @@ View层和Controller层，实现了策咯模式
 WebJars是将客户端（浏览器）资源（JavaScript，Css等）打成jar包文件，以对资源进行统一依赖管理
 
 crud是指在做计算处理时的增加(Create)、读取(Retrieve)、更新(Update)和删除(Delete)几个单词的首字母简写。crud主要被用在描述软件系统中数据库或者[持久层](https://baike.baidu.com/item/持久层/3584971)的基本操作功能。
+
+#### 名词
+
+POJO（Plain Old Java Object, 简单Java对象）
+
+IoC：Inversion of Control  控制反转 
+
+DI：依赖注入（ Dependency Injection） 
+
+轻量级容器（ Lightweight Container) 
+
+EJB是的Enterprise Java Beans
+
