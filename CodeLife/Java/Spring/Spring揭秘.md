@@ -1,0 +1,150 @@
+IoC：Inversion of Control  控制反转 
+
+- 轻量级容器（ Lightweight Container) 
+- 依赖注入（ Dependency Injection） 
+- Don’t call us, we will call you. 
+
+面向切面编程（Aspect Oriented Programming， AOP） 
+
+项目对象模型 (POM： Project Object Model)，一组标准集合，一个项目生命周期(Project Lifecycle)，一个依赖管理系统(Dependency Management System)，和用来运行定义在生命周期阶段(phase)中插件(plugin)目标(goal)的逻辑。 
+
+*DAO*(Data Access Object) 数据访问对象是一个面向对象的数据库接口
+
+EJB是的Enterprise Java Beans
+
+依赖注入（Dependency Injection， DI） 
+
+Java 简单对象（Plain Ordinary Java Object， POJO） 
+
+
+
+spring通过描述来创建对象 ,在 Spring 中把每一个需要管理的对象称为 Spring Bean（简称 Bean），而 Spring 管理这些 Bean 的容器，被我们称为 Spring
+IoC 容器（或者简称 IoC 容器）， 通过注解来装配 Bean 到 Spring IoC 容器中 。IoC 容器具备两个基本的功能： 
+
+- 通过描述管理 Bean，包括发布和获取 Bean； 
+- 通过描述完成 Bean 之间的依赖关系。 
+
+
+
+
+
+
+
+Bean生命周期
+
+Bean 定义、Bean 的初始化、 Bean 的生存期和 Bean 的销毁  
+
+
+
+1. 将 Bean 的定义发布到 IoC 容器 
+
+只是将定义发布到 IoC 容器而不做实例化和依赖注入，当我们取出来的时候才做初始化和依赖注入等操作 
+
+- Spring 通过我们的配置，如@ComponentScan 定义的扫描路径去找到带有@Component 的类，这个过程就是一个资源定位的过程。
+-  一旦找到了资源，那么它就开始解析，并且将定义的信息保存起来。注意，此时还没有初始化 Bean，也就没有 Bean 的实例，它有的仅仅是 Bean 的定义。
+-  然后就会把 Bean 定义发布到 Spring IoC 容器中。此时， IoC 容器也只有 Bean 的定义，还是没有 Bean 的实例生成。 
+
+![1584363163737](1584363163737.png)
+
+
+
+先在 Maven 配置文件中加载依赖 (从本地仓库中加载各种jar包，如果本地仓库没有，则从中央仓库下载)
+
+通过@Value 注解，使用${......}这样的占位符读取配置在属性文件（src/main/resources/application.properties）的内容 
+
+
+
+SpringBoot应用启动时通过@SpringBootApplication中的@EnableAutoConfiguration中的@Import({AutoConfigurationImportSelector.class})，AutoConfigurationImportSelector中的List<String> configurations = SpringFactoriesLoader.loadFactoryNames(this.getSpringFactoriesLoaderFactoryClass(), this.getBeanClassLoader());
+
+SpringFactorisLoader中的找到jar包下的"META-INF/spring.factories"的配置
+
+
+
+在jar包中的spring.factories中，@EnableConfigurationProperties({HttpProperties.class}) ，将配置注入到Ioc容器中，@ConfigurationProperties将配置文件Properties中的属性绑定到类中的成员变量上，@Bean 从配置文件Properties获取变量
+
+
+
+配置文件-----@Bean获取对应的值----->@ConfigurationProperties将值绑定到类中变量 ----> @EnableConfigurationProperties将key-value注入到Ioc容器中
+
+组件（对应的类）
+
+
+
+- @SpringBootApplication: 
+
+  -- Spring Boot应用标注在某个类上说明这个类是SpringBoot的主配置类，SpringBoot就应该运行这个类的main方法来启动SpringBoot应用； 
+
+  - @SpringBootConfiguration:
+
+    -- 标注在某个类上，表示这是一个Spring Boot的配置类； 
+
+  - @EnableAutoConfiguration：
+
+    -- 开启自动配置功能；以前我们需要配置的东西，Spring Boot帮我们自动配置；@EnableAutoConfiguration告诉SpringBoot开启自动配置功能；这样自动配置才能生效； 
+
+    - @AutoConfigurationPackage：自动配置包 
+
+    - @Import({AutoConfigurationImportSelector.class})
+
+      -- EnableAutoConfigurationImportSelector：导入哪些组件的选择器；将所有需要导入的组件以全类名的方式返回；这些组件就会被添加到容器中；会给容器中导入非常多的自动配置类（xxxAutoConfiguration）；就是给容器中导入这个场景需要的所有组件，并配置好这些组件； 
+
+
+
+- @Configuration:指明当前类是一个配置类； 
+  **配置类 ----- 配置文件；**配置类也是容器中的一个**组件**；@Componen 
+
+
+
+- @ConfigurationProperties：告诉SpringBoot将本类中的所有属性和配置文件中相关的配置进行绑定；
+
+  prefix = "person"：配置文件中哪个下面的所有属性进行一一映射
+
+  @ConfigurationProperties(prefix = "person")默认从全局配置文件中获取值； 
+
+- @Component 
+
+  -- 只有这个组件是容器中的组件，才能容器提供的@ConfigurationProperties功能；
+
+
+
+- @PropertySource(value = {"classpath:person.properties"}) ：加载指定的配置文件  同时需要
+
+  @Component @ConfigurationProperties(prefix = "person") 
+
+  
+
+- @Bean //给容器中添加一个组件，这个组件的某些值需要从properties中获取 
+
+
+
+F5刷新按钮只对当前页面进行刷新，只刷新本地缓存；
+
+Ctrl + F5 的行为也是刷新页面，但是会把浏览器中的临时文件夹的文件删除再重新从服务器下载。
+
+Model、View、Controller即模型、视图、控制器
+
+**MVC要实现的目标是将软件用户界面和业务逻辑分离以使代码可扩展性、可复用性、可维护性、灵活性加强。**
+
+View层是界面，Model层是业务逻辑，Controller层用来调度View层和Model层，将用户界面和业务逻辑合理的组织在一起，起粘合剂的效果。所以Controller中的内容能少则少，这样才能提供最大的灵活性。**用来将不同的View和不同的Model组织在一起，顺便替双方传递消息**
+
+View层，单独实现了组合模式
+
+Model层和View层，实现了观察者模式
+
+View层和Controller层，实现了策咯模式
+
+**Model是被观察的对象，View是观察者，Model层一旦发生变化，View层即被通知更新**
+
+一个View被多个Controller引用
+
+策略模式中的策略通常都很小很薄，不会包含太多的内容， Controller是一个策略， 自然不应该在里面放置过多的内容
+
+模型层（Model）：指从现实世界中抽象出来的对象模型，是应用逻辑的反应；它封装了数据和对数据的操作，是实际进行数据处理的地方（模型层与数据库才有交互）
+
+视图层（View）：是应用和用户之间的接口，它负责将应用显示给用户 和 显示模型的状态。
+
+控制器（Controller）:控制器负责视图和模型之间的交互，控制对用户输入的响应、响应方式和流程；它主要负责两方面的动作，一是把用户的请求分发到相应的模型，二是吧模型的改变及时地反映到视图上。
+
+WebJars是将客户端（浏览器）资源（JavaScript，Css等）打成jar包文件，以对资源进行统一依赖管理
+
+crud是指在做计算处理时的增加(Create)、读取(Retrieve)、更新(Update)和删除(Delete)几个单词的首字母简写。crud主要被用在描述软件系统中数据库或者[持久层](https://baike.baidu.com/item/持久层/3584971)的基本操作功能。
