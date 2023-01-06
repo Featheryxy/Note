@@ -37,6 +37,35 @@ IoC职责：
 
 
 
+容器类型：
+
+1. BeanFactory：默认lazy-load
+2. ApplicationContext：扩展了BeanFactory， 支持国际化等功能，启动即加载
+
+
+
+常用注解：
+
+@Component 
+
+@Autowired
+
+
+
+Autowired自动绑定模式：
+
+1. no，default
+2. byName，实例名称和beanName相同
+3. byType
+4. constructor， 根据byType
+5. autodetect
+
+
+
+自动绑定
+
+手动绑定
+
 #### Other
 
 面向切面编程（Aspect Oriented Programming， AOP） 
@@ -195,3 +224,4 @@ DI：依赖注入（ Dependency Injection）
 
 EJB是的Enterprise Java Beans
 
+Bean：所有注册到容器中的业务对象称之为Bean
