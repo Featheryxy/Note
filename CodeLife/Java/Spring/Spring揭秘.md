@@ -2,7 +2,7 @@
 
 Spring是什么?
 
-Spring是一个轻量级的IoC和AOP容器框架。是为Java应用程序提供基础性服务的一套框架，目的是用于简化企业应用程序的开发，它使得开发者只需要关心业务需求。
+Spring是一个轻量级的IoC和AOP容器框架，目的是用于简化企业应用程序的开发，它使得开发者只需要关心业务需求。
 
 常见的配置方式有三种：基于XML的配置、基于注解的配置、基于Java的配置。
 
@@ -76,7 +76,13 @@ IoC职责：
 容器类型：
 
 1. BeanFactory：默认lazy-load
-2. ApplicationContext：扩展了BeanFactory， 支持国际化等功能，启动即加载
+2. ApplicationContext：在BeanFactory基础容器之上，提供的另一个IoC容器实现。支持国际化等功能，启动后会实例化所有的bean定义
+   - 统一资源加载策略
+   - 国际化信息支持
+   - 容器内事件发布
+   - 多配置模块加载简化
+
+
 
 
 
@@ -84,7 +90,19 @@ IoC职责：
 
 @Component 
 
-@Autowired
+@Autowired, byType
+
+@Qualifier, byName, IoC容器无法自己从多个同一类型的实例中选取我们真正想要的那个, 可以使用@Qualifier直接点名
+
+
+
+JSR250 标注依赖注入关系
+
+@Resource，byName
+
+@PostConstruct和@PreDestroy不是服务于依赖注入的，它们主要用于标注对象生命周期管理相关方法。
+
+与Spring的InitializingBean和DisposableBean接口，以及配置项中的init-method和destroy-method起到类似的作用
 
 
 
@@ -104,7 +122,31 @@ Autowired自动绑定模式：
 
 
 
+FactoryBean：还是个Bean，同样会注册到容器中，只不过该类型的Bean本身就是生产对象的工厂
 
+BeanFactory：容器本身，
+
+
+
+IOC原理：
+
+1. 容器启动阶段
+
+   - 加载配置
+   - 分析配置信息
+   - 装备到BeanDefinition，注册到相应的BeanDefinitionRegistry
+   - 其他处理
+   - BeanFactoryPostProcessor会修改BeanDefinition中的信息
+
+2. Bean实例化阶段
+
+   第一次调用getBean()后会进入实例化阶段
+
+
+
+BeanPostProcessor：对象实例化阶段
+
+BeanFactoryPostProcessor：容器启动阶段
 
 #### Other
 
@@ -265,3 +307,5 @@ DI：依赖注入（ Dependency Injection）
 EJB是的Enterprise Java Beans
 
 Bean：所有注册到容器中的业务对象称之为Bean
+
+URL：Uniform Resource Locator（统一资源定位器）
