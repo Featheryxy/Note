@@ -90,9 +90,21 @@ IoC职责：
 
 @Component 
 
+@Repository
+
+@Service
+
+@Controller
+
+> @Repository，@Service，@Controller和@Component 主要在语义上不同，都会被component-scan扫描到并注入到容器中，其默认名称为将类名首字母小写
+
+
+
 @Autowired, byType
 
 @Qualifier, byName, IoC容器无法自己从多个同一类型的实例中选取我们真正想要的那个, 可以使用@Qualifier直接点名
+
+
 
 
 
@@ -148,9 +160,23 @@ BeanPostProcessor：对象实例化阶段
 
 BeanFactoryPostProcessor：容器启动阶段
 
-#### Other
+#### AOP
 
 面向切面编程（Aspect Oriented Programming， AOP） 
+
+AOL（Aspect-Oriented Language）
+
+对oop的补充，oop负责业务相关代码的抽象，AOP可以从另一个角度来完成其他操作，如安全检查，日志记录
+
+Aspect -- AOP
+
+Class -- OOP
+
+如今的AOP依旧是在OOP的空间中
+
+
+
+#### Other
 
 项目对象模型 (POM： Project Object Model)，一组标准集合，一个项目生命周期(Project Lifecycle)，一个依赖管理系统(Dependency Management System)，和用来运行定义在生命周期阶段(phase)中插件(plugin)目标(goal)的逻辑。 
 
@@ -309,3 +335,5 @@ EJB是的Enterprise Java Beans
 Bean：所有注册到容器中的业务对象称之为Bean
 
 URL：Uniform Resource Locator（统一资源定位器）
+
+OOP：Object-Oriented Software Development
