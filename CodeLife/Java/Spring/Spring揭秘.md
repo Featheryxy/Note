@@ -166,15 +166,44 @@ BeanFactoryPostProcessor：容器启动阶段
 
 AOL（Aspect-Oriented Language）
 
-对oop的补充，oop负责业务相关代码的抽象，AOP可以从另一个角度来完成其他操作，如安全检查，日志记录
+类比：
 
-Aspect -- AOP
+- Aspect -- AOP
 
-Class -- OOP
-
-如今的AOP依旧是在OOP的空间中
+- Class -- OOP
 
 
+
+AOP主要是对OOP的补充，OOP负责业务相关代码的抽象，定义纵向的关系，不适用于定义横向的关系，导致了大量代码的重复
+
+AOP，一般称为面向切面，作为面向对象的一种补充，用于将那些与业务无关，但却对多个对象产生影响的公共行为和逻辑，抽取并封装为一个可重用的模块，这个模块被命名为“切面”（Aspect），减少系统中的重复代码，降低了模块间的耦合度，同时提高了系统的可维护性。可用于权限认证、日志、事务处理。
+
+AOP实现的关键在于 代理模式，AOP代理主要分为**静态代理**和**动态代理**。
+
+- 静态代理的代表为AspectJ；AspectJ是静态代理的增强，所谓静态代理，就是AOP框架会在**编译阶段生成AOP代理类**，因此也称为编译时增强，他会在编译阶段将AspectJ(切面)织入到Java字节码中，运行的时候就是增强之后的AOP对象。
+- 动态代理则以Spring AOP为代表：Spring AOP使用的动态代理，所谓的动态代理就是说AOP框架不会去修改字节码，而是每次**运行时在内存中临时为方法生成一个AOP对象**，这个AOP对象包含了目标对象的全部方法，并且在特定的切点做了增强处理，并回调原对象的方法。
+
+Spring AOP 中的动态代理主要有两种方式，
+
+- JDK动态代理：
+
+  JDK动态代理只提供接口的代理，不支持类的代理。核心InvocationHandler接口和Proxy类，InvocationHandler 通过invoke()方法反射来调用目标类中的代码，动态地将横切逻辑和业务编织在一起；接着，Proxy利用 InvocationHandler动态创建一个符合某一接口的的实例,  生成目标类的代理对象。
+
+- CGLIB动态代理：
+
+  如果代理类没有实现 InvocationHandler 接口，那么Spring AOP会选择使用CGLIB来动态代理目标类。CGLIB（Code Generation Library），是一个代码生成的类库，可以在运行时动态的生成指定类的一个子类对象，并覆盖其中特定方法并添加增强代码，从而实现AOP。CGLIB是通过继承的方式做的动态代理，因此如果某个类被标记为final，那么它是无法使用CGLIB做动态代理的。
+
+
+
+静态代理与动态代理区别在于生成AOP代理对象的时机不同，相对来说AspectJ的静态代理方式具有更好的性能，但是AspectJ需要特定的编译器进行处理，而Spring AOP则无需特定的编译器处理。
+
+InvocationHandler 的 invoke(Object  proxy,Method  method,Object[] args)：
+
+- proxy是**最终生成的代理实例;**  
+- method 是被代理目标实例的某个具体方法;  
+- args 是被代理目标实例某个方法的具体入参, 在方法反射调用时使用。
+
+ 
 
 Joinpoint：将AOP的功能织入到OOP系统的执行点
 
@@ -198,7 +227,20 @@ Advice：相当于Class中的Method
   - After returning Advice
   - After throwing Advice
   - After (Finally) Advice
-  - 
+
+Around Advice：可以在Joinpoint之前和之后执行相应的逻辑
+
+Introduction：
+
+Aspect：AOP概念实体，可以包含多个
+
+
+
+织入（Weaving）
+
+织入器（Weaver），编译器ajc就是AspectJ的织入器
+
+Spring AOP 属于第二代AOP， 采用动态代理机制和字节码生成技术实现，与最初的AspectJ采用编译器将横切逻辑织入目标对象不同，动态代理机制和字节码生成都是在运行期间为目标对象生成一个代理对象，而将横切逻辑织入到这个代理对象中，系统最终使用的是织入了横切逻辑的代理对象，而不是真正的目标对象。
 
 
 
@@ -365,3 +407,12 @@ Bean：所有注册到容器中的业务对象称之为Bean
 URL：Uniform Resource Locator（统一资源定位器）
 
 OOP：Object-Oriented Software Development
+
+#### Reference
+
+https://spring.io/guides
+
+
+
+
+
