@@ -176,6 +176,34 @@ Class -- OOP
 
 
 
+Joinpoint：将AOP的功能织入到OOP系统的执行点
+
+Joinpoint类型：
+
+1. 方法调用（Method Call）：方法被调用时，在调用对象的执行点
+2. 方法调用执行（Method Call execution）：被调用到的方法逻辑执行时
+3. 构造方法调用（Constructor Call）：
+4. 构造方法执行（Constructor  Call Execution）
+5. 字段设置（Field Set）
+6. 字段获取（Field Get）
+7. 异常处理执行（Exception Handler Execution）
+8. 类初始化（Class initialization）：静态初始块
+
+Pointcut：Joinpoint的表述方式，Pointcut之间可以进行逻辑运算
+
+Advice：相当于Class中的Method
+
+- Before Advice
+- After Advice
+  - After returning Advice
+  - After throwing Advice
+  - After (Finally) Advice
+  - 
+
+
+
+
+
 #### Other
 
 项目对象模型 (POM： Project Object Model)，一组标准集合，一个项目生命周期(Project Lifecycle)，一个依赖管理系统(Dependency Management System)，和用来运行定义在生命周期阶段(phase)中插件(plugin)目标(goal)的逻辑。 
