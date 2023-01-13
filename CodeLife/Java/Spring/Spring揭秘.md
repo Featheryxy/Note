@@ -46,6 +46,12 @@ Spring MVC：提供面向Web应用的Model-View-Controller实现。
 
 Spring 提供了IOC容器实现，帮助我们以依赖注入的方式管理对象之间的依赖关系。解耦各业务对象间依赖关系的对象绑定方式
 
+IOC就是控制反转，是指创建对象的控制权的转移，以前创建对象的主动权和时机是由自己把控的，而现在这种权力转移到Spring容器中，并由容器根据配置文件去创建实例和管理各个实例之间的依赖关系，对象与对象之间松散耦合，也利于功能的复用。
+
+
+
+
+
 
 
 依赖注入方式：
@@ -57,6 +63,7 @@ Spring 提供了IOC容器实现，帮助我们以依赖注入的方式管理对�
      - 构造方法无法被继承，无法设置默认值
 2. setter注入：最提倡，可被继承，允许设置默认值
 3. 接口注入：要求被注入的对象实现不必要的接口，带有侵入性
+3. 注解注入
 
 IoC职责：
 
@@ -73,14 +80,34 @@ IoC职责：
 
 
 
+
+
+BeanFactory 和 ApplicationContext的区别？
+
+Spring的两大核心接口，都可以当做Spring的容器。其中ApplicationContext是BeanFactory的子接口
+
 容器类型：
 
-1. BeanFactory：默认lazy-load
-2. ApplicationContext：在BeanFactory基础容器之上，提供的另一个IoC容器实现。支持国际化等功能，启动后会实例化所有的bean定义
+1. BeanFactory：默认lazy-load，是Spring里面最底层的接口，包含了各种Bean的定义，读取bean配置文档，管理bean的加载、实例化，控制bean的生命周期，维护bean之间的依赖关系
+2. ApplicationContext：ApplicationContext接口作为BeanFactory的派生，除了提供BeanFactory所具有的功能外，还提供了更完整的框架功能。启动后会实例化所有的bean定义
    - 统一资源加载策略
    - 国际化信息支持
    - 容器内事件发布
    - 多配置模块加载简化
+   - 提供在监听器中注册bean的事件
+
+① BeanFactroy采用的是延迟加载形式来注入Bean的，即只有在使用到某个Bean时(调用getBean())，才对该Bean进行加载实例化。
+	这样，我们就不能发现一些存在的Spring的配置问题。如果Bean的某一个属性没有注入，BeanFacotry加载后，直至第一次使用调用getBean方法才会抛出异常。
+
+ ② ApplicationContext，它是在容器启动时，一次性创建了所有的Bean。这样，在容器启动时，我们就可以发现Spring中存在的配置错误，这样有利于检查所依赖属性是否注入。
+ ApplicationContext启动后预载入所有的单实例Bean，通过预载入单实例bean ,确保当你需要的时候，你就不用等待，因为它们已经创建好了。
+
+ ③ 相对于基本的BeanFactory，ApplicationContext 唯一的不足是占用内存空间。当应用程序配置Bean较多时，程序启动较慢。
+
+（3）BeanFactory通常以编程的方式被创建，ApplicationContext还能以声明的方式创建，如使用ContextLoader。
+
+（4）BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProcessor的使用，
+但两者之间的区别是：BeanFactory需要手动注册，而ApplicationContext则是自动注册。
 
 
 
@@ -159,6 +186,86 @@ IOC原理：
 BeanPostProcessor：对象实例化阶段
 
 BeanFactoryPostProcessor：容器启动阶段
+
+6、请解释Spring Bean的生命周期？
+
+ 首先说一下Servlet的生命周期：实例化，初始init，接收请求service，销毁destroy；
+
+ Spring上下文中的Bean生命周期也类似，如下：
+
+（1）实例化Bean：
+
+对于BeanFactory容器，当客户向容器请求一个尚未初始化的bean时，或初始化bean的时候需要注入另一个尚未初始化的依赖时，容器就会调用createBean进行实例化。
+对于ApplicationContext容器，当容器启动结束后，通过获取BeanDefinition对象中的信息，实例化所有的bean。
+
+（2）设置对象属性（依赖注入）：
+
+实例化后的对象被封装在BeanWrapper对象中，紧接着，Spring根据BeanDefinition中的信息 以及 通过BeanWrapper提供的设置属性的接口完成依赖注入。
+
+（3）处理Aware接口：
+
+接着，Spring会检测该对象是否实现了xxxAware接口，并将相关的xxxAware实例注入给Bean：
+
+①如果这个Bean已经实现了BeanNameAware接口，会调用它实现的setBeanName(String beanId)方法，此处传递的就是Spring配置文件中Bean的id值；
+
+②如果这个Bean已经实现了BeanFactoryAware接口，会调用它实现的setBeanFactory()方法，传递的是Spring工厂自身。
+
+③如果这个Bean已经实现了ApplicationContextAware接口，会调用setApplicationContext(ApplicationContext)方法，传入Spring上下文；
+
+（4）BeanPostProcessor：
+
+如果想对Bean进行一些自定义的处理，那么可以让Bean实现了BeanPostProcessor接口，那将会调用postProcessBeforeInitialization(Object obj, String s)方法。
+
+（5）InitializingBean 与 init-method：
+
+如果Bean在Spring配置文件中配置了 init-method 属性，则会自动调用其配置的初始化方法。
+
+（6）如果这个Bean实现了BeanPostProcessor接口，将会调用postProcessAfterInitialization(Object obj, String s)方法；由于这个方法是在Bean初始化结束时调用的，所以可以被应用于内存或缓存技术；
+
+以上几个步骤完成后，Bean就已经被正确创建了，之后就可以使用这个Bean了。
+
+（7）DisposableBean：
+
+当Bean不再需要时，会经过清理阶段，如果Bean实现了DisposableBean这个接口，会调用其实现的destroy()方法；
+
+（8）destroy-method：
+
+最后，如果这个Bean的Spring配置中配置了destroy-method属性，会自动调用其配置的销毁方法。
+
+
+
+7、 解释Spring支持的几种bean的作用域scope。
+
+Spring容器中的bean可以分为5个范围：
+
+（1）singleton：默认，每个容器中只有一个bean的实例，单例的模式由BeanFactory自身来维护, 与容器具有相同的生命周期。
+
+（2）prototype：为每一个bean请求提供一个实例，当改对象实例返回给请求方后，其生命周期由请求方管理。
+
+（3）request：为每一个Http请求创建一个实例，在请求完成以后，bean会失效并被垃圾回收器回收。
+
+（4）session：与request范围类似，活的比request长，确保每个session中有一个bean的实例，在session过期后，bean会随之失效。
+
+（5）global-session：全局作用域，global-session和Portlet应用相关。当你的应用部署在Portlet容器中工作时，它包含很多portlet。
+如果你想要声明让所有的portlet共用全局的存储变量的话，那么这全局变量需要存储在global-session中。全局作用域与Servlet中的session作用域效果相同。
+
+8、Spring框架中的单例Beans是线程安全的么？
+
+Spring框架并没有对单例bean进行任何多线程的封装处理。关于单例bean的线程安全和并发问题需要开发者自行去搞定。但实际上，大部分的Spring bean 并没有可变的状态(比如Serview类和DAO类)，所以在某种程度上说Spring的单例bean是线程安全的。如果你的bean有多种状态的话（比如 View Model 对象），就需要自行保证线程安全。最浅显的解决办法就是将多态bean的作用域由“singleton”变更为“prototype”。
+
+9、Spring如何处理线程并发问题？
+
+在一般情况下，只有无状态的Bean才可以在多线程环境下共享，在Spring中，绝大部分Bean都可以声明为singleton作用域，
+因为Spring对一些Bean中非线程安全状态采用ThreadLocal进行处理，解决线程安全问题。
+ThreadLocal和线程同步机制都是为了解决多线程中相同变量的访问冲突问题。
+同步机制采用了“时间换空间”的方式，仅提供一份变量，不同的线程在访问前需要获取锁，没获得锁的线程则需要排队。
+而ThreadLocal采用了“空间换时间”的方式。ThreadLocal会为每一个线程提供一个独立的变量副本，从而隔离了多个线程对数据的访问冲突。
+因为每一个线程都拥有自己的变量副本，从而也就没有必要对该变量进行同步了。
+ThreadLocal提供了线程安全的共享对象，在编写多线程代码时，可以把不安全的变量封装进 ThreadLocal。
+
+
+
+
 
 #### AOP
 
