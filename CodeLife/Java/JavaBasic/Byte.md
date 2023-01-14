@@ -61,6 +61,4 @@ System.out.println(a);
 
 
 
-
-
 等比数列，1，2，4，（a1=1, q=2, Sn=2^n-1）
