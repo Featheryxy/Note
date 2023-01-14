@@ -1,5 +1,114 @@
 # Annontation
 
+注解可以类比于标签，
+
+注解是一系列元数据，用来解释程序代码，但是并非是代码本身的一部分，对于代码的运行效果没有直接影响。
+
+注解使用@interface来定义，
+
+```java
+public @interface TestAnnotation {
+}
+```
+
+有5种元注解，分别是
+
+@Retention：Retention 的英文意为保留期的意思。它解释说明了这个注解的的存活时间。 
+
+- RetentionPolicy.SOURCE 注解只在源码阶段保留，在编译器进行编译时它将被丢弃忽视。
+- RetentionPolicy.CLASS 注解只被保留到编译进行的时候，它并不会被加载到 JVM 中。
+- RetentionPolicy.RUNTIME 注解可以保留到程序运行的时候，它会被加载进入到 JVM 中，所以在程序运行时可以获取到它们。
+
+@Documented：将注解中的元素包含到 Javadoc 中 
+
+@Target：指定了注解运用的地方 
+
+- ElementType.ANNOTATION_TYPE 可以给一个注解进行注解
+- ElementType.CONSTRUCTOR 可以给构造方法进行注解
+- ElementType.FIELD 可以给属性进行注解
+- ElementType.LOCAL_VARIABLE 可以给局部变量进行注解
+- ElementType.METHOD 可以给方法进行注解
+- ElementType.PACKAGE 可以给一个包进行注解
+- ElementType.PARAMETER 可以给一个方法内的参数进行注解
+- ElementType.TYPE 可以给一个类型进行注解，比如类、接口、枚举
+
+@Inherited：注解 Test 被 @Inherited 修饰，之后类 A 被 Test 注解，类 B 继承 A,类 B 也拥有 Test 这个注解。 
+
+```
+@Inherited
+@Retention(RetentionPolicy.RUNTIME)
+@interface Test {}
+@Test
+public class A {}
+public class B extends A {}
+```
+
+@Repeatable  :注解的值可以同时取多个 
+
+一个人他既是程序员又是产品经理,同时他还是个画家。 
+
+```
+@interface Persons {
+    Person[]  value();
+}
+@Repeatable(Persons.class)
+@interface Person{
+    String role default "";
+}
+@Person(role="artist")
+@Person(role="coder")
+@Person(role="PM")
+public class SuperMan{
+}
+```
+
+注解的属性：注解的属性也叫做成员变量。注解只有成员变量，没有方法 。注解的成员变量在注解的定义中以“无形参的方法”形式来声明 ,可以用 default 关键值指定默认值
+
+```java
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface TestAnnotation {
+    public int id() default -1;
+    String msg();
+}
+
+@TestAnnotation(id=3,msg="hello annotation")
+public class Test {
+}
+```
+
+
+
+注解通过反射获取并使用，首先可以通过 Class 对象的 isAnnotationPresent() 方法判断它是否应用了某个注解 ，然后通过 getAnnotation() 方法来获取 Annotation 对象 
+
+```java
+// 判断是否应用了某个注解
+public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {}
+
+public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {}
+
+public Annotation[] getAnnotations() {}
+```
+
+使用场景：
+
+1. 检查
+2. 
+
+
+
+> 注解：注解是一系列元数据，它提供数据用来解释程序代码，但是注解并非是所解释的代码本身的一部分。注解对于代码的运行效果没有直接影响 
+>
+> 元注解：注解的注解，用注解修饰注解
+
+
+
+
+
+## Reference
+
+https://zhuanlan.zhihu.com/p/37701743
+
 ## 概述
 
 - 从 JDK 5.0 开始, Java 增加了对元数据(MetaData) 的支持, 也就是Annotation(注解)  
