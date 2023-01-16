@@ -1,5 +1,75 @@
 # 异常
 
+异常主要用于处理程序中的不被期望的事件，其顶层父类为 Throwable，由此派生出 Error 和 Exception。
+
+Error ：JVM本身的错误 ，不能通过代码处理。
+
+Exception ：可以被Java异常处理机制使用 
+
+异常总体上可分为两类，非检查异常（unckecked exception）和检查异常（checked exception）。
+
+- unckecked exception：Error 和 RuntimeException 以及他们的子类 
+- checked exception：others
+
+异常处理方式：
+
+1. try…catch{1, m}…[finally ]， 
+2. throws：在方法签名上声明，将checked exception交给函数调用者caller处理，自己不处理
+
+注意事项：
+
+try块中一旦出现异常，不会执行异常抛出点后的代码，会生成一个对应异常类的对象，根据此对象的类型，去catch中进行匹配
+
+每一个catch块用于捕获并处理一个特定的异常，或者这异常类型的子类，Java7中可以将多个异常声明在一个catch中。
+
+catch中的异常类型如果满足子父类关系，则要求子类一定声明在父类的上面。先抛具体的错误，再抛通用的错误。否则编译不通过错
+
+异常的链式调用：
+
+将异常对象作为参数构造新的异常对象
+
+```java
+public class Throwable implements Serializable {
+    private Throwable cause = this;
+    public Throwable(String message, Throwable cause) {
+        fillInStackTrace();
+        detailMessage = message;
+        this.cause = cause;
+    }
+     public Throwable(Throwable cause) {
+        fillInStackTrace();
+        detailMessage = (cause==null ? null : cause.toString());
+        this.cause = cause;
+    }
+    //........
+}
+```
+
+finally块和return：
+
+一个函数的返回值总是指向同一个内存地址，如果一个函数中有多个返回值，则后执行的会覆盖之前执行的数据。
+
+- finally中的return 会覆盖 try 或者catch中的返回值。
+- finally中的return会抑制（消灭）前面try或者catch块中的异常
+- finally中的异常会覆盖（消灭）前面try或者catch中的异常
+
+
+
+异常处理策略：
+
+1. resumption model of exception handling（恢复式异常处理模式 ） ：当异常被处理后，控制流会恢复到**异常抛出点**接着执行 
+2. termination model of exception handling（终结式异常处理模式）：执行流恢复到处理了异常的**catch块后接着执行** 
+
+建议：
+
+1. 不要在fianlly中使用return和抛出异常
+2. fianlly中仅用作与资源的释放
+3. return写在函数的最后面，而不是try … catch … finally中 
+
+
+
+
+
 方法不仅告诉编译器返回什么值，还要告诉编译器有可能发生什么错误。
 
 ```java
@@ -243,6 +313,13 @@ class Student{
 
 ## **自定义异常**
 
+按照国际惯例， 自定义的异常应该总是包含如下的构造函数： 
+
+- 一个无参构造函数
+- 一个带有String参数的构造函数，并传递给父类的构造函数。
+- 一个带有String参数和Throwable参数，并都传递给父类构造函数
+- 一个带有Throwable 参数的构造函数，并传递给父类的构造函数。
+
 ```java
 package com.atguigu.java2;
 /*
@@ -309,4 +386,4 @@ public class ReturnExceptionDemo {
 ## **throw与throws**
 
 - throw：生成异常对象
-- throws：向上一级抛出异常，用于处理异常
+- throws：在方法签名中使用，向上一级抛出异常，用于处理异常
