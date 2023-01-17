@@ -1,5 +1,13 @@
 # Reflection
 
+反射就是把java类中的各种成分映射成一个个的Java对象，如Fields，Constructor对象，我们可以通过Class对象来获取类的结构信息。
+
+Class是一个普通的类，这个类描述的是所有类的公共特性。
+
+其构造方法为private，所以Class对象的由JVM来创建，将class文件读入内存，并为之创建一个Class对象
+
+
+
 Java运行时系统始终为所有对象维护一个运行时类型标识。保存这些信息的类名为Class.
 
 在启动时，包含main方法的类被加载，它会加载所有需要的类。这些被加载的类又要加载它们需要的类，以此类推。这将花费很长时间，可以使用Class.forName手工强制加载其他类。
@@ -474,3 +482,28 @@ public void testField1() throws Exception {
 
 ## 7 反射的应用：动态代理  
 
+## Others
+
+Class:Class就是一个普通的类，这个类描述的是所有的类的公共特性。如所有的类，都有一个类名，都有0个或者多个字段
+使用，由于其构造函数为私有的，不能使用关键字new
+
+```java
+public static void main(String[] args){
+       //第一种
+       Class c1 = String.class;
+	   // 一般我们把Class的对象叫字节码
+       //第二种
+       String s = "hello,world";
+       Class c2 = s.getClass();
+		//第三种,以上面的Book类为例,其实就是动态加载类，注意捕获异常，因为类有可能不存在
+   		try {
+       		Class c3 = Class.forName("com.test.Book");
+   		} catch (ClassNotFoundException e) {
+       		e.printStackTrace();
+        }
+}
+```
+
+## Reference
+
+   https://www.cnblogs.com/lingyejun/p/17034074.html
