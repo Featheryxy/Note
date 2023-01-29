@@ -1,10 +1,14 @@
-# 对象与类
+# Class And Instance
 
-程序=算法+数据结构
+JVM以类为模板，在堆中构造出实例。
 
-- 首先确定如何操作数据，再决定如何组织数据的结构
+类元信息存储在栈中，一个.class文件，有且只有一个全限定名称，只有一个Class对象实例与之对应。
 
-而OOP将数据放在第一位，然后再考虑操作数据的算法。
+对象实例保存在堆中，可以有多个。
+
+所以先有类，再有实例，实例方法可以访问类属性，而类方法不能访问实例变量。
+
+类属性和方法通过static 修饰
 
 ### class
 
@@ -26,6 +30,7 @@ class —> instance
 
 - 依赖（uses-a）
 - 聚合（has-a）
+- 组合（contains-a）
 - 继承（is-a）
 
 ```java
@@ -86,7 +91,7 @@ final修饰类时，该类不能被继承，类中的方法不会被覆盖，默
 final修饰方法时，该**方法可以被继承**，**但是不能被覆盖override**
 
 ```java
-finalStringBuilder evaluations;
+final StringBuilder evaluations;
 evaluations =newStringBuilder();
 evaluations.append(LocalDate.now()+": Gold star!\n");
 System.out.println(evaluations);
@@ -113,13 +118,13 @@ public final class Math {
 }
 ```
 
-### 方法参数
+### method parameter
 
 按值调用：call by value, 参数为基本数据类型
 
 按引用调用该：call by reference，参数为对象引用
 
-### 对象构造
+### object constructor
 
 重载，默认字段初始化，无参数的构造器
 
@@ -176,11 +181,11 @@ public class People {
 }
 ```
 
-## 包
+## Package
 
-### 包名
+### package name
 
-包名：将一个因特网域名的逆序形式作为包名。考虑域名horstmann.com, 工程名为corejava，Employee为包下的类。则**完全限定名(fully qualified name)**为com.horstmann.com.Employee
+包名：将一个**因特网域名的逆序**形式作为包名。考虑域名horstmann.com, 工程名为corejava，Employee为包下的类。则**完全限定名(fully qualified name)**为com.horstmann.com.Employee
 
 ### 类的导入
 
@@ -199,7 +204,7 @@ public class packtest {
 ### 静态导入
 
 ```java
-import staticjava.lang.Math.*;
+import static java.lang.Math.*;
 
 public classpacktest {
 	public static voidmain(String[] args) {
@@ -210,12 +215,3 @@ public classpacktest {
 }
 ```
 
-## Jar文件
-
-```
-创建jar文件：jar cvf jarFIleName file1 file2 ...
-e.g.: jar cvf Calculator.jar *.class icon.gif
-
-执行jar文件：java -jar jarFileName.jar
-e.g.: java -jar Calculator.jar
-```

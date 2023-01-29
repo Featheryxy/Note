@@ -1,10 +1,9 @@
 # 1 Java比较器
 
-- 在Java中经常会涉及到对象数组的排序问题，那么就涉及到**对象之间**
-  **的比较**问题。
-- Java实现对象排序的方式有两种：
-  - 自然排序： java.lang.Comparable
-  - 定制排序： java.util.Comparator  
+- 在Java中经常会涉及到对象数组的排序问题，那么就涉及到**对象之间的比较**问题。
+- Java实现对象排序的方式有两种，默认升序：
+  - 自然排序： java.lang.Comparable，通过接口继承实现
+  - 定制排序： java.util.Comparator ，作为方法参数来实现
 
 ## 2 自然排序  
 
