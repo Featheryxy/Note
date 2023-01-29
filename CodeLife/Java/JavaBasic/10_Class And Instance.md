@@ -1,4 +1,4 @@
-# Class And Instance
+# Class and Instance
 
 JVM以类为模板，在堆中构造出实例。
 
