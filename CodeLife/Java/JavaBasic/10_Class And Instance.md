@@ -55,6 +55,96 @@ class ClassName{
 }
 ```
 
+### extends
+
+继承：基于已有的类创建新的类。i.e.：复用这些类的方法，而且可以增加一些新的方法和字段。
+
+使用依据：if student is a people, then we use class student extends people.
+
+```java
+public classPeople {
+	private Stringname;
+	private intage;
+	
+	public People(){
+	
+	}
+	
+	public People(String name,intage){
+		this.name= name;
+		this.age= age;
+	}
+	
+	public void introduce(){
+	      System.out.println("My name is "+name+", I'm "+age+" year old.");
+	}
+}
+
+public class Student extends People {
+	private String degree;
+
+	public Student(){
+
+	}
+
+	public Student(String name, int age, String degree){
+		super(name, age);
+		this.degree = degree;
+	}
+
+	// 方法覆盖
+	@Override
+	public void introduce() {
+		// 利用super关键字调用超类的方法
+		super.introduce();
+		System.out.println("I have "+degree+" degree!");
+	}
+
+	public static void main(String[] args) {
+		Student student = new Student("Milo", 25, "master");
+		student.introduce();
+	}
+}
+```
+
+### this and super
+
+this
+
+1. 指示**隐式参数的引用**
+2. 调用该类的**其他构造器**
+
+super
+
+1. 调用超类的方法
+2. 调用超类的**构造器**
+
+### 多态
+
+多态：一个对象变量可以指示多种实际类型的现象。对象变量是多态的（polymorphic）
+
+动态绑定：运行时能够自动选择适当的方法.
+
+原理：每个类会维护一个方法表（method table），其中列出了所有的签名和要调用的实际方法。首先虚拟机获取多态变量people的People和Student的方法表，然后查找相同签名的方法，最后再调用
+
+方法签名：方法的名字和参数列表
+
+```java
+People people;
+people = new People();
+people = new Student();
+```
+
+### 强制类型转换
+
+原因：暂时忽视对象的实际类型之后使用对象的全部功能。每个对象变量都有一个类型，类型描述了这个变量所引用的以及能够引用的对象类型。
+
+```java
+if (arr[1] instanceof People){
+	people = (People)arr[1];
+}
+```
+
 ### parameter
 
 隐式（implicit）参数：field1, this关键字指示隐式参数
@@ -178,40 +268,6 @@ public class People {
 		System.out.println(people2);
 		// People{name='Milo', age=25, isMale=true}
 	}
-}
-```
-
-## Package
-
-### package name
-
-包名：将一个**因特网域名的逆序**形式作为包名。考虑域名horstmann.com, 工程名为corejava，Employee为包下的类。则**完全限定名(fully qualified name)**为com.horstmann.com.Employee
-
-### 类的导入
-
-```java
-import java.time.LocalDate;
-
-public class packtest {
-	public static void main(String[] args) {
-		java.time.LocalDate today = java.time.LocalDate.now();
-		// 等价于
-		LocalDate.now();
-	}
-}
-```
-
-### 静态导入
-
-```java
-import static java.lang.Math.*;
-
-public classpacktest {
-	public static voidmain(String[] args) {
-	      Math.pow(2,2);
-				// 等价于
-				pow(2,2);
-	   }
 }
 ```
 

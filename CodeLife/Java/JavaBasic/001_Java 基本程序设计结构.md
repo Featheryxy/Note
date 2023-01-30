@@ -20,21 +20,6 @@ JDK = JRE + 开发工具集（例如Javac编译工具等）
 
 常量名：所有字母都大写。多单词时每个单词用下划线连接： XXX_YYY_ZZZ
 
-### CMD
-
-```java
-// 编译java文件，生成.class文件
-javac ClassName.java
-// 运行
-java ClassName
-
-// 参数
-java -option
-java -classpath | -cp
-
-java -jar demo.jar
-```
-
 ### 注释
 
 ```java
