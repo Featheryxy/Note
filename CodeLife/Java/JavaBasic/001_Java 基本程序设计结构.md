@@ -2,13 +2,18 @@
 
 ### 简介
 
-JRE = JVM + Java SE标准类库
+语言特点：面向对象
 
-JDK = JRE + 开发工具集（例如Javac编译工具等）
+- 两个基本概念：类、对象
+- 三大特性：封装、继承、多态
 
 大小写敏感
 
-变量的声明尽可能靠近第一次使用的地方
+一个源文件（.java文件）中最多只能有一个public类。其它类的个数不限，如果源文件包含一个public类，则文件名必须按该类名命名
+
+JRE = JVM + Java SE标准类库
+
+JDK = JRE + 开发工具集（例如Javac编译工具等）
 
 ### 命名规范
 
@@ -38,21 +43,18 @@ JDK = JRE + 开发工具集（例如Javac编译工具等）
 
 基本类型（数值，字符，布尔）不是对象，
 
-byte   1字节   8位  [-128~127]   127+128+1=256 = 2^8
+- byte   1字节   8位  [-128~127]   127+128+1=256 = 2^8
+- short  2字节
+- int      4字节
+- long   8字节
+- float    4字节，
+  - 浮点型常量有两种表示形式：
+  - 十进制数形式：如： 5.12 512.0f .512 (必须有小数点）
+  - 科学计数法形式:如： 5.12e2 512E2 100E-2
 
-short  2字节
-
-int      4字节
-
-long   8字节
-
-float    4字节
-
-double 8字节
-
-char      2字节  Unicode编码  \u0000-\uFFFF
-
-boolean 1字节 true, false
+- double 8字节
+- char      2字节  Unicode编码  \u0000-\uFFFF
+- boolean 1字节 true, false
 
 ```java
 		byte a = 1;
@@ -66,6 +68,16 @@ boolean 1字节 true, false
 		double f2 =5d;
 		char g = 'g';
 		String s = "G";
+
+        short s = 5;
+//        s = s - 2;// wrong，2 is int
+        s = 5 - (short)(2);
+        s-=2; //Convert int to short
+
+        char c = 'a'; // a = 97
+        int i = 5;
+        float d = .314F;
+        double result = c+i+d; // 向上转型 102.31400299072266
 ```
 
 ### 字符串
@@ -93,6 +105,13 @@ boolean 1字节 true, false
 		if (str!=null && str.length()!=0){
 			System.out.println("既不是Null串也不是空串");
 		}
+
+        System.out.println("str1" + false); // str1false
+        System.out.println(3.14f+""); // 3.14
+        System.out.println(3+4+"hello"); // 7hello
+        System.out.println("hello"+3+4); // hello34
+        System.out.println("a"+1+"hello"); //a1hello
+        System.out.println("hello"+"a"+1); //helloa1
 ```
 
 ### StringBuilder
