@@ -60,9 +60,24 @@ class ClassName{
 }
 ```
 
+当类中没有显式调用构造器时，会使用默认的无参构造器，否则使用显式的构造器
+
 ### extends
 
-继承：基于已有的类创建新的类。i.e.：复用这些类的方法，而且可以增加一些新的方法和字段。
+继承：基于已有的类创建新的类。i.e.：子类继承父类的所有属性和方法，并且可以重写父类的方法或增加自己的方法。
+
+重写：同名同参（参数数量，参数类型，参数顺序）
+
+- 若子类重写了父类方法，就意味着子类里定义的方法彻底覆盖了父类里的同名方法，系统将不可能把父类里的方法转移到子类中。
+- 对于实例变量则不存在这样的现象，即使子类里定义了与父类完全相同的实例变量，这个实例变量依然不可能覆盖父类中定义的实例变量
+
+子类重写的方法的返回值类型不能大于父类被重写的方法的返回值类型
+
+子类重写的方法使用的访问权限不能小于父类被重写的方法的访问权限
+
+子类不能重写父类中声明为private权限的方法
+
+子类与父类中同名同参数的方法必须同时声明为非static的(即为重写)，或者同时声明为static的（不是重写） 。因为static方法是属于类的，子类无法覆盖父类的方法
 
 使用依据：if student is a people, then we use class student extends people.
 
@@ -112,14 +127,35 @@ public class Student extends People {
 }
 ```
 
-### this and super
+### this 
 
 this
 
-1. 指示**隐式参数的引用**
-2. 调用该类的**其他构造器**
+1. 它在方法内部使用，即这个方法所属对象的引用
+2. 它在构造器内部使用，调用该类的**其他构造器**
 
-super
+```java
+class Person{ // 定义Person类
+    private String name ;
+    private int age ;
+    public Person(){ // 无参构造器
+        System.out.println("新对象实例化") ;
+    }
+    public Person(String name){
+        this(); // 调用本类中的无参构造器
+        this.name = name ;
+    }
+    public Person(String name,int age){
+        this(name) ; // 调用有一个参数的构造器
+        this.age = age;
+    }
+    public String getInfo(){
+        return "姓名： " + name + "，年龄： " + age ;
+    }
+}
+```
+
+### super
 
 1. 调用超类的方法
 2. 调用超类的**构造器**
@@ -140,7 +176,36 @@ people = new People();
 people = new Student();
 ```
 
-### 强制类型转换
+Java引用变量有两个类型： 编译时类型和运行时类型。
+
+编译时， 看左边；运行时， 看右边
+
+多态情况下，
+
+“看左边” ： 看的是父类的引用（父类中不具备子类特有的方法）
+“看右边” ： 看的是子类的对象（实际运行的是子类重写父类的方法）
+
+对象的多态 —在Java中,子类的对象可以替代父类的对象使用
+
+- 一个变量只能有一种确定的数据类型
+- 一个引用类型变量可能指向(引用)多种不同类型的对象
+
+子类可看做是特殊的父类， 所以父类类型的引用可以指向子类的对象：向上转型(upcasting)
+
+一个引用类型变量如果声明为父类的类型，但实际引用的是子类对象，那么该变量就不能再访问子类中添加的属性和方法
+
+### 类型转换
+
+向上转型是自动的，如 int 自动向上转型为 float
+
+向下转型需要强制类型转换
+
+对Java对象的强制类型转换称为造型
+
+- 从子类到父类的类型转换可以自动进行
+- 从父类到子类的类型转换必须通过造型(强制类型转换)实现
+- 无继承关系的引用类型间的转换是非法的
+- 在造型前可以使用instanceof操作符测试一个对象的类型
 
 原因：暂时忽视对象的实际类型之后使用对象的全部功能。每个对象变量都有一个类型，类型描述了这个变量所引用的以及能够引用的对象类型。
 
@@ -199,17 +264,32 @@ age = 13;// error
 
 static修饰的变量或方法在类加载的时候就进行了initialization
 
-静态字段：static 修饰的字段属于类，由类名直接访问，不需要构造对象来访问
-
-静态常量：
-
-静态方法：
+static修饰的成员：static 修饰的字段属于类，由类名直接访问，不需要构造对象来访问，被所有对象所共享 (共享一块内存)
 
 ```java
-public final class Math {
-	...
-	public static final double PI = 3.14159265358979323846;
-	...
+package statictest;
+
+public class Person {
+        private int id;
+        public static int total = 0;
+
+        public Person() {
+                total++;
+                id = total;
+        }
+
+        public static void main(String[] args) {
+                Person.total = 100; // 不用创建对象就可以访问静态成员
+                //访问方式：类名.类属性， 类名.类方法
+                System.out.println(Person.total); // 100
+
+                Person Tom = new Person();
+                System.out.println(total); // 101
+
+                total=100;
+                System.out.println(total);  // 100
+
+        }
 }
 ```
 
