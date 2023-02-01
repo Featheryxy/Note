@@ -45,6 +45,32 @@ System.out.println(a);
         System.out.println(3 >> 2);  //floor(3/(2^2)=0
 ```
 
+浮点型常量有两种表示形式：
+ 十进制数形式：如： 5.12 512.0f .512 (必须有小数点）
+ 科学计数法形式:如： 5.12e2 512E2 100E-2  
+
+当把任何基本数据类型的值和字符串(String)进行连接运算时(+)， 基本数据类型的值将自动转化为字符串(String)类型  
+
+
+
+```java
+    System.out.println("str1" + false); // str1false
+    System.out.println(3.14f+""); // 3.14
+    System.out.println(3+4+"hello"); // 7hello
+    System.out.println("hello"+3+4); // hello34
+    System.out.println("a"+1+"hello"); //a1hello
+    System.out.println("hello"+"a"+1); //helloa1
+
+        short s = 5;
+//        s = s - 2;// wrong，2 is int
+        s = 5 - (short)(2);
+		s-=2; //Convert int to short
+
+        char c = 'a'; // a = 97
+        int i = 5;
+        float d = .314F;
+        double result = c+i+d; // 向上转型
+```
 对于整数，有四种表示方式：
 
 - 二进制(binary)： 0,1 ，满2进1.以0b或0B开头。
@@ -76,5 +102,7 @@ System.out.println(a);
 
 为什么要使用原码、反码、补码表示形式呢？
 计算机辨别“符号位”显然会让计算机的基础电路设计变得十分复杂! 于是人们想出了将**符号位也参与运算**的方法. 我们知道, 根据运算法则减去一个正数等于加上一个负数, 即: 1-1 = 1 + (-1) = 0 , 所以机器可以只有加法而没有减法, 这样计算机运算的设计就更简单了
+
+![](illustration/1.png)
 
 等比数列，1，2，4，（a1=1, q=2, Sn=2^n-1）

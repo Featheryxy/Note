@@ -20,3 +20,5 @@ MVC是常用的设计模式之一，将整个程序分为三个层次： 视图�
 
 - 相关工具类 view.utils
 - 自定义view view.ui
+
+![](illustration/MVC.png)
