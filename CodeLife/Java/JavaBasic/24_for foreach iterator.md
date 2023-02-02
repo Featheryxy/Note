@@ -11,6 +11,16 @@ for,foreach,iterator的比较
 
 <!-- more -->
 
+# for, foreach, iterator
+
+foreach是语法糖，底层使用的也是iterator。
+
+对于ArrayList, 循环时优先使用for循环，按地址取值
+
+对于LinkedList应该使用迭代器或foreach，因为其在get任何一个位置的数据的时候，都会把前面的数据走一遍
+
+foreach不可以修改，删除遍历的元素。
+
 ## 语法糖
 
 指计算机语言中添加的某种语法，这种语法对语言的功能并没有影响，语法糖能够增加程序的可读性，编写的效率。编译器会帮我们做转换
@@ -74,42 +84,41 @@ for (Integer num:integers) {
 
 
 
-for()循环是最快的遍历方式，随后是iterator()迭代器，最后是foreach循环，foreach是语法糖，底层使用的也是iterator
 
-foreach不可以修改，删除遍历的元素。
+
+```java
+// LinkedList的get
+public E get(int index) {
+    return entry(index).element;
+}
+private Entry<E> entry(int index) {
+    if (index < 0 || index >= size)
+        throw new IndexOutOfBoundsException("Index: "+index+
+                                            ", Size: "+size);
+    Entry<E> e = header;
+    if (index < (size >> 1)) {
+        // 如果index 位于前一半，从前向后遍历
+        for (int i = 0; i <= index; i++)
+            e = e.next;
+    } else {
+        for (int i = size; i > index; i--)
+            e = e.previous;
+    }
+     return e;
+}
+
+// ArrayList的get方法源代码
+// 直接获取地址O(1)
+public E get(int index) {
+    rangeCheck(index);
+    return elementData(index);
+}
+```
+
+## Reference
 
 
 
 https://www.cnblogs.com/cxuanBlog/p/10927538.html
 
 https://blog.csdn.net/weixin_34087307/article/details/86216558?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-7.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-7.channel_param
-
-ArrayList 的内存连续吗
-
-```java
-Node<E> node(int index) {
-        // assert isElementIndex(index);
-
-        if (index < (size >> 1)) {
-            // 如果index 位于前一半，从前向后遍历
-            Node<E> x = first;
-            for (int i = 0; i < index; i++)
-                x = x.next;
-            return x;
-        } else {
-            // 如果index 位于后一半，从后向前遍历
-            Node<E> x = last;
-            for (int i = size - 1; i > index; i--)
-                x = x.prev;
-            return x;
-        }
-    }
-
-// 直接获取地址O(1)
-public E get(int index) {
-        rangeCheck(index);
-
-        return elementData(index);
-    }
-```
-

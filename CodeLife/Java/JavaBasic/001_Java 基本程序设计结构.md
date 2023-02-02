@@ -51,7 +51,6 @@ JDK = JRE + 开发工具集（例如Javac编译工具等）
   - 浮点型常量有两种表示形式：
   - 十进制数形式：如： 5.12 512.0f .512 (必须有小数点）
   - 科学计数法形式:如： 5.12e2 512E2 100E-2
-
 - double 8字节
 - char      2字节  Unicode编码  \u0000-\uFFFF
 - boolean 1字节 true, false
@@ -79,6 +78,18 @@ JDK = JRE + 开发工具集（例如Javac编译工具等）
         float d = .314F;
         double result = c+i+d; // 向上转型 102.31400299072266
 ```
+
+### 浮点数
+
+IEEE 754标准
+
+浮点数= [符号, 阶码，尾数] = 
+
+float = [1位符号，8位指数，23位小数]，共32bit
+
+double = [1位符号，11位指数，52位小数]，共64bit
+
+
 
 ### 整数
 
@@ -242,4 +253,21 @@ int a [] = {1, 2, 3};
 
 布尔数组默认为false
 
-数组没有length()这个方法，有length的属性。String有length()这个方法
+数组中使用`arr.length` , 类似于数组对象的成员属性，其实是`length`由JVM的指令生成
+
+- "[I"(数组对象)直接由JVM创建
+
+字符串中使用`str.length()`，String对象的成员方法
+
+
+```java
+int[] nums = {-1,0,1,2,-1,-4};
+int[][] nums2 = new int[2][2];
+
+System.out.println(nums);  // [I@4554617c
+System.out.println(nums.getClass().getName());  // [I
+System.out.println(nums2.getClass().getName());  // [[I
+
+System.out.println(nums.length); // 6
+```
+
