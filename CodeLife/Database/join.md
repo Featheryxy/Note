@@ -1,5 +1,9 @@
 ## 实践
 
+在连表操作的时候，其实是先进行了2表的全连接（笛卡尔积，也就是所有能组合的情况a.rowCount*b.rowCount），然后根据on后面的条件进行筛选，最后如果是左连接或者右连接，再补全左表或者右表的数据
+
+join on 
+
 ### 数据库
 
 ```sql
@@ -57,7 +61,7 @@ cls_id  cls_name  stu_id  stu_name  cls_id  gender
      2  2班             3  小兰             4  0       
      3  3班             3  小兰             4  0       
      
--- 全外连接, oracle中使用full join
+-- 全外连接, oracle中使用full [outer] join
 SELECT * FROM class a 
 LEFT OUTER JOIN STUDENT b ON a.cls_id=b.cls_id
 UNION
@@ -114,6 +118,16 @@ cls_id  cls_name  stu_id  stu_name  cls_id  gender
 - join and 在join生成临时表前帅选元组
 
 > 当使用left join, and后 关于主表的帅选无效
+>
+> SELECT * FROM class a
+> LEFT JOIN STUDENT b ON a.cls_id=b.cls_id
+> AND a.cls_id = 1;
+>
+> 1. class join student 进行笛卡尔积，生成临时表temp1
+> 2.  ON a.cls_id=b.cls_id AND a.cls_id = 1 对表temp1进行帅选，帅选a.cls_id=b.cls_id AND a.cls_id=1
+> 3. left join 添加class 表中
+
+
 
 ```sql
 SELECT * FROM class a
@@ -141,6 +155,7 @@ cls_id  cls_name  stu_id  stu_name  cls_id  gender
 -- 等价于
 SELECT * FROM class a
 LEFT JOIN STUDENT b ON a.cls_id=b.cls_id;
+
 cls_id  cls_name  stu_id  stu_name  cls_id  gender  
 ------  --------  ------  --------  ------  --------
      1  1班             1  小明             1  1       
@@ -239,3 +254,5 @@ cls_id  cls_name  stu_id  stu_name  gender
 ```
 
 https://blog.csdn.net/weixin_36979214/article/details/105993194
+
+执行顺序：https://blog.csdn.net/weixin_44457814/article/details/106715422
