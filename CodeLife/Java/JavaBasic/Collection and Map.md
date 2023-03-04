@@ -7,13 +7,13 @@ Java 集合可分为 Collection 和 Map 两种体系
   - Set： 元素无序、不可重复的集合
 -  Map接口： 双列数据，保存具有映射关系“key-value对”的集合  
 
+![Collection](Collection and Map.assets/Collection.png)
 
+![Map](Collection and Map.assets/Map.png)
 
 继承树
 
-![Collection](https://github.com/Featheryxy/JavaBasic/blob/main/Collection%20and%20Map.assets/Collection.png)
 
-![Map](https://github.com/Featheryxy/JavaBasic/blob/main/Collection%20and%20Map.assets/Map.png)
 
 ## 2 Collection
 
@@ -402,7 +402,7 @@ Java 集合可分为 Collection 和 Map 两种体系
 *              |----Vector：作为List接口的古老实现类；线程安全的，效率低；底层使用Object[] elementData存储
 *
 *
-*   2. ArrayList的源码分析：
+*   2. ArrayList 的源码分析：
 *   2.1 jdk 7情况下
 *      ArrayList list = new ArrayList();//底层创建了长度是10的Object[]数组elementData
 *      list.add(123);//elementData[0] = new Integer(123);
@@ -1158,4 +1158,6 @@ public void test2(){
 
     }
 ```
+
+## 7 小结
 
