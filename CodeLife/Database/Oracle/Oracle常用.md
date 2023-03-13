@@ -14,8 +14,7 @@ conn scott/213213
 
 C:\Users\Milo>sqlplus scott/213213
 
--- 查看当前用户名称/schema
-show user;
+
 
 -- 查看当前用户的schema_name
 select SYS_CONTEXT('USERENV','CURRENT_SCHEMA') CURRENT_SCHEMA from dual;
@@ -29,6 +28,46 @@ SQL> select name from v$database;
 SQL> @path_to_sql_file
 
 ```
+
+### 实例
+
+同一主机上可以运行多个Oracle实例，每个实例都由唯一的SID（System Identifier）来标识
+
+```sql
+-- 查看当前主机上的实例
+select name from v$database;
+```
+
+
+
+### session 与 process
+
+Session（会话）是指用户与数据库之间的一个连接。
+
+process（进程）用于于执行各种任务。
+
+> 当用户发起一个连接请求时，Oracle会分配一个新的session以响应该请求。然后，Oracle会创建一个新的process来处理该session。一个个process可能会处理多个session，例如在多个用户连接到同一个数据库实例时。在这种情况下，这些session共享同一个process，这也被称为共享服务器模式。
+
+```sql
+-- 查看当前用户名称/schema
+show user;
+
+-- 所有当前连接到数据库的用户
+select * from v$session where type='USER' and status='ACTIVE';
+	-- if port is 0, 代表该连接由本地进程发起，而不是由远程客户端发起的
+	
+	
+```
+
+
+
+- "Process"是Oracle数据库实例中的一个后台进程，用于执行各种任务。
+
+  
+
+sessions=1.1*processes + 5
+
+
 
 ### 备份表
 
@@ -106,6 +145,28 @@ select substr('12345', 1, 2) ||0||substr('12345', 4) from dual;
 
 ```java
 SELECT column_name FROM user_tab_columns where table_name = upper('表名') 
+```
+
+### DBLink
+
+在databaseA中创建连接databaseB的link
+
+```sql
+ select * from user_sys_privs where privilege like upper('%DATABASE LINK%') and username = 'userA'; 
+ 
+ grant CREATE PUBLIC DATABASE LINK,DROP PUBLIC DATABASE LINK to userA; 
+ 
+ create public database link NC65DBLINK    
+ connect to nc56 identified by nc56  
+ using '(DESCRIPTION =(ADDRESS_LIST =(ADDRESS =(PROTOCOL = TCP)(HOST = 192.168.17.254)(PORT = 1521)))(CONNECT_DATA =(SERVICE_NAME = orcl)))';
+ 查看是否创建成功
+
+select * from dba_db_links;
+select owner,object_name from dba_objects where object_type='DATABASE LINK';--查询时间久
+
+ select * from crm_bd_building@NC65DBLINK
+ 
+drop  public database link  NC65DBLINK
 ```
 
 ### 引号
