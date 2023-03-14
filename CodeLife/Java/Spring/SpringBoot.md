@@ -44,10 +44,7 @@ Spring Boot 是一个基于 Spring 框架的开源框架，它简化了 Spring�
 
 
 
-**Bean**：在 Spring 中把每一个**需要管理的对象实例**称为 **Spring Bean（简称 Bean）**
 
-- 在 Spring IoC 容器中，默认的情况下， Bean 都是以单例存在的，也就是使用 **getBean 方法返回的都是同一个对象**  
-- Spring IoC 容器中，允许我们按**类型**或者**名称**获取 Bean  
 
 
 

@@ -6,25 +6,30 @@ Spring是一个轻量级的IoC和AOP容器框架，目的是用于简化企业�
 
 常见的配置方式有三种：基于XML的配置、基于注解的配置、基于Java的配置。
 
-主要由以下几个模块组成：
+主要由以下八个模块组成：
 
-Spring Core：核心类库，提供IOC服务；
+1. Data Access/Integration
 
-Spring Context：提供框架式的Bean访问方式，以及企业级功能（JNDI、定时任务等）；
+2. Web
 
-Spring AOP：AOP服务；
+3. AOP
+4. Aspects
+5. Instrument
+6. Messaging
+7. Core Container
+8. Test
 
-Spring DAO：对JDBC的抽象，简化了数据访问异常的处理；
+每个「绿框」，对应一个模块，总共8个模块；「黑色包」，表示要实现这个模块的 jar 包
 
-Spring ORM：对现有的ORM框架的支持；
-
-Spring Web：提供了基本的面向Web的综合特性，例如多方文件上传；
-
-Spring MVC：提供面向Web应用的Model-View-Controller实现。
+![Spring5模块](Spring揭秘.assets/Spring5模块.bmp)
 
 
 
-![](SpringLifeTree.png)上层模块依赖下层模块，同层模块相互独立
+![](SpringLifeTree.png)
+
+
+
+上层模块依赖下层模块，同层模块相互独立
 
 
 
@@ -50,11 +55,13 @@ IOC就是控制反转，是指创建对象的控制权的转移，以前创建�
 
 
 
+**Spring Bean（简称 Bean）**：在 Spring 中每一个**需要管理的对象实例**
+
+**IOC：**控制反转， Spring容器**创建**和**管理**SpringBean。i.e.:管理Bean的生命周期，以及bean的依赖注入。
 
 
 
-
-依赖注入方式：
+**依赖注入方式：**
 
 1. 构造器注入
    - 优点：对象构造完成后即可使用
@@ -65,13 +72,6 @@ IOC就是控制反转，是指创建对象的控制权的转移，以前创建�
 3. 接口注入：要求被注入的对象实现不必要的接口，带有侵入性
 3. 注解注入
 
-IoC职责：
-
-1. 对象的构建
-2. 对象之间的依赖绑定
-
-
-
 如何管理对象间的依赖关系：
 
 1. 直接编码
@@ -80,7 +80,16 @@ IoC职责：
 
 
 
+Spring IOC 容器的实现的两种方式（接口）：
 
+- BeanFactory：IOC 容器基本实现，是 Spring 内部的使用接口，不提供开发人员进行使用。加载配置文件时候不会创建对象，在获取对象（使用）才去创建对象
+
+- ApplicationContext：BeanFactory 接口的子接口，提供更多更强大的功能，一般由开发人员进行使用。加载配置文件时候就会进行创建对象。
+
+  - ClassPathXmlApplicationContext： 从 class path 中加载配置文件，更常用
+  - FileSystemXmlApplicationContext：从本地文件中加载配置文件，不常用，如果再到 Linux 环境中，还要改路径
+
+  
 
 BeanFactory 和 ApplicationContext的区别？
 

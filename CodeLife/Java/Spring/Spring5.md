@@ -4,32 +4,32 @@
 
 https://repo.spring.io/ui/native/release/org/springframework/spring
 
-![Spring5模块](Spring5.assets/Spring5模块.bmp)
-
-## IOC
-
-IOC：控制反转，把创建对象过程交给 Spring 进行管理
-
-> 把对象创建和对象之间的调用过程，交给 Spring 进行管理，降低耦合度。
-
-contex ----> beanfactorybean ----> bean/factorybean
 
 
+### IOC
 
-### 原理
+~~SpringBean：在Spring容器中被管理的Java对象~~
+
+~~IOC：控制反转， Spring容器**创建**和**管理**SpringBean。i.e.:管理Bean的生命周期，以及bean的依赖注入。~~
+
+> ~~把对象创建和对象之间的调用过程，交给 Spring 进行管理，降低耦合度。~~
+
+Spring IOC 容器的实现的两种方式（接口）：
+
+- BeanFactory：IOC 容器基本实现，是 Spring 内部的使用接口，不提供开发人员进行使用。加载配置文件时候不会创建对象，在获取对象（使用）才去创建对象
+- ApplicationContext：BeanFactory 接口的子接口，提供更多更强大的功能，一般由开发人员进行使用。加载配置文件时候就会进行创建对象。
+  - ClassPathXmlApplicationContext： 从 class path 中加载配置文件，更常用
+  - FileSystemXmlApplicationContext：从本地文件中加载配置文件，不常用，如果再到 Linux 环境中，还要改路径
+
+ClassPathXmlApplicationContext -----> ApplicationContext -----> BeanFactory 
+
+
 
 原理：xml 解析、工厂模式、反射
 
-1. IOC 思想基于 IOC 容器完成，IOC 容器底层就是对象工厂
-2. Spring 提供 IOC 容器实现两种方式：（两个接口）
-   - BeanFactory：IOC 容器基本实现，是 Spring 内部的使用接口，不提供开发人员进行使用。加载配置文件时候不会创建对象，在获取对象（使用）才去创建对象
-   - ApplicationContext：BeanFactory 接口的子接口，提供更多更强大的功能，一般由开发人员进行使用。加载配置文件时候就会把在配置文件对象进行创建
 
-3. ApplicationContext 接口有实现类
 
-## Bean（基于XML）
-
-什么是 Bean 管理
+### 什么是 Bean 管理
 
 1. Spring 创建对象
 
@@ -37,16 +37,26 @@ contex ----> beanfactorybean ----> bean/factorybean
 
    > 将对象或值赋给变量名
    >
-   > - 通过set方法注入
-   > - 通过构造器注入
+   > - 通过**set方法**注入
+   > - 通过**构造器**注入
    > - 外部bean对象注入
 
-Bean 管理操作方式
+### Bean 作用域
+
+```xml
+<!-- 默认为singleton -->
+<bean id="MyBean" class="com.milo.bean.MyBean" scope="prototype"></bean>
+```
+
+- 设置 scope 值是 singleton 时候，加载 spring 配置文件时候就会创建单实例对象
+- 设置 scope 值是 prototype 时候，不是在加载 spring 配置文件时候创建对象，在调用getBean 方法时候创建多实例对象
+
+### Bean 管理操作方式
 
 1. 基于 xml 配置文件方式实现
 2. 基于注解方式实现
 
-### XML配置
+### Bean（基于XML）
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -107,17 +117,6 @@ Bean 管理操作方式
     </bean>
 
 ```
-
-### Bean 作用域
-
-```xml
-<!-- 默认为singleton -->
-<bean id="MyBean" class="com.milo.bean.MyBean" scope="prototype"></bean>
-```
-
-- 设置 scope 值是 singleton 时候，加载 spring 配置文件时候就会创建单实例对象
-- 设置 scope 值是 prototype 时候，不是在加载 spring 配置文件时候创建对象，在调用
-  getBean 方法时候创建多实例对象
 
 ### Bean与FactoryBean
 
@@ -244,7 +243,7 @@ public class MyBeanPost implements BeanPostProcessor {
 -->
 ```
 
-## Bean(基于注解)
+### Bean(基于注解)
 
 注解是代码特殊标记，格式：@注解名称(属性名称=属性值, 属性名称=属性值..)
 
