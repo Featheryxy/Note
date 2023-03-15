@@ -76,25 +76,12 @@ SpringBoot 初始化Bean过程
 5. 依赖注入：@Autowired
 6. 
 
-Spring 中的 bean 的作⽤域有哪些?  
-
-- singleton : 唯⼀ bean 实例， Spring 中的 bean 默认都是单例的。
-- prototype : 每次请求都会创建⼀个新的 bean 实例。
-- request : 每⼀次HTTP请求都会产⽣⼀个新的bean，该bean仅在当前HTTP request内有效。
-- session : 每⼀次HTTP请求都会产⽣⼀个新的 bean，该bean仅在当前 HTTP session 内有效。
-- global-session： 全局session作⽤域，仅仅在基于portlet的web应⽤中才有意义， Spring5已经没有了。 Portlet是能够⽣成语义代码(例如： HTML)⽚段的⼩型Java Web插件。它们基于portlet容器，可以像servlet⼀样处理HTTP请求。但是，与 servlet 不同，每个 portlet 都有不同的会话  
+- 
 
 
 
-@Component 和 @Bean 的区别是什么？
-
-1. 作⽤对象不同: @Component 注解作⽤于类，⽽ @Bean 注解作⽤于⽅法。
-2. @Component 通常是通过类路径扫描来⾃动侦测以及⾃动装配到Spring容器中（我们可以使⽤@ComponentScan 注解定义要扫描的路径从中找出标识了需要装配的类⾃动装配到 Spring 的bean 容器中）。 @Bean 注解通常是我们在标有该注解的⽅法中定义产⽣这个 bean, @Bean 告诉了Spring这是某个类的示例，当我需要⽤它的时候还给我。
-3. @Bean 注解⽐ Component 注解的⾃定义性更强，⽽且很多地⽅我们只能通过 @Bean 注解来注册bean。⽐如当我们引⽤第三⽅库中的类需要装配到 Spring 容器时，则只能通过@Bean 来实现。  
+3. 
 
 
 
-简便部署
 
-- 通过`mvn package`将项目打包成jar包，或war包
-- `F:\DestTop>java -jar springboot-helloworld-0.0.1-SNAPSHOT.jar`

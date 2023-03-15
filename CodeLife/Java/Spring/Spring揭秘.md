@@ -1,4 +1,4 @@
-#### Spring
+# Spring
 
 Spring是什么?
 
@@ -47,7 +47,9 @@ Spring是一个轻量级的IoC和AOP容器框架，目的是用于简化企业�
 
 
 
-#### IoC
+## IoC
+
+### 概述
 
 Spring 提供了IOC容器实现，帮助我们以依赖注入的方式管理对象之间的依赖关系。解耦各业务对象间依赖关系的对象绑定方式
 
@@ -61,7 +63,25 @@ IOC就是控制反转，是指创建对象的控制权的转移，以前创建�
 
 
 
-**依赖注入方式：**
+### IOC原理
+
+IOC原理：xml 解析、工厂模式、反射
+
+1. 容器启动阶段
+
+   - 加载配置
+   - 分析配置信息
+   - 装备到BeanDefinition，注册到相应的BeanDefinitionRegistry
+   - 其他处理
+   - BeanFactoryPostProcessor会修改BeanDefinition中的信息
+
+2. Bean实例化阶段
+
+   第一次调用getBean()后会进入实例化阶段
+
+3. 
+
+### **依赖注入方式**
 
 1. 构造器注入
    - 优点：对象构造完成后即可使用
@@ -80,49 +100,35 @@ IOC就是控制反转，是指创建对象的控制权的转移，以前创建�
 
 
 
-Spring IOC 容器的实现的两种方式（接口）：
+### IOC 容器
 
-- BeanFactory：IOC 容器基本实现，是 Spring 内部的使用接口，不提供开发人员进行使用。加载配置文件时候不会创建对象，在获取对象（使用）才去创建对象
-
-- ApplicationContext：BeanFactory 接口的子接口，提供更多更强大的功能，一般由开发人员进行使用。加载配置文件时候就会进行创建对象。
-
-  - ClassPathXmlApplicationContext： 从 class path 中加载配置文件，更常用
-  - FileSystemXmlApplicationContext：从本地文件中加载配置文件，不常用，如果再到 Linux 环境中，还要改路径
-
-  
-
-BeanFactory 和 ApplicationContext的区别？
-
-Spring的两大核心接口，都可以当做Spring的容器。其中ApplicationContext是BeanFactory的子接口
-
-容器类型：
+Spring IOC 容器的实现的两种方式（接口）
 
 1. BeanFactory：默认lazy-load，是Spring里面最底层的接口，包含了各种Bean的定义，读取bean配置文档，管理bean的加载、实例化，控制bean的生命周期，维护bean之间的依赖关系
-2. ApplicationContext：ApplicationContext接口作为BeanFactory的派生，除了提供BeanFactory所具有的功能外，还提供了更完整的框架功能。启动后会实例化所有的bean定义
+2. ApplicationContext： ApplicationContext接口作为BeanFactory的派生，除了提供BeanFactory所具有的功能外，还提供了更完整的框架功能。启动后会实例化所有的bean定义
    - 统一资源加载策略
    - 国际化信息支持
    - 容器内事件发布
    - 多配置模块加载简化
    - 提供在监听器中注册bean的事件
+   
 
-① BeanFactroy采用的是延迟加载形式来注入Bean的，即只有在使用到某个Bean时(调用getBean())，才对该Bean进行加载实例化。
-	这样，我们就不能发现一些存在的Spring的配置问题。如果Bean的某一个属性没有注入，BeanFacotry加载后，直至第一次使用调用getBean方法才会抛出异常。
+ApplicationContext的子类有：
 
- ② ApplicationContext，它是在容器启动时，一次性创建了所有的Bean。这样，在容器启动时，我们就可以发现Spring中存在的配置错误，这样有利于检查所依赖属性是否注入。
- ApplicationContext启动后预载入所有的单实例Bean，通过预载入单实例bean ,确保当你需要的时候，你就不用等待，因为它们已经创建好了。
+- ClassPathXmlApplicationContext： 从 class path 中加载配置文件，更常用
+- FileSystemXmlApplicationContext：从本地文件中加载配置文件，不常用，如果再到 Linux 环境中，还要改路径
 
- ③ 相对于基本的BeanFactory，ApplicationContext 唯一的不足是占用内存空间。当应用程序配置Bean较多时，程序启动较慢。
+**两种容器的优缺点**
 
-（3）BeanFactory通常以编程的方式被创建，ApplicationContext还能以声明的方式创建，如使用ContextLoader。
+BeanFactory：lazy-load， 启动快，不能及时发现Spring的配置问题，因为只有在第一次调用getBean时才抛出异常。
 
-（4）BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProcessor的使用，
-但两者之间的区别是：BeanFactory需要手动注册，而ApplicationContext则是自动注册。
+ApplicationContext：启动较慢，占用内存空间，
 
+BeanFactory通常以编程的方式被创建，ApplicationContext还能以声明的方式创建，如使用ContextLoader。
 
+BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProcessor的使用，但两者之间的区别是：BeanFactory需要手动注册，而ApplicationContext则是自动注册。
 
-
-
-常用注解：
+### 常用注解
 
 @Component 
 
@@ -134,27 +140,27 @@ Spring的两大核心接口，都可以当做Spring的容器。其中Application
 
 > @Repository，@Service，@Controller和@Component 主要在语义上不同，都会被component-scan扫描到并注入到容器中，其默认名称为将类名首字母小写
 
-
-
-@Autowired, byType
+@Autowired, byType：默认要求依赖对象必须存在，如果要允许null值，则设置它的required属性为false。> `@Autowired(required=false)`
 
 @Qualifier, byName, IoC容器无法自己从多个同一类型的实例中选取我们真正想要的那个, 可以使用@Qualifier直接点名
 
-
-
-
-
-JSR250 标注依赖注入关系
-
 @Resource，byName
 
-@PostConstruct和@PreDestroy不是服务于依赖注入的，它们主要用于标注对象生命周期管理相关方法。
+@PostConstruct 和@PreDestroy不是服务于依赖注入的，它们主要用于标注对象生命周期管理相关方法。
 
 与Spring的InitializingBean和DisposableBean接口，以及配置项中的init-method和destroy-method起到类似的作用
 
+> @Resource， @PostConstruct，@PreDestroy， JSR250 标注依赖注入关系
 
+@Value：注入普通类型属性
 
-Autowired自动绑定模式：
+> @Value(value = "Jack")
+> private String name;
+
+@Configuration :作为配置类，替代 xml 配置文件
+@ComponentScan(basePackages = {"com.demo"})
+
+**Autowired自动绑定匹配规则：**
 
 1. no，default
 2. byName，实例名称和beanName相同
@@ -168,101 +174,98 @@ Autowired自动绑定模式：
 
 手动绑定
 
+### @Component 和 @Bean 
 
+区别：
 
-FactoryBean：还是个Bean，同样会注册到容器中，只不过该类型的Bean本身就是生产对象的工厂
+1. 作⽤对象不同: @Component 注解作⽤于类，⽽ @Bean 注解作⽤于⽅法。
+2. @Component 通常是通过**类路径扫描来⾃动侦测以及⾃动装配到Spring容器**中（我们可以使⽤@ComponentScan 注解定义要扫描的路径从中找出标识了需要装配的类⾃动装配到 Spring 的bean 容器中）。 @Bean 注解通常是我们在标有该注解的⽅法中定义产⽣这个 bean, @Bean 告诉了Spring这是某个类的示例，当我需要⽤它的时候还给我。
+3. @Bean 注解⽐ Component 注解的⾃定义性更强，⽽且很多地⽅我们只能通过 @Bean 注解来注册bean。⽐如**当我们引⽤第三⽅库中的类需要装配到 Spring 容器时，则只能通过@Bean 来实现**。  
+
+### **FactoryBean与BeanFactory**
+
+FactoryBean：还是个Bean，同样会注册到容器中，只不过该类型的Bean本身就是**生产对象的工厂**
 
 BeanFactory：容器本身，
 
 
 
-IOC原理：
-
-1. 容器启动阶段
-
-   - 加载配置
-   - 分析配置信息
-   - 装备到BeanDefinition，注册到相应的BeanDefinitionRegistry
-   - 其他处理
-   - BeanFactoryPostProcessor会修改BeanDefinition中的信息
-
-2. Bean实例化阶段
-
-   第一次调用getBean()后会进入实例化阶段
-
-
+### **BeanPostProcessor与BeanFactoryPostProcessor**
 
 BeanPostProcessor：对象实例化阶段
 
 BeanFactoryPostProcessor：容器启动阶段
 
-6、请解释Spring Bean的生命周期？
+
+
+### **Spring Bean的生命周期**
 
  首先说一下Servlet的生命周期：实例化，初始init，接收请求service，销毁destroy；
 
  Spring上下文中的Bean生命周期也类似，如下：
 
-（1）实例化Bean：
+1. 实例化Bean：
+   - 对于BeanFactory容器，当客户向容器请求一个尚未初始化的bean时，或初始化bean的时候需要注入另一个尚未初始化的依赖时，容器就会调用createBean进行实例化。
+   - 对于ApplicationContext容器，当容器启动结束后，通过获取BeanDefinition对象中的信息，实例化所有的bean。
 
-对于BeanFactory容器，当客户向容器请求一个尚未初始化的bean时，或初始化bean的时候需要注入另一个尚未初始化的依赖时，容器就会调用createBean进行实例化。
-对于ApplicationContext容器，当容器启动结束后，通过获取BeanDefinition对象中的信息，实例化所有的bean。
+2. 设置对象属性（依赖注入）：
 
-（2）设置对象属性（依赖注入）：
+   实例化后的对象被封装在BeanWrapper对象中，紧接着，Spring根据BeanDefinition中的信息 以及 通过BeanWrapper提供的设置属性的接口完成依赖注入。
 
-实例化后的对象被封装在BeanWrapper对象中，紧接着，Spring根据BeanDefinition中的信息 以及 通过BeanWrapper提供的设置属性的接口完成依赖注入。
+3. 处理Aware接口：
 
-（3）处理Aware接口：
+   接着，Spring会检测该对象是否实现了xxxAware接口，并将相关的xxxAware实例注入给Bean：
 
-接着，Spring会检测该对象是否实现了xxxAware接口，并将相关的xxxAware实例注入给Bean：
+   - 如果这个Bean已经实现了BeanNameAware接口，会调用它实现的setBeanName(String beanId)方法，此处传递的就是Spring配置文件中Bean的id值；
+   - 如果这个Bean已经实现了BeanFactoryAware接口，会调用它实现的setBeanFactory()方法，传递的是Spring工厂自身。
+   - 如果这个Bean已经实现了ApplicationContextAware接口，会调用setApplicationContext(ApplicationContext)方法，传入Spring上下文；
 
-①如果这个Bean已经实现了BeanNameAware接口，会调用它实现的setBeanName(String beanId)方法，此处传递的就是Spring配置文件中Bean的id值；
+4. BeanPostProcessor：
 
-②如果这个Bean已经实现了BeanFactoryAware接口，会调用它实现的setBeanFactory()方法，传递的是Spring工厂自身。
+   如果想对Bean进行一些自定义的处理，那么可以让Bean实现了BeanPostProcessor接口，那将会调用postProcessBeforeInitialization(Object obj, String s)初始化之前执行的方法或postProcessAfterInitialization()初始化之后调用的方法。
 
-③如果这个Bean已经实现了ApplicationContextAware接口，会调用setApplicationContext(ApplicationContext)方法，传入Spring上下文；
+5. InitializingBean 与 init-method：
 
-（4）BeanPostProcessor：
+​		如果Bean在Spring配置文件中配置了 init-method 属性，则会自动调用其配置的初始化方法。
 
-如果想对Bean进行一些自定义的处理，那么可以让Bean实现了BeanPostProcessor接口，那将会调用postProcessBeforeInitialization(Object obj, String s)方法。
+6. 如果这个Bean实现了BeanPostProcessor接口，将会调用postProcessAfterInitialization(Object obj, String s)方法；由于这个方法是在Bean初始化结束时调用的，所以可以被应用于内存或缓存技术；
 
-（5）InitializingBean 与 init-method：
+​		以上几个步骤完成后，Bean就已经被正确创建了，之后就可以使用这个Bean了。
 
-如果Bean在Spring配置文件中配置了 init-method 属性，则会自动调用其配置的初始化方法。
+7. DisposableBean：
 
-（6）如果这个Bean实现了BeanPostProcessor接口，将会调用postProcessAfterInitialization(Object obj, String s)方法；由于这个方法是在Bean初始化结束时调用的，所以可以被应用于内存或缓存技术；
+​		当Bean不再需要时，会经过清理阶段，如果Bean实现了DisposableBean这个接口，会调用其实现的destroy()方法；
 
-以上几个步骤完成后，Bean就已经被正确创建了，之后就可以使用这个Bean了。
+8. destroy-method：
 
-（7）DisposableBean：
-
-当Bean不再需要时，会经过清理阶段，如果Bean实现了DisposableBean这个接口，会调用其实现的destroy()方法；
-
-（8）destroy-method：
-
-最后，如果这个Bean的Spring配置中配置了destroy-method属性，会自动调用其配置的销毁方法。
+​		最后，如果这个Bean的Spring配置中配置了destroy-method属性，会自动调用其配置的销毁方法。
 
 
 
-7、 解释Spring支持的几种bean的作用域scope。
-
-Spring容器中的bean可以分为5个范围：
+### **bean的作用域scope**
 
 （1）singleton：默认，每个容器中只有一个bean的实例，单例的模式由BeanFactory自身来维护, 与容器具有相同的生命周期。
 
-（2）prototype：为每一个bean请求提供一个实例，当改对象实例返回给请求方后，其生命周期由请求方管理。
+（2）prototype：为每一个**bean请求**提供一个实例，当改对象实例返回给请求方后，其生命周期由请求方管理。
 
-（3）request：为每一个Http请求创建一个实例，在请求完成以后，bean会失效并被垃圾回收器回收。
+（3）request：为每一个**Http请求**创建一个实例，在请求完成以后，bean会失效并被垃圾回收器回收。
 
 （4）session：与request范围类似，活的比request长，确保每个session中有一个bean的实例，在session过期后，bean会随之失效。
 
 （5）global-session：全局作用域，global-session和Portlet应用相关。当你的应用部署在Portlet容器中工作时，它包含很多portlet。
 如果你想要声明让所有的portlet共用全局的存储变量的话，那么这全局变量需要存储在global-session中。全局作用域与Servlet中的session作用域效果相同。
 
-8、Spring框架中的单例Beans是线程安全的么？
 
-Spring框架并没有对单例bean进行任何多线程的封装处理。关于单例bean的线程安全和并发问题需要开发者自行去搞定。但实际上，大部分的Spring bean 并没有可变的状态(比如Serview类和DAO类)，所以在某种程度上说Spring的单例bean是线程安全的。如果你的bean有多种状态的话（比如 View Model 对象），就需要自行保证线程安全。最浅显的解决办法就是将多态bean的作用域由“singleton”变更为“prototype”。
 
-9、Spring如何处理线程并发问题？
+### **Spring框架中的单例Beans是线程安全的么**？
+
+并不是线程安全的，但是实际上大部分的Spring bean 并没有可变的状态，所以某种程度上来说是线程安全的
+
+> Spring框架并没有对单例bean进行任何多线程的封装处理。关于单例bean的线程安全和并发问题需要开发者自行去搞定。但实际上，大部分的Spring bean 并没有可变的状态(比如Serview类和DAO类)，所以在某种程度上说Spring的单例bean是线程安全的。如果你的bean有多种状态的话（比如 View Model 对象），就需要自行保证线程安全。最浅显的解决办法就是将多态bean的作用域由“singleton”变更为“prototype”。
+
+
+
+### Spring如何处理线程并发问题
 
 在一般情况下，只有无状态的Bean才可以在多线程环境下共享，在Spring中，绝大部分Bean都可以声明为singleton作用域，
 因为Spring对一些Bean中非线程安全状态采用ThreadLocal进行处理，解决线程安全问题。
@@ -276,7 +279,7 @@ ThreadLocal提供了线程安全的共享对象，在编写多线程代码时，
 
 
 
-#### AOP
+## AOP
 
 面向切面编程（Aspect Oriented Programming， AOP） 
 
@@ -362,7 +365,7 @@ Spring AOP 属于第二代AOP， 采用动态代理机制和字节码生成技�
 
 
 
-#### Other
+## Other
 
 项目对象模型 (POM： Project Object Model)，一组标准集合，一个项目生命周期(Project Lifecycle)，一个依赖管理系统(Dependency Management System)，和用来运行定义在生命周期阶段(phase)中插件(plugin)目标(goal)的逻辑。 
 
@@ -506,7 +509,7 @@ WebJars是将客户端（浏览器）资源（JavaScript，Css等）打成jar包
 
 crud是指在做计算处理时的增加(Create)、读取(Retrieve)、更新(Update)和删除(Delete)几个单词的首字母简写。crud主要被用在描述软件系统中数据库或者[持久层](https://baike.baidu.com/item/持久层/3584971)的基本操作功能。
 
-#### 名词
+## 名词
 
 POJO（Plain Old Java Object, 简单Java对象）
 
@@ -524,7 +527,7 @@ URL：Uniform Resource Locator（统一资源定位器）
 
 OOP：Object-Oriented Software Development
 
-#### Reference
+## Reference
 
 https://spring.io/guides
 

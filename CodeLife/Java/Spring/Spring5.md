@@ -14,18 +14,16 @@ https://repo.spring.io/ui/native/release/org/springframework/spring
 
 > ~~把对象创建和对象之间的调用过程，交给 Spring 进行管理，降低耦合度。~~
 
-Spring IOC 容器的实现的两种方式（接口）：
+~~Spring IOC 容器的实现的两种方式（接口）：~~
 
-- BeanFactory：IOC 容器基本实现，是 Spring 内部的使用接口，不提供开发人员进行使用。加载配置文件时候不会创建对象，在获取对象（使用）才去创建对象
-- ApplicationContext：BeanFactory 接口的子接口，提供更多更强大的功能，一般由开发人员进行使用。加载配置文件时候就会进行创建对象。
-  - ClassPathXmlApplicationContext： 从 class path 中加载配置文件，更常用
-  - FileSystemXmlApplicationContext：从本地文件中加载配置文件，不常用，如果再到 Linux 环境中，还要改路径
+- ~~BeanFactory：IOC 容器基本实现，是 Spring 内部的使用接口，不提供开发人员进行使用。加载配置文件时候不会创建对象，在获取对象（使用）才去创建对象~~
+- ~~ApplicationContext：BeanFactory 接口的子接口，提供更多更强大的功能，一般由开发人员进行使用。加载配置文件时候就会进行创建对象。~~
+  - ~~ClassPathXmlApplicationContext： 从 class path 中加载配置文件，更常用~~
+  - ~~FileSystemXmlApplicationContext：从本地文件中加载配置文件，不常用，如果再到 Linux 环境中，还要改路径~~
 
-ClassPathXmlApplicationContext -----> ApplicationContext -----> BeanFactory 
+~~ClassPathXmlApplicationContext -----> ApplicationContext -----> BeanFactory~~ 
 
 
-
-原理：xml 解析、工厂模式、反射
 
 
 
@@ -122,7 +120,7 @@ ClassPathXmlApplicationContext -----> ApplicationContext -----> BeanFactory
 
 1. Bean存放在singletonObjects, FactoryBean存放于factoryBeanObjectCache
 2. 如果要获取源对象需要加上&，否则会获取getObject()方法返回的对象
-3. 如果只是实现了FactoryBean这个最底层的接口，那么它和普通Bean的处理流程一模一样。如果说实现了SmartFactoryBean接口并重写了isEagerInint()并返回true的话，那么Spring在启动的时候会先去调用getObject()，然后将返回值存入factoryBeanObjectCache里面。
+3. 如果只是实现了FactoryBean这个最底层的接口，那么它和普通Bean的处理流程一模一样。如果说实现了SmartFactoryBean接口并重写了isEagerInint()并返回true的话，那么Spring在启动的时候会先去调用getObject()，然后将返回值存入actoryBeanObjectCache里面。
 
 ```java
 public class MyBean implements FactoryBean {
