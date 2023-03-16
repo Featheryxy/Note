@@ -130,7 +130,11 @@ BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProc
 
 ### 常用注解
 
-@Component 
+@Configuration： Java 配置文件，替代 xml 配置文件， Spring 的容器会根据它来生成 IoC 容器去装配 Bean；也是容器中的一个**组件**（包含@Component）
+
+@ComponentScan(basePackages = {"com.demo"})则是标明采用何种策略去扫描装配 Bean。
+
+@Component 标明哪个类被扫描进入 Spring IoC 容器
 
 @Repository
 
@@ -140,9 +144,14 @@ BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProc
 
 > @Repository，@Service，@Controller和@Component 主要在语义上不同，都会被component-scan扫描到并注入到容器中，其默认名称为将类名首字母小写
 
-@Autowired, byType：默认要求依赖对象必须存在，如果要允许null值，则设置它的required属性为false。> `@Autowired(required=false)`
+@Autowired, byType：会根据类型找到对应的 Bean，如果对应类型的 Bean 不是唯一的，那么它会根据其属性名称和 Bean 的名称进行匹配。如果匹配得上，就会使用该 Bean；如果还无法匹配，就会抛出异常。默认要求依赖对象必须存在，如果要允许null值，则设置它的required属性为false。`@Autowired(required=false)`
 
-@Qualifier, byName, IoC容器无法自己从多个同一类型的实例中选取我们真正想要的那个, 可以使用@Qualifier直接点名
+当使用@Autowired 时，存在多个Bean时，可以通过@Primary 和@Quelifier  消除歧视
+
+- @Primary  优先使用该Bean
+- @Quelifier  通过类型和名称一起找到 Bean  
+
+
 
 @Resource，byName
 
@@ -157,8 +166,7 @@ BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProc
 > @Value(value = "Jack")
 > private String name;
 
-@Configuration :作为配置类，替代 xml 配置文件
-@ComponentScan(basePackages = {"com.demo"})
+
 
 **Autowired自动绑定匹配规则：**
 
@@ -202,7 +210,15 @@ BeanFactoryPostProcessor：容器启动阶段
 
  首先说一下Servlet的生命周期：实例化，初始init，接收请求service，销毁destroy；
 
+
+
  Spring上下文中的Bean生命周期也类似，如下：
+
+1. 将 Bean 的定义发布到 IoC 容器 :只是将定义发布到 IoC 容器而不做实例化和依赖注入，当我们取出来的时候才做初始化和依赖注入等操作 
+
+   - Spring 通过我们的配置，如@ComponentScan 定义的扫描路径去找到带有@Component 的类，这个过程就是一个资源定位的过程。
+   - 一旦找到了资源，那么它就开始解析，并且将定义的信息保存起来。注意，此时还没有初始化 Bean，也就没有 Bean 的实例，它有的仅仅是 Bean 的定义。
+   - 然后就会把 Bean 定义发布到 Spring IoC 容器中。此时， IoC 容器也只有 Bean 的定义，还是没有 Bean 的实例生成。
 
 1. 实例化Bean：
    - 对于BeanFactory容器，当客户向容器请求一个尚未初始化的bean时，或初始化bean的时候需要注入另一个尚未初始化的依赖时，容器就会调用createBean进行实例化。
@@ -363,123 +379,7 @@ Spring AOP 属于第二代AOP， 采用动态代理机制和字节码生成技�
 
 
 
-
-
-## Other
-
-项目对象模型 (POM： Project Object Model)，一组标准集合，一个项目生命周期(Project Lifecycle)，一个依赖管理系统(Dependency Management System)，和用来运行定义在生命周期阶段(phase)中插件(plugin)目标(goal)的逻辑。 
-
-DAO(Data Access Object) 数据访问对象是一个面向对象的数据库接口
-
-
-
-
-
-spring通过描述来创建对象 ,在 Spring 中把每一个需要管理的对象称为 Spring Bean（简称 Bean），而 Spring 管理这些 Bean 的容器，被我们称为 Spring
-IoC 容器（或者简称 IoC 容器）， 通过注解来装配 Bean 到 Spring IoC 容器中 。IoC 容器具备两个基本的功能： 
-
-- 通过描述管理 Bean，包括发布和获取 Bean； 
-- 通过描述完成 Bean 之间的依赖关系。 
-
-
-
-dependency injection
-passing in objects into your constructor without you having to explicitly create or pass them.
-注解代替xml
-Spring Boot is simply a configuration framework for the Spring framework.
-
-
-
-Bean生命周期
-
-Bean 定义、Bean 的初始化、 Bean 的生存期和 Bean 的销毁  
-
-
-
-1. 将 Bean 的定义发布到 IoC 容器 
-
-只是将定义发布到 IoC 容器而不做实例化和依赖注入，当我们取出来的时候才做初始化和依赖注入等操作 
-
-- Spring 通过我们的配置，如@ComponentScan 定义的扫描路径去找到带有@Component 的类，这个过程就是一个资源定位的过程。
--  一旦找到了资源，那么它就开始解析，并且将定义的信息保存起来。注意，此时还没有初始化 Bean，也就没有 Bean 的实例，它有的仅仅是 Bean 的定义。
--  然后就会把 Bean 定义发布到 Spring IoC 容器中。此时， IoC 容器也只有 Bean 的定义，还是没有 Bean 的实例生成。 
-
-![1584363163737](1584363163737.png)
-
-
-
-先在 Maven 配置文件中加载依赖 (从本地仓库中加载各种jar包，如果本地仓库没有，则从中央仓库下载)
-
-通过@Value 注解，使用${......}这样的占位符读取配置在属性文件（src/main/resources/application.properties）的内容 
-
-
-
-SpringBoot应用启动时通过@SpringBootApplication中的@EnableAutoConfiguration中的@Import({AutoConfigurationImportSelector.class})，AutoConfigurationImportSelector中的List<String> configurations = SpringFactoriesLoader.loadFactoryNames(this.getSpringFactoriesLoaderFactoryClass(), this.getBeanClassLoader());
-
-SpringFactorisLoader中的找到jar包下的"META-INF/spring.factories"的配置
-
-
-
-在jar包中的spring.factories中，@EnableConfigurationProperties({HttpProperties.class}) ，将配置注入到Ioc容器中，@ConfigurationProperties将配置文件Properties中的属性绑定到类中的成员变量上，@Bean 从配置文件Properties获取变量
-
-
-
-配置文件-----@Bean获取对应的值----->@ConfigurationProperties将值绑定到类中变量 ----> @EnableConfigurationProperties将key-value注入到Ioc容器中
-
-组件（对应的类）
-
-
-
-- @SpringBootApplication: 
-
-  -- Spring Boot应用标注在某个类上说明这个类是SpringBoot的主配置类，SpringBoot就应该运行这个类的main方法来启动SpringBoot应用； 
-
-  - @SpringBootConfiguration:
-
-    -- 标注在某个类上，表示这是一个Spring Boot的配置类； 
-
-  - @EnableAutoConfiguration：
-
-    -- 开启自动配置功能；以前我们需要配置的东西，Spring Boot帮我们自动配置；@EnableAutoConfiguration告诉SpringBoot开启自动配置功能；这样自动配置才能生效； 
-
-    - @AutoConfigurationPackage：自动配置包 
-
-    - @Import({AutoConfigurationImportSelector.class})
-
-      -- EnableAutoConfigurationImportSelector：导入哪些组件的选择器；将所有需要导入的组件以全类名的方式返回；这些组件就会被添加到容器中；会给容器中导入非常多的自动配置类（xxxAutoConfiguration）；就是给容器中导入这个场景需要的所有组件，并配置好这些组件； 
-
-
-
-- @Configuration:指明当前类是一个配置类； 
-  **配置类 ----- 配置文件；**配置类也是容器中的一个**组件**；@Componen 
-
-
-
-- @ConfigurationProperties：告诉SpringBoot将本类中的所有属性和配置文件中相关的配置进行绑定；
-
-  prefix = "person"：配置文件中哪个下面的所有属性进行一一映射
-
-  @ConfigurationProperties(prefix = "person")默认从全局配置文件中获取值； 
-
-- @Component 
-
-  -- 只有这个组件是容器中的组件，才能容器提供的@ConfigurationProperties功能；
-
-
-
-- @PropertySource(value = {"classpath:person.properties"}) ：加载指定的配置文件  同时需要
-
-  @Component @ConfigurationProperties(prefix = "person") 
-
-  
-
-- @Bean //给容器中添加一个组件，这个组件的某些值需要从properties中获取 
-
-
-
-F5刷新按钮只对当前页面进行刷新，只刷新本地缓存；
-
-Ctrl + F5 的行为也是刷新页面，但是会把浏览器中的临时文件夹的文件删除再重新从服务器下载。
+## MVC
 
 Model、View、Controller即模型、视图、控制器
 
@@ -505,17 +405,13 @@ View层和Controller层，实现了策咯模式
 
 控制器（Controller）:控制器负责视图和模型之间的交互，控制对用户输入的响应、响应方式和流程；它主要负责两方面的动作，一是把用户的请求分发到相应的模型，二是吧模型的改变及时地反映到视图上。
 
-WebJars是将客户端（浏览器）资源（JavaScript，Css等）打成jar包文件，以对资源进行统一依赖管理
-
-crud是指在做计算处理时的增加(Create)、读取(Retrieve)、更新(Update)和删除(Delete)几个单词的首字母简写。crud主要被用在描述软件系统中数据库或者[持久层](https://baike.baidu.com/item/持久层/3584971)的基本操作功能。
-
 ## 名词
 
 POJO（Plain Old Java Object, 简单Java对象）
 
 IoC：Inversion of Control  控制反转 
 
-DI：依赖注入（ Dependency Injection） 
+DI：依赖注入（ Dependency Injection） ：passing in objects into your constructor without you having to explicitly create or pass them.
 
 轻量级容器（ Lightweight Container) 
 
@@ -526,6 +422,14 @@ Bean：所有注册到容器中的业务对象称之为Bean
 URL：Uniform Resource Locator（统一资源定位器）
 
 OOP：Object-Oriented Software Development
+
+POM：项目对象模型 (POM： Project Object Model)，一组标准集合，一个项目生命周期(Project Lifecycle)，一个依赖管理系统(Dependency Management System)，和用来运行定义在生命周期阶段(phase)中插件(plugin)目标(goal)的逻辑。 
+
+DAO(Data Access Object) 数据访问对象是一个面向对象的数据库接口
+
+crud是指在做计算处理时的增加(Create)、读取(Retrieve)、更新(Update)和删除(Delete)几个单词的首字母简写。crud主要被用在描述软件系统中数据库或者持久层的基本操作功能。
+
+WebJars是将客户端（浏览器）资源（JavaScript，Css等）打成jar包文件，以对资源进行统一依赖管理
 
 ## Reference
 

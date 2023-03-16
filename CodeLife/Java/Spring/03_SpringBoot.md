@@ -1,16 +1,3 @@
-https://www.cnblogs.com/tjudzj/p/8758391.html
-
-
-```java
-// 使用org.springframework.beans.BeanUtils.copyProperties方法进行对象之间属性的赋值，
-// 避免通过get、set方法一个一个属性的赋值
-public static void copyProperties(Object source, Object target) throws BeansException {
-        copyProperties(source, target, (Class)null, (String[])null);
-}
-```
-
-
-
 Spring Boot 是一个基于 Spring 框架的开源框架，它简化了 Spring应用程序的构建和部署过程。Spring Boot减少了大量配置，提供了**自动配置**和**约定优于配置**的原则
 
  自动配置：
@@ -46,41 +33,62 @@ Spring Boot 是一个基于 Spring 框架的开源框架，它简化了 Spring�
 
 
 
+SpringBoot应用启动时通过@SpringBootApplication中的@EnableAutoConfiguration中的@Import({AutoConfigurationImportSelector.class})，AutoConfigurationImportSelector中的List<String> configurations = SpringFactoriesLoader.loadFactoryNames(this.getSpringFactoriesLoaderFactoryClass(), this.getBeanClassLoader());
 
-
-```
-@Configuration 代表这是一个 Java 配置文件， Spring 的容器会根据它来生成 IoC 容器去装配 Bean；（包含@Component）
-- @Bean 将实例对象装配到 IoC 容器中
-
-@Component 是标明哪个类被扫描进入 Spring IoC 容器
-- Autowired
-@ComponentScan 则是标明采用何种策略去扫描装配 Bean。
-
- @Component 注解作⽤于类，⽽ @Bean 注解作⽤于⽅法
-
-@Autowired 自动装配Bean，首先它会根据类型找到对应的 Bean，如果对应类型的 Bean 不是唯一的，那么它会根据其属性名称和 Bean 的名称进行匹配。如果匹配得上，就会使用该 Bean；如果还无法匹配，就会抛出异常    
-  - 如果不能确定其标注属性一定会存在并且允许这个被标注的属性为 null，那么你可以配置@Autowired 属性 required 为 false  
-  - `@Autowired(required = false)  `
-
-- 当使用@Autowired 时，存在多个Bean时，可以通过@Primary 和@Quelifier  消除歧视
-  - @Primary  优先使用该Bean
-  - @Quelifier  通过类型和名称一起找到 Bean  
-```
-
-SpringBoot 初始化Bean过程
-
-1. 资源定位：如@ComponentScan所定义的扫描包
-2. Bean定义：将Bean的定义保存到BeanDefinition实例中
-3. 发布Bean定义：IoC容器装载Bean定义
-4. 实例化：创建Bean的实例对象
-5. 依赖注入：@Autowired
-6. 
-
-- 
+SpringFactorisLoader中的找到jar包下的"META-INF/spring.factories"的配置
 
 
 
-3. 
+在jar包中的spring.factories中，@EnableConfigurationProperties({HttpProperties.class}) ，将配置注入到Ioc容器中，@ConfigurationProperties将配置文件Properties中的属性绑定到类中的成员变量上，@Bean 从配置文件Properties获取变量
+
+
+
+配置文件-----@Bean获取对应的值----->@ConfigurationProperties将值绑定到类中变量 ----> @EnableConfigurationProperties将key-value注入到Ioc容器中
+
+组件（对应的类）
+
+
+
+- @SpringBootApplication: 
+
+  -- Spring Boot应用标注在某个类上说明这个类是SpringBoot的主配置类，SpringBoot就应该运行这个类的main方法来启动SpringBoot应用； 
+
+  - @SpringBootConfiguration:
+
+    -- 标注在某个类上，表示这是一个Spring Boot的配置类； 
+
+  - @EnableAutoConfiguration：
+
+    -- 开启自动配置功能；以前我们需要配置的东西，Spring Boot帮我们自动配置；@EnableAutoConfiguration告诉SpringBoot开启自动配置功能；这样自动配置才能生效； 
+
+    - @AutoConfigurationPackage：自动配置包 
+
+    - @Import({AutoConfigurationImportSelector.class})
+
+      -- EnableAutoConfigurationImportSelector：导入哪些组件的选择器；将所有需要导入的组件以全类名的方式返回；这些组件就会被添加到容器中；会给容器中导入非常多的自动配置类（xxxAutoConfiguration）；就是给容器中导入这个场景需要的所有组件，并配置好这些组件； 
+
+
+
+- @ConfigurationProperties：告诉SpringBoot将本类中的所有属性和配置文件中相关的配置进行绑定；
+
+  prefix = "person"：配置文件中哪个下面的所有属性进行一一映射
+
+  @ConfigurationProperties(prefix = "person")默认从全局配置文件中获取值； 
+
+- @Component 
+
+  -- 只有这个组件是容器中的组件，才能容器提供的@ConfigurationProperties功能；
+
+- @PropertySource(value = {"classpath:person.properties"}) ：加载指定的配置文件  同时需要
+
+  @Component @ConfigurationProperties(prefix = "person") 
+
+- @Bean //给容器中添加一个组件，这个组件的某些值需要从properties中获取 
+
+- @Value 使用${......}这样的占位符读取配置在属性文件（src/main/resources/application.properties）的内容 
+
+
+
 
 
 
