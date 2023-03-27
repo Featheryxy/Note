@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: rabbitmq-springboot
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: ems
+    password: ems
+    virtual-host: /ems
