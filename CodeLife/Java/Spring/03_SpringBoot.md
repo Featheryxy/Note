@@ -31,6 +31,14 @@ Spring Boot 是一个基于 Spring 框架的开源框架，它简化了 Spring�
 
 
 
+自动配置：Auto-Configuration
+
+自动装配：Autowire
+
+
+
+自动配置：通过Maven将Spring Boot Starter依赖引入来实现，Starter依赖包含了应用程序所需要的各种组件和配置信息。当应用程序引入spring-boot-starter-web依赖时，Spring Boot会自动配置Web应用程序所需的组件，包括Tomcat服务器、Spring MVC框架、Jackson JSON处理库等等
+
 
 
 SpringBoot应用启动时通过@SpringBootApplication中的@EnableAutoConfiguration中的@Import({AutoConfigurationImportSelector.class})，AutoConfigurationImportSelector中的List<String> configurations = SpringFactoriesLoader.loadFactoryNames(this.getSpringFactoriesLoaderFactoryClass(), this.getBeanClassLoader());
@@ -87,9 +95,46 @@ SpringFactorisLoader中的找到jar包下的"META-INF/spring.factories"的配置
 
 - @Value 使用${......}这样的占位符读取配置在属性文件（src/main/resources/application.properties）的内容 
 
+- 
 
 
 
+#### @Bean
 
+```java
+@Bean注解用于定义一个bean。通过@Bean注解，我们可以将一个方法返回的对象注册为一个Spring应用程序上下文中的bean。
+    
+@Configuration
+public class AppConfig {
 
+    @Bean
+    public DataSource dataSource() {
+        // create and configure a DataSource object
+        return dataSource;
+    }
 
+}    
+
+Spring应用程序上下文加载这个配置类时，它会调用这个方法并将其返回值注册为一个名为"dataSource"的bean。之后，我们就可以在应用程序中使用@Autowired注解将这个bean注入到其他的组件中。
+    
+@Bean注解默认情况下会使用方法名作为bean的名称。如果我们想要指定不同的名称，可以使用value属性或name属性
+@Bean("myDataSource")
+public DataSource dataSource() {
+    // create and configure a DataSource object
+    return dataSource;
+}    
+```
+
+#### @Import
+
+@Import注解是一个用于引入其他配置类的注解。它允许我们将其他配置类加载到当前配置类中，从而实现对其他配置类的重用和组合。除了使用@Import注解引入其他的配置类外，还可以使用它来引入其他的普通Java类、XML配置文件等等
+
+```java
+@Configuration
+@Import({DataSourceConfig.class, SecurityConfig.class})
+public class AppConfig {
+    // ...
+}
+```
+
+![image-20230330202141497](03_SpringBoot.assets/image-20230330202141497.png)
