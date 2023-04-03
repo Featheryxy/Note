@@ -3,8 +3,8 @@
 1. 检验算法输入
 2. 参数初始化
 3. 确定遍历的次数(for)，或停止的条件(while)
-4. 执行判断语句，标志判断
-5. 执行操作
+4. 循环体：执行判断语句，标志判断
+5. 循环体：执行操作
 6. 返回
 
 ## 指针
@@ -30,12 +30,12 @@
 | 6    | copyOf(int[] original, int newLength) | copy数组                               |
 
 ```java
-int [] arr = new int []{1,2,3};
-int[] copy = Arrays.copyOf(arr, 5);
-for(int i: copy){
-    System.out.print(i);
-}
-// 12300
+    public static void main(String[] args) {
+        int [] arr = new int []{1,2,3};
+        int[] copy = Arrays.copyOf(arr, 5);
+        System.out.println(Arrays.toString(copy));
+        // [1, 2, 3, 0, 0]
+    }
 ```
 
 ## Collection
@@ -87,15 +87,20 @@ PS:
  * 遍历：keySet() / values() / entrySet()
  * 包含：containsKey(Object key)，containsValue(Object value)
 
-```
+```java
 for(Integer num: nums){
     Integer count = map.get(num);
     count = count == null? 1: ++count;
     map.put(num, count);
 }
+
+Map<String, Integer> map = new HashMap<>();
+map.put("1", map.getOrDefault("1", 0)+1);
+System.out.println(map);
+// {1=1}
 ```
 
-## Stack
+## Stack(Deprecated)
 
 ```
 Stack<Character> stack = new Stack();
@@ -111,13 +116,9 @@ stack.pop();
 stack.isEmpty();
 ```
 
-## String
+## ArrayDeque
 
-- 不变性（指引用不变），对String赋值，如
 
-  ```
-  String
-  ```
 
 
 ## String2Basis
@@ -146,6 +147,7 @@ System.out.println(str3);//"12.4"
 String类型 --->基本数据类型、包装类
 
 - 调用包装类的`parseXxx(String s)`
+- 调用包装类的`valueOf(String s)`
 
 ```java
 String str1 = "123";
@@ -171,6 +173,8 @@ String ---> CharArray
 String str = "ABCD";
 char[] chars = str.toCharArray();
 System.out.println(chars[0]); // A
+
+char a = str.charAt(0);
 ```
 
 CharArray ---> String
@@ -178,9 +182,10 @@ CharArray ---> String
 - 掉用String类的构造函数
 
 ```java
-String string = new String(chars);
-System.out.println(string.length()); // 4
-System.out.println(string); // ABCD
+char[] chars = new char[]{'a', 'b', 'c'};
+String charStr = new String(chars);
+System.out.println(charStr);
+// abc
 ```
 
 ## Arr2List
@@ -283,6 +288,7 @@ while(l<r && nums[r] == nums[--r]);
 while(l<r && nums[r] == nums[r]){
 	
 }
+
 // ----------------------------------------------------------
 j = 0;
 while(j<n){
@@ -430,11 +436,14 @@ System.out.println(a); // 2
 
 int b = 1;
 System.out.println(++b); // 2
-System.out.println(b); // 1
+System.out.println(b); // 2
 
 // -------------------------------------
-int a = 1;
-a=a++ + ++a - a-- +a--;
+int b=a++ + ++a-a--+a--;
+// 2+2-3+2
+System.out.println(a); // 1
+System.out.println(b); // 3
+
 a=a++ + (++a) - a-- + a--; /* 此时先运算++a ,a内存值为2 */
 ==>
 a=(a++) + 2 - a-- + a--; /*此时先计算 取 a++ 到temp=2 然后 a内存值+1 为3 */
@@ -452,7 +461,7 @@ a=2+2-3+2=3;
 - \>> 右移动运算符：把”>>”左边的运算数的各二进位全部右移若干位，**>>** 右边的数字指定了移动的位数
 
 - n<< 1 等价于 n*2
-- n>>2  等价于 n/2
+- n>>1  等价于 n/2
 
 ## 与运算
 
