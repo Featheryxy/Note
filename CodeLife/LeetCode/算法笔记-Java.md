@@ -85,7 +85,8 @@ PS:
  * 查询：get(Object key)
  * 长度：size()
  * 遍历：keySet() / values() / entrySet()
- * 包含：containsKey(Object key)，containsValue(Object value)
+ * 包含：**containsKey(Object key)，containsValue(Object value)**
+ * 常用：**getOrDefault(Object key， 0)**
 
 ```java
 for(Integer num: nums){
@@ -117,6 +118,23 @@ stack.isEmpty();
 ```
 
 ## ArrayDeque
+
+## String
+
+```java
+str.lastIndexOf(int index);
+str.subString(int begIndex);
+str.subString(int begIndex, int endIndex);
+str.contains(String s);
+
+String.format("%-4d", 99); // 99空格空格
+String.format("%04d", 99); // 0099
+
+str.matches(String regx); // 完全匹配
+
+Pattern pat = Pattern.compile(String regx);
+boolean pat.matcher(str).find(); // 只要能匹配到就能返回true;
+```
 
 
 
@@ -168,6 +186,7 @@ System.out.println(b2); // false
 String ---> CharArray
 
 - 调用String类的`toCharArray()`
+- str.charAt(int index)
 
 ```java
 String str = "ABCD";
@@ -252,6 +271,51 @@ System.out.println(Arrays.toString(list.toArray()));
 // [3, 5, 7]
 ```
 
+## Collections
+
+```java
+Collection.min(List lis);
+Collection.sort(List lis);
+Collection.reverse(List lis);
+
+```
+
+## Char
+
+```
+Ascii
+48 0
+57 9
+65 A
+97 a
+
+A与a 相差32（二进制：100000）
+    
+```
+
+### Swap
+
+```java
+int a = 1;
+int b = 2;
+int tmp = 0;
+
+public void static swap1(){
+    int tmp = a;
+    int a = b;
+    int b = tmp;
+}
+
+// a must be 'R' or 'B';
+public static swap1(char a){
+	retrun 'R'+'B'-a
+}
+
+
+```
+
+
+
 ## 数字的处理
 
 - 将数字转换成字符串进行处理
@@ -272,6 +336,20 @@ num % 2 == 0
 ## 数组
 
 数组属性：位置，值，前后，组，排序
+
+```java
+// 正序
+for(int i=0; i<arr.length; i++) {
+    
+}
+
+// 倒序
+for(int i=arr.length-1; i>=0; i--) {
+    
+}
+```
+
+
 
 ##  while，for
 
@@ -459,9 +537,10 @@ a=2+2-3+2=3;
 
 - << 左移动运算符：运算数的各二进位全部左移若干位，由 **<<** 右边的数字指定了移动的位数，高位丢弃，低位补0
 - \>> 右移动运算符：把”>>”左边的运算数的各二进位全部右移若干位，**>>** 右边的数字指定了移动的位数
-
 - n<< 1 等价于 n*2
 - n>>1  等价于 n/2
+- (n>>2) & 1 取n的二进制的第2位（从右（最低位）向左（最高位）计数）
+- 
 
 ## 与运算
 
