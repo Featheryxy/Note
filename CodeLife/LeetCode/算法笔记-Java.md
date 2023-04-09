@@ -1,3 +1,29 @@
+## 解题思想
+
+算法 = 数据结构 + 控制结构 
+
+看到一个题先读懂，然后思考用什么数据结构。
+
+如果正向求解比较麻烦，可以使用逆向思维
+
+数据结构：
+
+1. int [n]：保存只有两种状态的集合
+2. ArrayList
+3. HashMap
+4. Set
+   - HashSet
+   - TreeSet， 默认正序，可以用`Collections.reverse(treeSet)`倒序
+5. Stack
+
+数据结构：
+
+1. if
+2. A?B:C, 代替if
+3. Switch：多分支使用
+4. for 知道循环次数时使用
+5. while 知道循环停止条件时使用
+
 ## 解题过程
 
 1. 检验算法输入
@@ -6,6 +32,52 @@
 4. 循环体：执行判断语句，标志判断
 5. 循环体：执行操作
 6. 返回
+
+## while，for
+
+循环不变量：在循环的过程中保持不变的性质, 可以用于证明算法的正确性
+
+> 循环不变量是一个断言，在初始化，保持，终止这三个阶段都为真时，则循环正确
+>
+> 初始化：循环的第一次迭代之前，它为正
+>
+> 保持：循环的某次迭代之前它为真，那么下次迭代之前它仍为真
+>
+> 终止：在循环终止时，
+
+区间 nums[left...right]的长度  = right-left +1
+
+区间 nums[left...right)的长度  = right-left 
+
+- for ：知道要**循环的次数**时使用
+  - 可以当做一个指针来使用
+- while：知道**循环停止的时机**时使用
+
+```java
+while(l<r && nums[r] == nums[--r]);
+
+// 等价于
+
+--r;
+while(l<r && nums[r] == nums[r]){
+	
+}
+
+// ----------------------------------------------------------
+j = 0;
+while(j<n){
+    
+    j++;
+}
+
+// 等价于
+for(int j=0; j<n; j++){
+    
+} 
+
+```
+
+## 
 
 ## 指针
 
@@ -16,7 +88,31 @@
 
 滑动窗口
 
+- 
+
 指针碰撞
+
+## 数组
+
+二分查找前提：数组有序，数组中无重复元素
+
+
+
+数组属性：位置，值，前后，组，排序
+
+```java
+// 正序
+for(int i=0; i<arr.length; i++) {
+    
+}
+
+// 倒序
+for(int i=arr.length-1; i>=0; i--) {
+    
+}
+```
+
+
 
 ## Arrays
 
@@ -121,6 +217,12 @@ stack.isEmpty();
 
 ## String
 
+子串：一个字符串的子串是该字符串中任意一个字符或一段字符连续出现的序列 
+
+> 例如，在字符串 "Hello World" 中，"H"、"e"、"l"、"o"、"W"、"o"、"r"、"l"、"d"，以及 "Hello"、"World"、"o Wor"、"lo W"、"ld" 等都是其子串 
+
+索引+1 = 长度
+
 ```java
 str.lastIndexOf(int index);
 str.subString(int begIndex);
@@ -134,6 +236,19 @@ str.matches(String regx); // 完全匹配
 
 Pattern pat = Pattern.compile(String regx);
 boolean pat.matcher(str).find(); // 只要能匹配到就能返回true;
+
+// 循环中substring的用法
+for (int i = 0; i < len; i++)
+    for (int j = i + 1; j <= len; j++) {
+        String test = s.substring(i, j);
+    }
+}
+
+for (int i = 0; i < len; i++)
+    for (int j = i + 1; j < len; j++) {
+        String test = arr[];
+    }
+}
 ```
 
 
@@ -293,7 +408,7 @@ A与a 相差32（二进制：100000）
     
 ```
 
-### Swap
+## Swap
 
 ```java
 int a = 1;
@@ -333,52 +448,7 @@ int(num / 10)
 num % 2 == 0
 ```
 
-## 数组
 
-数组属性：位置，值，前后，组，排序
-
-```java
-// 正序
-for(int i=0; i<arr.length; i++) {
-    
-}
-
-// 倒序
-for(int i=arr.length-1; i>=0; i--) {
-    
-}
-```
-
-
-
-##  while，for
-
-- for ：知道要**循环的次数**时使用
-  - 可以当做一个指针来使用
-- while：知道**循环停止的时机**时使用
-
-```java
-while(l<r && nums[r] == nums[--r]);
-
-// 等价于
-
---r;
-while(l<r && nums[r] == nums[r]){
-	
-}
-
-// ----------------------------------------------------------
-j = 0;
-while(j<n){
-    
-    j++;
-}
-
-// 等价于
-for(int j=0; j<n; j++){
-    
-} 
-```
 
 ## if-else
 
