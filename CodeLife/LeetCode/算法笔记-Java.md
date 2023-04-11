@@ -79,7 +79,7 @@ for(int j=0; j<n; j++){
 
 ```
 
-## 
+#
 
 ## 指针
 
@@ -98,8 +98,6 @@ for(int j=0; j<n; j++){
 
 二分查找前提：数组有序，数组中无重复元素
 
-
-
 数组属性：位置，值，前后，组，排序
 
 ```java
@@ -111,6 +109,13 @@ for(int i=0; i<arr.length; i++) {
 // 倒序
 for(int i=arr.length-1; i>=0; i--) {
     
+}
+
+// 三角遍历, j只遍历i后面的值
+for(int i=0; i<arr.length; i++) {
+    for (int j=i; j<arr.length; j++) {
+        
+    }
 }
 ```
 
@@ -401,13 +406,16 @@ Collection.reverse(List lis);
 
 ```
 Ascii
-48 0
-57 9
+48 0 11000_b
+57 9 
 65 A
 97 a
 
+
 A与a 相差32（二进制：100000）
-    
+char2int:
+int tmp = '9'-'0'; // tmp = 9
+
 ```
 
 ## Swap
