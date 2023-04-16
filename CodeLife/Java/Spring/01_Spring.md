@@ -1,4 +1,4 @@
-# Spring
+# ![SpringLifeTree](01_Spring.assets/SpringLifeTree.png)Spring
 
 Spring是什么?
 
@@ -25,7 +25,7 @@ Spring是一个轻量级的IoC和AOP容器框架，目的是用于简化企业�
 
 
 
-![](SpringLifeTree.png)
+![](Spring揭秘.assets/SpringLifeTree.png)
 
 
 
@@ -48,6 +48,8 @@ Spring是一个轻量级的IoC和AOP容器框架，目的是用于简化企业�
 
 
 ## IoC
+
+Inversion of Control
 
 ### 概述
 
@@ -132,7 +134,7 @@ BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProc
 
 @Configuration： Java 配置文件，替代 xml 配置文件， Spring 的容器会根据它来生成 IoC 容器去装配 Bean；也是容器中的一个**组件**（包含@Component）
 
-@ComponentScan(basePackages = {"com.demo"})则是标明采用何种策略去扫描装配 Bean。
+@ComponentScan(basePackages = {"com.demo"})则是标明采用何种策略去扫描装配 Bean。默认扫描当前包及其子级包下的所有文件 
 
 @Component 标明哪个类被扫描进入 Spring IoC 容器
 
@@ -144,7 +146,7 @@ BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProc
 
 > @Repository，@Service，@Controller和@Component 主要在语义上不同，都会被component-scan扫描到并注入到容器中，其默认名称为将类名首字母小写
 
-@Autowired, byType：会根据类型找到对应的 Bean，如果对应类型的 Bean 不是唯一的，那么它会根据其属性名称和 Bean 的名称进行匹配。如果匹配得上，就会使用该 Bean；如果还无法匹配，就会抛出异常。默认要求依赖对象必须存在，如果要允许null值，则设置它的required属性为false。`@Autowired(required=false)`
+@Autowired, **byType**：会根据类型找到对应的 Bean，如果对应类型的 Bean 不是唯一的，那么它会根据其属性名称和 Bean 的名称进行匹配。如果匹配得上，就会使用该 Bean；如果还无法匹配，就会抛出异常。默认要求依赖对象必须存在，如果要允许null值，则设置它的required属性为false。`@Autowired(required=false)`
 
 当使用@Autowired 时，存在多个Bean时，可以通过@Primary 和@Quelifier  消除歧视
 
@@ -153,7 +155,7 @@ BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProc
 
 
 
-@Resource，byName
+@Resource，**byName**
 
 @PostConstruct 和@PreDestroy不是服务于依赖注入的，它们主要用于标注对象生命周期管理相关方法。
 
@@ -182,13 +184,28 @@ BeanFactory和ApplicationContext都支持BeanPostProcessor、BeanFactoryPostProc
 
 手动绑定
 
-### @Component 和 @Bean 
+### @Component 和 @Bean
 
 区别：
 
 1. 作⽤对象不同: @Component 注解作⽤于类，⽽ @Bean 注解作⽤于⽅法。
-2. @Component 通常是通过**类路径扫描来⾃动侦测以及⾃动装配到Spring容器**中（我们可以使⽤@ComponentScan 注解定义要扫描的路径从中找出标识了需要装配的类⾃动装配到 Spring 的bean 容器中）。 @Bean 注解通常是我们在标有该注解的⽅法中定义产⽣这个 bean, @Bean 告诉了Spring这是某个类的示例，当我需要⽤它的时候还给我。
+2. @Component 通常是通过**类路径扫描来⾃动侦测以及⾃动装配到Spring容器**中（我们可以使⽤@ComponentScan 注解定义要扫描的路径从中找出标识了需要装配的类⾃动装配到 Spring 的bean 容器中）。 @Bean 将一个方法的返回值注册为一个bean。这个方法通常在一个被`@Configuration`注解的类中定义，默认使用方法名作为bean的名称 
 3. @Bean 注解⽐ Component 注解的⾃定义性更强，⽽且很多地⽅我们只能通过 @Bean 注解来注册bean。⽐如**当我们引⽤第三⽅库中的类需要装配到 Spring 容器时，则只能通过@Bean 来实现**。  
+
+```java
+@Configuration
+public class AppConfig {
+ 
+    @Bean
+    public UserService userService() {
+        return new UserServiceImpl();
+    }
+ 
+}
+
+```
+
+
 
 ### **FactoryBean与BeanFactory**
 
@@ -242,19 +259,19 @@ BeanFactoryPostProcessor：容器启动阶段
 
 5. InitializingBean 与 init-method：
 
-​		如果Bean在Spring配置文件中配置了 init-method 属性，则会自动调用其配置的初始化方法。
+			如果Bean在Spring配置文件中配置了 init-method 属性，则会自动调用其配置的初始化方法。
 
 6. 如果这个Bean实现了BeanPostProcessor接口，将会调用postProcessAfterInitialization(Object obj, String s)方法；由于这个方法是在Bean初始化结束时调用的，所以可以被应用于内存或缓存技术；
 
-​		以上几个步骤完成后，Bean就已经被正确创建了，之后就可以使用这个Bean了。
+			以上几个步骤完成后，Bean就已经被正确创建了，之后就可以使用这个Bean了。
 
 7. DisposableBean：
 
-​		当Bean不再需要时，会经过清理阶段，如果Bean实现了DisposableBean这个接口，会调用其实现的destroy()方法；
+			当Bean不再需要时，会经过清理阶段，如果Bean实现了DisposableBean这个接口，会调用其实现的destroy()方法；
 
 8. destroy-method：
 
-​		最后，如果这个Bean的Spring配置中配置了destroy-method属性，会自动调用其配置的销毁方法。
+			最后，如果这个Bean的Spring配置中配置了destroy-method属性，会自动调用其配置的销毁方法。
 
 
 
@@ -355,15 +372,14 @@ Joinpoint类型：
 
 Pointcut：Joinpoint的表述方式，Pointcut之间可以进行逻辑运算
 
-Advice：相当于Class中的Method
+Advice（通知）：相当于Class中的Method，在方法执行前或执行后要做的动作
 
-- Before Advice
+- Before Advice：前置通知，在一个方法执行前被调用
 - After Advice
-  - After returning Advice
-  - After throwing Advice
+  - After returning Advice：仅当方法成功完成后执行的通知。
+  - After throwing Advice：在方法抛出异常退出时执行的通知。
   - After (Finally) Advice
-
-Around Advice：可以在Joinpoint之前和之后执行相应的逻辑
+- Around Advice：可以在Joinpoint之前和之后执行相应的逻辑
 
 Introduction：
 
