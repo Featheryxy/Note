@@ -14,7 +14,7 @@
 4. Set
    - HashSet
    - TreeSet， 默认正序，可以用`Collections.reverse(treeSet)`倒序
-5. Stack
+5. Stack：
 
 数据结构：
 
