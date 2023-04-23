@@ -1,4 +1,4 @@
-泛型，即“参数化类型”， 通过一个标识符来声明数据类型 ` public class Generic<T>`, T可以是任何对象类
+泛型，即“参数化类型”， 通过一个**标识符来声明数据类型** ` public class Generic<T>`, T可以是任何对象类
 
 ```java
 /*
