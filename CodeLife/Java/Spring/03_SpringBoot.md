@@ -1,3 +1,21 @@
+Spring Boot 相比 Spring 做了以下改进：
+
+🚀 简化配置：Spring Boot 通过自动配置、Starter 等方式，极大地简化了应用的配置工作，开箱即用，减少了开发人员的工作量。
+
+🔌 内嵌服务器：Spring Boot 集成了 Tomcat、Jetty 等服务器，可以方便地开发和部署 Web 应用程序。
+
+🧩 Starter 依赖：Spring Boot 提供了 Starter 依赖，可以轻松地集成常用的第三方库，减少了开发人员的工作量。
+
+🔧 自动配置：Spring Boot 根据应用程序的依赖关系和配置文件，自动配置 Spring 环境，使得应用程序的搭建和部署更加方便和快速。
+
+💻 Actuator：Spring Boot 提供了 Actuator，可以实现对应用程序的监控和管理，包括健康检查、监控指标、追踪等。
+
+👨‍💼 生态系统：Spring Boot 生态系统非常丰富，包括 Spring Cloud、Spring Security 等，提供了更多的功能和支持。
+
+Spring Boot 通过自动配置、Starter 依赖、内嵌服务器等方式，极大地简化了应用程序的开发和部署，提高了开发效率和运行效率。同时，Spring Boot 的生态系统也非常丰富，为应用程序的开发和部署提供了更多的功能和支持。
+
+
+
 Spring Boot 是一个基于 Spring 框架的开源框架，它简化了 Spring应用程序的构建和部署过程。Spring Boot减少了大量配置，提供了**自动配置**和**约定优于配置**的原则
 
  自动配置：
@@ -7,6 +25,21 @@ Spring Boot 是一个基于 Spring 框架的开源框架，它简化了 Spring�
  面向生产环境：Spring Boot设计之初就考虑了应用程序在生产环境下的部署和运行。它提供了丰富的健康检查、监控、日志记录等功能，可以帮助开发者快速定位和解决问题。
 
  综上所述，Spring Boot通过自动配置、独立运行、约定优于配置、组件化和面向生产环境等特性，大大简化了Spring应用程序的开发和部署，提高了开发效率和运行效率。
+
+
+
+5. 说说 SpringBoot 的自动装配流程？
+  Spring Boot 的自动装配流程：
+
+🔎 1. Spring Boot 会根据类路径下的 META-INF/spring.factories 文件加载需要自动装配的配置类。
+
+🧩 2. 自动配置类通常使用 @Conditional 注解，通过条件判断来决定是否需要装配。
+
+💡 3. 自动配置类中包含了对应用程序的默认配置和 Bean 的定义。
+
+🔄 4. 自动配置类会通过 @Import 注解导入其他需要的配置类。
+
+🔧 5. 在装配时，Spring Boot 会根据应用程序的配置文件和属性文件，覆盖默认配置，实现个性化配置。
 
 
 
