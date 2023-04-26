@@ -1,10 +1,17 @@
 ## Docker
 
-Docker：Build，Ship and Run Any App,Anywhere. 将环境进行打包,从而做到一次封装，到处运行
+Docker：Build，Ship and Run Any App,Anywhere. **将环境与app进行打包,从而做到一次封装，到处运行**
 
 根据镜像image创建容器container，同一个image可以创建多个container
 
 dockerfile ---build-->image--run-->container
+
+持久化：
+
+1. 通过DataVolume将container中的文件挂载到外部系统文件上，从而实现数据的共享
+2. 将当前容器重新提交成为新的镜像，进而保存数据
+
+
 
 ```
 # 安装

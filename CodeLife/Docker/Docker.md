@@ -12,7 +12,7 @@
 
 Docker是基于Go语言实现的云开源项目。
 
-​		Docker的主要目标是“Build，Ship and Run Any App,Anywhere”，也就是通过对应用组件的封装、分发、部署、运行等生命周期的管理，使用户的APP（可以是一个WEB应用或数据库应用等等）及其运行环境能够做到“**一次封装，到处运行**”。
+​		Docker的主要目标是“Build，Ship and Run Any App,Anywhere”，也就是通过对应用组件的封装、分发、部署、运行等生命周期的管理，**使用户的APP（可以是一个WEB应用或数据库应用等等）及其运行环境能够做到“一次封装，到处运行**”。
 
 ​		Linux 容器技术的出现就解决了这样一个问题，而 Docker 就是在它的基础上发展过来的。将应用运行在 Docker 容器上面，而 Docker 容器在任何操作系统上都是一致的，这就实现了跨平台、跨服务器。**只需要一次配置好环境，换到别的机子上就可以一键部署好，大大简化了操作**
 
@@ -1248,6 +1248,7 @@ a8ea48378d9b        11 minutes ago      /bin/sh -c #(nop)  ENV MYPATH=/usr/local
     11-Jun-2020 11:01:18.105 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          May 5 2020 20:36:20 UTC
     ```
     
+
  使用docker run 替换 tomcat dockerfile 中的 CMD ["catalina.sh", "run"]，tomcat没有执行
     
 ```
