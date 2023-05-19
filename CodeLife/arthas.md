@@ -12,4 +12,7 @@ watch com.hundsun.lcpt.bizframe.util.ManageUtil getDictMap -x 2 -b -s -n 2
 
 重入 arthas
 telnet localhost port_id
+
+
+watch com.hundsun.lcpt.ta.pub.trust.services.impl.TrustPrdDailyNavService getMultiWorkDayNavDate -x 2 -b 
 ```
