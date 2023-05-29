@@ -38,6 +38,19 @@ SQL> @path_to_sql_file
 select name from v$database;
 ```
 
+### 闪回
+
+```java
+select t.SQL_TEXT, t.FIRST_LOAD_TIME, t.* from  v$SQLAREA t where t.SQL_TEXT like '%table_name%' ; 
+
+
+select * from tbtrustproduct as of timestamp to_timestamp('2021-07-01 14:40:00', 'yyyy-mm-dd hh24:mi:ss');
+
+alter table tbtrustproduct enable row movement;
+
+flashback table tbtrustproduct to timestamp TO_TIMESTAMP('2021-07-01 14:40:00','yyyy-mm-dd hh24:mi:ss');
+```
+
 
 
 ### session 与 process
