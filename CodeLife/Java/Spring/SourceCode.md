@@ -21,3 +21,11 @@ spring-boot：核心模块，包含了Spring Boot框架的核心代码。
 3. **启动器模块**：继续阅读`spring-boot-starters`模块。启动器模块提供了一组预配置的依赖项，方便引入常用功能和第三方库。通过阅读启动器模块，你可以了解Spring Boot如何简化依赖管理和配置。
 4. **Actuator模块**：`spring-boot-actuator`模块提供了用于监控和管理应用程序的功能。了解Actuator的实现可以帮助你了解Spring Boot的运行时监控和管理能力。
 5. **其他模块**：根据你的兴趣和需求，可以继续阅读其他模块，例如`spring-boot-cli`模块（命令行工具）、`spring-boot-devtools`模块（开发工具）以及示例代码等。这些模块提供了额外的功能和工具，可以帮助你更好地使用和开发Spring Boot应用程序。
+
+
+
+```
+SpringApplication.java
+Class that can be used to bootstrap and launch(引导并启动) a Spring application from a Java main method.
+```
+
