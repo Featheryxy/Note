@@ -29,3 +29,4 @@ SpringApplication.java
 Class that can be used to bootstrap and launch(引导并启动) a Spring application from a Java main method.
 ```
 
+https://juejin.cn/post/7025217025135869965
