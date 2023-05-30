@@ -813,7 +813,11 @@ public class WindowFacade {
 
 也称为Publish-Subscriber模式
 
-当观察对象（Subject）发生改变时回通知观察者(Observer)，**Subject中聚合Observer**
+
+
+当观察对象（Subject）发生改变时会**通知**观察者(Observer)。一个观察对象的通知多个观察者，所以在观察对象中组合多个观察者
+
+
 
 - 利用抽象类和接口从具体类中抽出抽象方法
 - 在将实例作为参数传递至类中，或者在类的字段中保存实例时，不适用具体类型
