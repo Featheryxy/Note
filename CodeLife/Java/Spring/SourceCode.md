@@ -30,3 +30,22 @@ Class that can be used to bootstrap and launch(引导并启动) a Spring applica
 ```
 
 https://juejin.cn/post/7025217025135869965
+
+
+
+在 Java 类名中，`$` 符号通常表示内部类（Inner Class）或嵌套类（Nested Class）的分隔符。
+
+在 `sun.misc.Launcher$AppClassLoader` 中，`$` 符号表示 `AppClassLoader` 是 `Launcher` 类的内部类。也就是说，`Launcher` 类中定义了一个名为 `AppClassLoader` 的内部类。
+
+
+
+
+
+
+
+```
+SpringBoot 启动时会从以下来个路径读取 spring.factories
+URL [file:/F:/GitHubNote/springboot-2.5.x-study/spring-boot-project/spring-boot-autoconfigure/build/resources/main/META-INF/spring.factories]
+URL [file:/F:/GitHubNote/springboot-2.5.x-study/spring-boot-project/spring-boot/build/resources/main/META-INF/spring.factories]
+```
+
