@@ -83,6 +83,30 @@ Settings --> Live Templates
 
 导入：在菜单栏选择 `File` | `Manage IDE Settings` | `Import Settings`
 
+## IDEA创建文件添加作者及时间信息
+
+ File ——> Settings…——> Editor ——> File and Code Templates ——> Includes ——> File Header
+
+```
+/**
+ * @author Name
+ * @date ${DATE} ${TIME}
+ */
+```
+
+
+
 ## ModuleFileDir
 
 Run/Debug Configurations --> + --> Application --->Edit configuration templates ---> Working directory  --> insert ModuleFileDir
+
+
+
+
+
+
+
+## 鼠标滚轮控制缩放大小
+
+File -> Setting -> Editor -> General 
+

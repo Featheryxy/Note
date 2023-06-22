@@ -18,7 +18,7 @@ Maven
 <dependency>
     <groupId>org.projectlombok</groupId>
     <artifactId>lombok</artifactId>
-    <version>1.18.12</version>
+    <version>1.18.24</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -26,10 +26,10 @@ Maven
 IDEA
 
 - Go to `File > Settings > Plugins` 		
-- Click on `Browse repositories...` 		
-- Search for `Lombok Plugin` 		
-- Click on `Install plugin` 		
-- Restart IntelliJ IDEA 		
+	 Click on `Browse repositories...` 		
+	 Search for `Lombok Plugin` 		
+	 Click on `Install plugin` 		
+	 Restart IntelliJ IDEA 		
 
 ### Features
 
