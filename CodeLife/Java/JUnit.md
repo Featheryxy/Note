@@ -17,6 +17,18 @@ JUnit是一个开源的Java语言的单元测试框架
 - Java程序最小的功能单元是方法
 - 单元测试就是针对单个Java方法的测试
 
+### maven gav
+
+```xml
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.8.2</version>
+        </dependency>
+```
+
+
+
 ### JUnit是一个开源的Java语言的单元测试框架
 
 - 门针对Java语言设计，使用最广泛·
@@ -274,3 +286,9 @@ public void test3() {
 
 - 可以把测试数据组织起来
 - 用不同的测试数据调用相同的测试方法
+
+
+
+##  Reference
+
+https://www.cnblogs.com/niunotniu/p/14671941.html
