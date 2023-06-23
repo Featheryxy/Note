@@ -21,13 +21,16 @@ JUnit是一个开源的Java语言的单元测试框架
 
 ```xml
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.8.2</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+            <scope>compile</scope>
         </dependency>
 ```
 
+### idea junit安装
 
+idea 默认带有junit jar包，可以通过添加@Test后，使用alt+enter键加入
 
 ### JUnit是一个开源的Java语言的单元测试框架
 

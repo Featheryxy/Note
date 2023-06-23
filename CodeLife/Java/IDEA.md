@@ -102,7 +102,13 @@ Run/Debug Configurations --> + --> Application --->Edit configuration templates 
 
 
 
+## 项目维度功能
 
+右键项目名称 ——> Optimize import
+
+还可以Run All Tests
+
+Reformat code
 
 
 
