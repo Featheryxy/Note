@@ -80,6 +80,14 @@ Server ---> Application server：中选中本地安装的tomcat路径
 
 Deployment ---> Deploy at the server startup 中添加项目 
 
+- Artifact（常用）：是项目的可部署组件，包含项目的代码和资源，通常是war包或jar包
+- External Source：而外部资源是项目所依赖的不包含在Artifact中的额外资源。 
+
+
+
+- WAR文件：是Web应用程序的打包文件，用于方便地部署和分发。
+- WAR Exploded（常用）：将WEB工程以当前文件夹的位置关系上传到服务器；可以支持热部署。 
+
 ps: 注意href中写的地址应该与web.xml中的mapping路径一致
 
 ```html
