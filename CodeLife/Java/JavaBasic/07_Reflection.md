@@ -1,22 +1,50 @@
 # Reflection
 
-反射就是把java类中的各种成分映射成一个个的Java对象，如Fields，Constructor对象，我们可以通过Class对象来获取类的结构信息。
-
-Class是一个普通的类，这个类描述的是所有类的公共特性。
-
-其构造方法为private，所以Class对象的由JVM来创建，将class文件读入内存，并为之创建一个Class对象
+反射：可以通过Class对象来获取java类中的各种成分对象（如Fields，Constructor对象）。Class是一个普通的类，这个类描述的是所有类的公共特性，其构造方法为private，所以Class对象的由JVM来创建，将class文件读入内存，并为之创建一个Class对象。
 
 
 
-Java运行时系统始终为所有对象维护一个运行时类型标识。保存这些信息的类名为Class.
-
-在启动时，包含main方法的类被加载，它会加载所有需要的类。这些被加载的类又要加载它们需要的类，以此类推。这将花费很长时间，可以使用Class.forName手工强制加载其他类。
-
-- 可以使用==运算符来实现两个类对象的比较
+获取Class 对象：
 
 ```java
-if(student.getClass() == Student.class);
+// method1
+Class clazz1 = Person.class;
+
+// method2        
+Person p1 = new Person();
+Class clazz2 = p1.getClass();
+
+// method3 
+Class clazz3 = Class.forName("com.feather.reflection.Person");
+System.out.println(clazz3);
+
+System.out.println(clazz1 == clazz2); // true
+System.out.println(clazz1 == clazz3); // true
+
+//method4 ：使用类的加载器：ClassLoader  (了解)
+ClassLoader classLoader = ReflectionTest.class.getClassLoader();
+Class clazz4 = classLoader.loadClass("com.feather.reflection.Person");
 ```
+
+获取Constructor 对象：
+
+- ` public Constructor<?>[] getDeclaredConstructors() `  获取 所有的构造器
+- `public Constructor<?>[] getConstructors()` 访问修饰符 为 public的构造器
+- `public void setAccessible(boolean flag) ` 是否忽略访问修饰符
+
+```java
+        Class<Student> clazz = Student.class;
+        Constructor<Student> declaredConstructor = clazz.getDeclaredConstructor(String.class);
+        Student student = declaredConstructor.newInstance("小明");   
+
+        Student stu = new Student("小红", 13);
+        Class<? extends Student> stuClass = stu.getClass();
+        for (Field field : stuClass.getDeclaredFields()) {
+            System.out.println(field.getName()+"--"+field.get(stu));
+        }
+```
+
+
 
 ## 1 概述
 
