@@ -1,3 +1,57 @@
+- [Spring Boot官网](https://spring.io/projects/spring-boot)
+- [Spring Boot官方文档](https://docs.spring.io/spring-boot/docs/)
+
+
+
+```
+@RestController = @Controller + @ResponseBody 
+@RequestMapping
+@SpringBootApplication = @SpringBootConfiguration + @EnableAutoConfiguration + @ComponentScan()
+	
+        
+    
+```
+
+
+
+```xml
+
+<build>
+	<plugins>
+		<plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+		</plugin>
+	</plugins>
+</build>
+
+    <!-- 声明了SpringBoot2.3.4版本中其他常用组件的版本号  -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.4.RELEASE</version>
+    </parent>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    <dependencies>        
+```
+
+
+
+spring-boot-starter-*：官方提供的starter
+
+thirdpartyproject-spring-boot-starter：第三方提供的starter
+
+
+
+在pom.xml文件中，右击鼠标点击diagrams 展示依赖树
+
+
+
 Spring Boot 相比 Spring 做了以下改进：
 
 🚀 简化配置：Spring Boot 通过自动配置、Starter 等方式，极大地简化了应用的配置工作，开箱即用，减少了开发人员的工作量。
@@ -29,7 +83,7 @@ Spring Boot 是一个基于 Spring 框架的开源框架，它简化了 Spring�
 
 
 5. 说说 SpringBoot 的自动装配流程？
-  Spring Boot 的自动装配流程：
+    Spring Boot 的自动装配流程：
 
 🔎 1. Spring Boot 会根据类路径下的 META-INF/spring.factories 文件加载需要自动装配的配置类。
 
