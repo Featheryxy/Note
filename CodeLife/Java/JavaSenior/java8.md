@@ -4,23 +4,88 @@ Java 是强类型语言，必须声明参数类型
 
 样板代码模糊了代码本意
 
+面向对象编程是对数据进行抽象，而函数式编程是对行为进行抽象
+
+传递对象，传递行为（方法）
+
+参数可以是对象，也可以时方法
+
+Java 8 还让集合类可以拥有一些额外的方法：default 方法
+
+函数式编程：使用**不可变值**和**函数**，函数对一个**值**进行处理，**映射成另一个值**
+
+java中f.apply(0,1) 等价于数学中的 f(1)
+
+
+对外暴露Stream 工厂而不是一个 List 或 Set 对象。因为 Stream 暴露集合的最大优点在于，它很好地封装了内部实现的数据结构。仅暴露一个 Stream 接口，用户在实际操作中无论如何使用，都不会影响内部的 List 或 Set。
+
+高阶函数：高阶函数是指接受另外一个函数作为参数，或返回一个函数的函数，f(g(x)),  Comparator 函数接口
+
+## 函数式接口
+
+**函数式接口**： **只包含一个抽象方法的接口**，用来表示 Lambda 表达式的类型，程序员只要定义了改接口的参数类型，那么在Lambda 表达式中不需要重复定义参数类型
+
+1. 使用@FunctionalInterface标识
+2. 常见的函数式接口
+   - Consumer 消费接口：可以对传入的参数进行消费        
+   - Function 计算转换接口：根据其中抽象方法的参数列表和返回值类型可以看到，可以在方法中对传入的参数计算或转换，把结果返回
+   - Predicate 判断接口：可以在方法对传入的参数条件进行判断，返回判断结果
+   - Supplier 生产型接口：可以在方法中创建对象，把创建好的对象返回
+
+   
+3. 常用的默认方法
+   - and ：我们在使用Predicate接口的时候可能需要进行判断条件的拼接，而and方法相当于使用&&来拼接两个判断条件
+   - or
+
+| 接口               | 参数 | 返回类型 |
+| ------------------ | ---- | -------- |
+| Predicate\<T>      | T    | boolean  |
+| Consumer\<T>       | T    | void     |
+| Function<T,R>      | T    | R        |
+| Supplier\<T>       | None | T        |
+| BinaryOperator\<T> | T，T | T        |
+
+```
+Comparator
+```
+
 
 
 ## Lambda
 
-**函数式接口**： 只包含一个抽象方法的接口，用来表示 Lambda 表达式的类型，程序员只要定义了改接口的参数类型，那么在Lambda 表达式中不需要重复定义参数类型
+当传递行为时，由于匿名内部类的写法难以阅读，所以使用lambda表达式简写。 Lambda 表达式无需指定类型，编译器javac可以从上下文中的方法签名中进行类型推断
 
-**Lambda表达式**： 函数式接口的实例，匿名内部类的简写
+**Lambda表达式**： 函数式接口的实例，匿名内部类的简写，
 
 - 形式：(参数类型 变量，……) -> {表达式}， 
-
 - 省略参数类型：如果参数类型可被推导，则参数类型可被省略。
 - 省略小括号：如果没有参数或只有一个参数，小括号也可省略。
 - 省略大括号：只有一行表达式时
 
-**final**：一个 lambda 访问的局部变量必须是 final 的，自 Java 8 起，从匿名类或是 lambda 访问的元素都是隐式 final 的，即Lambda 表达式引用的是值，而不是变量
+```java
+BinaryOperator<Long> add = new BinaryOperator<Long>() {
+    @Override
+    public Long apply(Long x, Long y) {
+        return x + y;
+    }
+};
 
-**方法引用**：当 lambda 的实现是一个单参的方法调用时
+BinaryOperator<Long> add = (x, y) -> x + y;
+
+BinaryOperator<Long> add = Long::sum;
+
+
+BinaryOperator<Long> addLongs = (x, y) -> x + y;
+
+// error
+BinaryOperator add = (x, y) -> x + y; 
+```
+
+
+
+**final**：一个 lambda 访问的局部变量必须是 final 的，自 Java 8 起，从匿名类或是 lambda 访问的元素都是隐式 final 的，即Lambda 表达式引用的是值，而不是变量。使用 final 变量时， 只能给该变量赋值一次，实际上是在使用赋给该变量的一个特定的值
+
+**方法引用**：当 lambda 的实现是一个单参的方法调用时, 引用其他类的方法
 
 ```java
 button.setOnAction(event -> System.out.println(event));
@@ -53,11 +118,17 @@ Button[] buttons = stream.toArray(Button[] :: new)
 
 ## Stream
 
+- 外部迭代
+  - fori  goto
+  - foreache iterator
+- 内部迭代
+  - steam 
+
 对于流来说,我们不需要告诉流怎么做,只要告诉流做什么就行
 
-惰性求值：只描述 Stream，最终不产生新集合的方法，方法返回值为stream
+惰性求值方法：只描述 Stream，最终不产生新集合的方法，方法返回值为stream
 
-及早求值：从 Stream 产生值的方法，
+及早求值方法：从 Stream 产生值的方法，返回值是另一个值或为空
 
 操作Stream流的三个阶段
 
@@ -107,7 +178,7 @@ lambda表达式中的参数可以是任意合法变量名，代表流中的每�
 
 - filter：流中保留为true的值
 - map： 能把一个对象转换成另外一个对象来作为流中的元素
-- flatMap：可以将多个stream合并成一个stream
+- flatMap：返回值是一个stream, 可以将多个stream合并成一个stream
 
 ```java
     public void flatMapCharacters() {
@@ -147,11 +218,32 @@ assertEquals(asList(1, 2, 3, 4), together);
 - noneMatch:是否都不符合，都不符合则为true
 - findAny:获取流中的任意一个元素，该方法无法保证获取的是流中的第一个元素，一旦匹配到就返回。速度比findFirst块
 - findFirst:获取流中的第一个元素
-- reduce：对流中的数据按照你制定的计算方式计算出一个结果，并返回一个Optional描述归约值（如果有）
+- reduce：从一组值中生成一个值，并返回一个Optional描述归约值（如果有）
 
 	​		
 
 ```java
+
+
+List<Track> tracks = asList(new Track("Bakai", 524),
+new Track("Violets for Your Furs", 378),
+new Track("Time Was", 451));
+
+Track shortestTrack = tracks.get(0);
+for (Track track : tracks) {
+    if (track.getLength() < shortestTrack.getLength()) {
+        shortestTrack = track;
+    }
+}
+
+reduce 模式
+accumulator 累加器；积聚者
+Object accumulator = initialValue;
+for(Object element : collection) {
+	accumulator = combine(accumulator, element);
+}
+这个模式中的两个可变项是 initialValue 初始值和 combine 函数
+
 int count = Stream.of(1, 2, 3).reduce(0, (acc, element) -> acc + element);
 // 等价于
 int acc = 0;
