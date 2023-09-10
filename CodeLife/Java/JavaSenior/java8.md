@@ -19,7 +19,7 @@ java中f.apply(0,1) 等价于数学中的 f(1)
 
 对外暴露Stream 工厂而不是一个 List 或 Set 对象。因为 Stream 暴露集合的最大优点在于，它很好地封装了内部实现的数据结构。仅暴露一个 Stream 接口，用户在实际操作中无论如何使用，都不会影响内部的 List 或 Set。
 
-高阶函数：高阶函数是指接受另外一个函数作为参数，或返回一个函数的函数，f(g(x)),  Comparator 函数接口
+高阶函数：高阶函数是指接受另外一个**函数作为参数**，或返回一个函数的函数，f(g(x)),  Comparator 函数接口
 
 ## 函数式接口
 
@@ -32,7 +32,6 @@ java中f.apply(0,1) 等价于数学中的 f(1)
    - Predicate 判断接口：可以在方法对传入的参数条件进行判断，返回判断结果
    - Supplier 生产型接口：可以在方法中创建对象，把创建好的对象返回
 
-   
 3. 常用的默认方法
    - and ：我们在使用Predicate接口的时候可能需要进行判断条件的拼接，而and方法相当于使用&&来拼接两个判断条件
    - or
@@ -85,7 +84,7 @@ BinaryOperator add = (x, y) -> x + y;
 
 **final**：一个 lambda 访问的局部变量必须是 final 的，自 Java 8 起，从匿名类或是 lambda 访问的元素都是隐式 final 的，即Lambda 表达式引用的是值，而不是变量。使用 final 变量时， 只能给该变量赋值一次，实际上是在使用赋给该变量的一个特定的值
 
-**方法引用**：当 lambda 的实现是一个单参的方法调用时, 引用其他类的方法
+**方法引用**：更简短的写法，当 lambda 的实现是一个单参的方法调用时, 引用其他类的方法。Classname::methodName
 
 ```java
 button.setOnAction(event -> System.out.println(event));
@@ -114,7 +113,21 @@ Button[] buttons = stream.toArray(Button[] :: new)
 
 **接口中的默认方法**：如果在接口中定义一个抽象方法, 那么该抽象需要在所有的实现类中实现该方法. 如果子类数量太多，那么要在所有的实现类中实现该方法则显得不现实, 所以可以为顶层接口定义默认方法供所有实现类使用。
 
+类胜于接口。如果在继承链中有方法体或抽象的方法声明，那么就可以忽略接口中定义
+的方法。
 
+2. 子类胜于父类。如果一个接口继承了另一个接口，且两个接口都定义了一个默认方法，
+  那么子类中定义的方法胜出。
+3. 没有规则三。如果上面两条规则不适用，子类要么需要实现该方法，要么将该方法声明
+  为抽象方法。
+
+默认方法提供了某种形式上的多重继承功能。
+
+接口允许多重继承，却没有成员变量；抽象类可以继承成员变量，却不能多重继承
+
+
+
+创造流的集合有序，则流有序
 
 ## Stream
 
@@ -128,7 +141,7 @@ Button[] buttons = stream.toArray(Button[] :: new)
 
 惰性求值方法：只描述 Stream，最终不产生新集合的方法，方法返回值为stream
 
-及早求值方法：从 Stream 产生值的方法，返回值是另一个值或为空
+及早求值方法：从 Stream 产生值的方法，返回值是不是stream或为空
 
 操作Stream流的三个阶段
 
@@ -188,6 +201,18 @@ List<Integer> together = Stream.of(asList(1, 2), asList(3, 4))
                                .collect(toList());
 
 assertEquals(asList(1, 2, 3, 4), together);
+        
+        
+    public static int countLowercaseLetters(String string) {
+        return (int) string.chars()
+                .filter(Character::isLowerCase)
+                .count();
+    }  
+        
+	    public static Optional<String> mostLowercaseString(List<String> strings) {
+        return strings.stream()
+                      .max(Comparator.comparingInt(StringExercises::countLowercaseLetters));
+    }        
 ```
 
 - distinct:返回一个具有相同顺序，且流中无重复元素的新流，注意（该方法依赖的Object的equals方法来判断是否是相同对象，所以要重写equals方法，否则只有对象地址一样时才会被认为是重复）
@@ -250,6 +275,12 @@ int acc = 0;
 for (Integer element : asList(1, 2, 3)) {
 	acc = acc + element;
 }
+
+public static List<String> getNamesAndOrigins(List<Artist> artists) {
+    return artists.stream()
+        .flatMap(artist -> Stream.of(artist.getName(), artist.getNationality()))
+        .collect(toList());
+}
 ```
 
 装箱：将基本类型包装成为一个对象。反之称为拆箱
@@ -263,6 +294,15 @@ Optional\<T\>对象：对T类型对象的封装，或者表示不是任何对象
 
 
 ```java
+Optional emptyOptional = Optional.empty();
+Optional alsoEmpty = Optional.ofNullable(null);
+assertFalse(emptyOptional.isPresent());
+// 例 4-22 中定义了变量 a
+assertTrue(a.isPresent());
+
+assertEquals("b", emptyOptional.orElse("b"));
+assertEquals("c", emptyOptional.orElseGet(() -> "c"));
+
 // 推荐用法
 // 1. 当可选值存在时，对该值操作, 不返回任何值。否则不操作
 optionalValue.ifPresent(v -> Process v);
@@ -311,7 +351,73 @@ Optional<List<Book>> books = author.map(author -> author.getBookList());
 
 ```
 
+Java 8 中的另一个变化是引入了默认方法和接口的静态方法
 
+```
+public interface ToLongFunction<T> {
+
+    /**
+     * Applies this function to the given argument.
+     *
+     * @param value the function argument
+     * @return the function result
+     */
+    long applyAsLong(T value);
+}
+
+@FunctionalInterface
+public interface LongFunction<R> {
+
+    /**
+     * Applies this function to the given argument.
+     *
+     * @param value the function argument
+     * @return the function result
+     */
+    R apply(long value);
+}
+
+LongStream mapToLong(DoubleToLongFunction mapper);
+
+
+public static void printTrackLengthStatistics(Album album) {
+    IntSummaryStatistics trackLengthStats
+            = album.getTracks()
+                   .mapToInt(track -> track.getLength())
+                   .summaryStatistics();
+
+    System.out.printf("Max: %d, Min: %d, Ave: %f, Sum: %d",
+                      trackLengthStats.getMax(),
+                      trackLengthStats.getMin(),
+                      trackLengthStats.getAverage(),
+                      trackLengthStats.getSum());
+}
+```
+
+相对于int, Integer 在计算时会带来额外的开销
+
+```
+private void overloadedMethod(Object o) {
+    System.out.print("Object");
+}
+
+private void overloadedMethod(String s) {
+    System.out.print("String");
+}
+
+    @Test
+    public void mostSpecific() {
+        overloadedMethod("abc");
+        // String
+    }
+    系统可能会推断出多种类型。这时，javac 会挑出最具体的类型。
+    
+如果只有一个可能的目标类型，由相应函数接口里的参数类型推导得出；
+如果有多个可能的目标类型，由最具体的类型推导得出；
+如果有多个可能的目标类型且最具体的类型不明确，则需人为指定类型
+```
+
+接口的默认方法
 
 ## 时间
 
