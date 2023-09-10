@@ -579,6 +579,51 @@ Map<Artist, Integer> countOfAlbums = new HashMap<>();
 
 
 
+```java
+public long countRunningTime() {
+    long count = 0;
+    for (Album album : albums) {
+        for (Track track : album.getTrackList()) {
+            count += track.getLength();
+        }
+    }
+    return count;
+}
+
+public long countRunningTime() {
+    return albums.stream()
+            .mapToLong(album -> album.getTracks()
+                                     .mapToLong(track -> track.getLength())
+                                     .sum())
+            .sum();
+}
+
+
+```
+
+Lambda测试
+
+```
+public static List<String> elementFirstToUppercase(List<String> words) {
+    return words.stream()
+    .map(Testing::firstToUppercase)
+    .collect(Collectors.<String>toList());
+}
+public static String firstToUppercase(String value) { 
+    char firstChar = Character.toUpperCase(value.charAt(0));
+    return firstChar + value.substring(1);
+}
+
+@Test
+public void twoLetterStringConvertedToUppercase() {
+    String input = "ab";
+    String result = Testing.firstToUppercase(input);
+    assertEquals("Ab", result);
+}
+```
+
+流有一个方法让你能查看每个值，同时能继续操作流。这就是 peek 方法
+
 
 
 ## 时间
