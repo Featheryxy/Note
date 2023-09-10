@@ -117,9 +117,9 @@ Button[] buttons = stream.toArray(Button[] :: new)
 的方法。
 
 2. 子类胜于父类。如果一个接口继承了另一个接口，且两个接口都定义了一个默认方法，
-  那么子类中定义的方法胜出。
+    那么子类中定义的方法胜出。
 3. 没有规则三。如果上面两条规则不适用，子类要么需要实现该方法，要么将该方法声明
-  为抽象方法。
+    为抽象方法。
 
 默认方法提供了某种形式上的多重继承功能。
 
@@ -417,7 +417,169 @@ private void overloadedMethod(String s) {
 如果有多个可能的目标类型且最具体的类型不明确，则需人为指定类型
 ```
 
-接口的默认方法
+
+
+转换成其他集合
+
+```java
+    @Test
+    public void toCollectionTreeset() {
+        Stream<Integer> stream = Stream.of(1, 2, 4, 5,2,4);
+        TreeSet<Integer> collect = stream.collect(toCollection(TreeSet::new));
+        System.out.println(collect); // [1, 2, 4, 5]
+    }
+```
+
+数据分块 partitioningBy
+
+```java
+public Map<Boolean, List<Artist>> bandsAndSolo(Stream<Artist> artists) {
+	return artists.collect(partitioningBy(artist -> artist.isSolo()));
+}
+```
+
+数据分组 groupingBy
+
+```java
+    public Map<Artist, List<Album>> albumsByArtist(Stream<Album> albums) {
+        return albums.collect(groupingBy(album -> album.getMainMusician()));
+    }
+```
+
+字符串
+
+```java
+StringBuilder builder = new StringBuilder("[");
+for (Artist artist : artists) {
+    if (builder.length() > 1)
+    	builder.append(", ");
+    
+    String name = artist.getName();
+    builder.append(name);
+}
+builder.append("]");
+String result = builder.toString();
+
+String result =
+	artists.stream()
+		.map(Artist::getName)
+		.collect(Collectors.joining(", ", "[", "]"));
+```
+
+组合收集器
+
+```java
+    public Map<Artist, Integer> numberOfAlbumsDumb(Stream<Album> albums) {
+        Map<Artist, List<Album>> albumsByArtist
+                = albums.collect(groupingBy(album -> album.getMainMusician()));
+
+        Map<Artist, Integer> numberOfAlbums = new HashMap<>();
+        for (Entry<Artist, List<Album>> entry : albumsByArtist.entrySet()) {
+            numberOfAlbums.put(entry.getKey(), entry.getValue().size());
+        }
+        return numberOfAlbums;
+    }
+
+	public Map<Artist, Long> numberOfAlbums(Stream<Album> albums) {
+        return albums.collect(groupingBy(album -> album.getMainMusician(),
+                counting()));
+    }
+
+// ----- 
+    // BEGIN NAME_OF_ALBUMS_DUMB
+    public Map<Artist, List<String>> nameOfAlbumsDumb(Stream<Album> albums) {
+        Map<Artist, List<Album>> albumsByArtist =
+                albums.collect(groupingBy(album -> album.getMainMusician()));
+
+        Map<Artist, List<String>> nameOfAlbums = new HashMap<>();
+        for (Entry<Artist, List<Album>> entry : albumsByArtist.entrySet()) {
+            nameOfAlbums.put(entry.getKey(), entry.getValue()
+                    .stream()
+                    .map(Album::getName)
+                    .collect(toList()));
+        }
+        return nameOfAlbums;
+    }
+
+    // mapping 下游收集器，用以收集最终结果的一个子集
+	//  averagingInt、summarizingLong
+    public Map<Artist, List<String>> nameOfAlbums(Stream<Album> albums) {
+        return albums.collect(groupingBy(Album::getMainMusician,
+                mapping(Album::getName, toList())));
+    }
+```
+
+定制收集器
+
+compute, computeIfAbsent
+
+```java
+public Artist getArtist(String name) {
+    Artist artist = artistCache.get(name);
+    if (artist == null) {
+        artist = readArtistFromDB(name);
+        artistCache.put(name, artist);
+    }
+    return artist;
+}
+
+public Artist getArtist(String name) {
+	return artistCache.computeIfAbsent(name, this::readArtistFromDB);
+}
+
+compute：计算并更新值
+computeIfAbsent：Value不存在时才计算
+computeIfPresent：Value存在时才计算
+
+/**
+* 来源：Java技术栈
+*/
+default V compute(K key,
+        BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
+        
+    // 函数式接口不能为空    
+    Objects.requireNonNull(remappingFunction);
+    
+    // 获取旧值
+    V oldValue = get(key);
+
+    // 获取计算的新值
+    V newValue = remappingFunction.apply(key, oldValue);
+    
+    if (newValue == null) { // 新值为空
+        // delete mapping
+        if (oldValue != null || containsKey(key)) { // 旧值存在时
+            // 移除该键值
+            remove(key);
+            return null;
+        } else {
+            // nothing to do. Leave things as they were.
+            return null;
+        }
+    } else { // 新值不为空
+        // 添加或者覆盖旧值
+        put(key, newValue);
+        return newValue;
+    }
+}
+
+
+Map<Artist, Integer> countOfAlbums = new HashMap<>();
+for(Map.Entry<Artist, List<Album>> entry : albumsByArtist.entrySet()) {
+    Artist artist = entry.getKey();
+    List<Album> albums = entry.getValue();
+	countOfAlbums.put(artist, albums.size());
+}
+
+Map<Artist, Integer> countOfAlbums = new HashMap<>();
+    albumsByArtist.forEach((artist, albums) -> {
+    countOfAlbums.put(artist, albums.size());
+});
+```
+
+
+
+
 
 ## 时间
 
