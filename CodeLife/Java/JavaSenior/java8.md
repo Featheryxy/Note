@@ -243,24 +243,7 @@ entries.stream()
 - findAny:获取流中的任意一个元素，该方法无法保证获取的是流中的第一个元素，一旦匹配到就返回。速度比findFirst块
 - findFirst:获取流中的第一个元素
 
-```java
-public static int countLowercaseLetters(String string) {
-    return (int) string.chars()
-            .filter(Character::isLowerCase)
-            .count();
-}  
-    
-public static Optional<String> mostLowercaseString(List<String> strings) {
-    return strings.stream()                .max(Comparator.comparingInt(StringExercises::countLowercaseLetters));
-}      
 
-
-public static List<String> getNamesAndOrigins(List<Artist> artists) {
-    return artists.stream()
-        .flatMap(artist -> Stream.of(artist.getName(), artist.getNationality()))
-        .collect(toList());
-}
-```
 
 ### map and flatmap
 
@@ -314,6 +297,9 @@ for (Integer element : asList(1, 2, 3)) {
 
 #### 转换成其他集合
 
+调用 toList 或者 toSet 方法时，不需要指定具体的类型。Stream 类库在背后自动为你
+挑选出了合适的类型
+
 ```java
     @Test
     public void test3(){
@@ -324,7 +310,17 @@ for (Integer element : asList(1, 2, 3)) {
     }
 ```
 
-数据分块 partitioningBy
+#### 转换成值
+
+```java
+        Stream<Integer> stream = Stream.of(1, 2, 3, 4, 5);
+        int sum = stream.mapToInt(Integer::intValue) // 转换成IntStream
+                .sum();
+```
+
+#### 数据分块
+
+partitioningBy, 将数据分成 ture 和 false 两部分
 
 ```java
 public Map<Boolean, List<Artist>> bandsAndSolo(Stream<Artist> artists) {
@@ -332,7 +328,9 @@ public Map<Boolean, List<Artist>> bandsAndSolo(Stream<Artist> artists) {
 }
 ```
 
-数据分组 groupingBy
+#### 数据分组
+
+groupingBy
 
 ```java
     public Map<Artist, List<Album>> albumsByArtist(Stream<Album> albums) {
@@ -340,7 +338,7 @@ public Map<Boolean, List<Artist>> bandsAndSolo(Stream<Artist> artists) {
     }
 ```
 
-字符串
+#### 字符串
 
 ```java
 StringBuilder builder = new StringBuilder("[");
@@ -358,9 +356,19 @@ String result =
 	artists.stream()
 		.map(Artist::getName)
 		.collect(Collectors.joining(", ", "[", "]"));
+
+public static int countLowercaseLetters(String string) {
+    return (int) string.chars()
+            .filter(Character::isLowerCase)
+            .count();
+}  
+    
+public static Optional<String> mostLowercaseString(List<String> strings) {
+    return strings.stream()                .max(Comparator.comparingInt(StringExercises::countLowercaseLetters));
+}  
 ```
 
-组合收集器
+#### 组合收集器
 
 ```java
     public Map<Artist, Integer> numberOfAlbumsDumb(Stream<Album> albums) {
@@ -379,8 +387,7 @@ String result =
                 counting()));
     }
 
-// ----- 
-    // BEGIN NAME_OF_ALBUMS_DUMB
+// ---------
     public Map<Artist, List<String>> nameOfAlbumsDumb(Stream<Album> albums) {
         Map<Artist, List<Album>> albumsByArtist =
                 albums.collect(groupingBy(album -> album.getMainMusician()));
@@ -403,7 +410,7 @@ String result =
     }
 ```
 
-定制收集器
+#### 定制收集器
 
 compute, computeIfAbsent
 
@@ -469,11 +476,7 @@ Map<Artist, Integer> countOfAlbums = new HashMap<>();
     albumsByArtist.forEach((artist, albums) -> {
     countOfAlbums.put(artist, albums.size());
 });
-```
 
-
-
-```java
 public long countRunningTime() {
     long count = 0;
     for (Album album : albums) {
@@ -492,14 +495,9 @@ public long countRunningTime() {
             .sum();
 }
 
-
 ```
 
 
-
-### advise
-
-1. 对外暴露Stream 工厂, 而不是一个 List 或 Set 对象。因为 Stream 暴露集合的最大优点在于，它很好地封装了内部实现的数据结构。仅暴露一个 Stream 接口，用户在实际操作中无论如何使用，都不会影响内部的 List 或 Set。
 
 ## Optional
 
@@ -566,6 +564,79 @@ public void twoLetterStringConvertedToUppercase() {
 ```
 
 流有一个方法让你能查看每个值，同时能继续操作流。这就是 peek 方法
+
+## advise
+
+### 单元测试
+
+1. lambda表达式分行
+2. 使用方法引用
+3. 使用peek打印中间状态，在peek
+
+### 对外暴露Stream 工厂, 而不是一个 List 或 Set 对象
+
+因为 Stream 暴露集合的最大优点在于，它很好地封装了内部实现的数据结构。仅暴露一个 Stream 接口，用户在实际操作中无论如何使用，都不会影响内部的 List 或 Set。
+
+### 使用高阶函数
+
+如果有一个整体上大概相似的模式，只是行为上有所不同，就可以试着加入一个 Lambda 表达式
+
+```java
+Logger logger = new Logger();
+if (logger.isDebugEnabled()) {
+	logger.debug("Look at this: " + expensiveOperation());
+}
+// 将logger.isDebugEnabled()封装到debug方法中
+Logger logger = new Logger();
+logger.debug(() -> "Look at this: " + expensiveOperation());
+
+public long countRunningTime() {
+	long count = 0;
+	for (Album album : albums) {
+		for (Track track : album.getTrackList()) {
+			count += track.getLength();
+		}
+	}
+	return count;
+}
+
+public long countMusicians() {
+	long count = 0;
+	for (Album album : albums) {
+		count += album.getMusicianList().size();
+	}
+	return count;
+}
+
+// 改为流
+public long countRunningTime() {
+	return albums.stream()
+		.mapToLong(album -> album.getTracks()
+								.mapToLong(track -> track.getLength())
+								.sum())
+		.sum();
+}
+public long countMusicians() {
+	return albums.stream()
+		.mapToLong(album -> album.getMusicians().count())
+		.sum();
+}
+
+// 改为领域行为
+public long countFeature(ToLongFunction<Album> function) {
+	return albums.stream()
+				.mapToLong(function)
+				.sum();
+}
+public long countTracks() {
+	return countFeature(album -> album.getTracks().count());
+}
+public long countRunningTime() {
+	return countFeature(album -> album.getTracks()
+						.mapToLong(track -> track.getLength())
+						.sum());
+}
+```
 
 
 
