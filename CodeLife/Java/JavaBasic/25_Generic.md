@@ -1,3 +1,35 @@
+type, parameter
+
+- 
+
+- String：实际类型参数
+
+- E：形式类型参数
+
+- ?：通配符参数
+
+- List：raw type 原生态类型
+
+- List\<String>：parameter type 参数化类型
+
+- List\<E>：generic type 泛型 
+
+- List\<?>：unbounded wildcard type 无限制通配符类型
+
+- List\<? extends Number>：有限制通配符类型
+
+- List\<E extends Number>：有限制参数化类型
+
+- List\<T extends Comparable\<T>>：递归类型限制
+
+- static \<E> Set\<E> union(Set\<E> s1, Set\<E> s2)： generic method，泛型方法
+
+  
+
+
+
+
+
 泛型，即“参数化类型”， 通过一个**标识符来声明数据类型** ` public class Generic<T>`, T可以是任何对象类
 
 ```java
