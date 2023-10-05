@@ -136,7 +136,7 @@ public class Test {
 
 
         // 由于不创建接口A的实现类，直接使用A接口的匿名内部类
-        // 创建匿名内部类对象
+        // 创建匿名内部类对象，并且重写了接口中的抽象方法
         A aa = new A() {
             @Override
             public void method() {
