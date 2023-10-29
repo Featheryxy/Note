@@ -1,6 +1,6 @@
 ## 概念
 
-面向对象编程对数据进行抽象，传递对象，从而导致很多样板代码。而函数式编程对行为进行抽象，传递行为。
+面向对象编程对数据进行抽象，传递对象，从而导致很多**样板代码**。而函数式编程对行为进行抽象，传递行为，从而减少样板代码。
 
 **函数式编程**：使用**不可变值(final 修饰的变量，i.e. 常量)**和**函数**，函数对一个**值**进行处理，**映射成另一个值**
 
@@ -243,9 +243,12 @@ map.put("Lucy", "female");
 map.put("Lisa", "female");
 
 Set<Map.Entry<String, String>> entries = map.entrySet();
-entries.stream()
-    .filter(entry-> "male".equals(entry.getValue()))
-    .forEach(System.out::println);
+String name = entries.stream()
+    .filter(e -> StringUtils.equals("male2", e.getValue()))
+    .map(e -> "小明")
+    .findFirst()
+    .orElseGet(() -> "小红");
+System.out.println(name);
 ```
 
 ### 常用方法
