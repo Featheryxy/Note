@@ -233,7 +233,7 @@ public class SequenceTest {
     public void testC(){
         System.out.println("    testC()");
     }
-    
+
     /*
     setUpBeforeClass()
     new SequenceTest()
@@ -251,7 +251,6 @@ public class SequenceTest {
     tearDownAfterClass()
      */
 }
-
 ```
 
 ### 总结
@@ -290,8 +289,6 @@ public void test3() {
 - 可以把测试数据组织起来
 - 用不同的测试数据调用相同的测试方法
 
-
-
-##  Reference
+## Reference
 
 https://www.cnblogs.com/niunotniu/p/14671941.html

@@ -35,13 +35,11 @@ x?        x匹配零次或一次   x{0} 或 x{1}
 ## 其他
 
 ```
-^\d  		^	以数字开头
-[a-zA-Z]$ 	$	以字母结尾
-|				管道符
-[]    			可选的yun's option
+^\d          ^    以数字开头
+[a-zA-Z]$     $    以字母结尾
+|                管道符
+[]                可选的，表示从方括号中选取一个字符
 ```
-
-
 
 ## 常见正则表达式
 
@@ -50,10 +48,6 @@ x?        x匹配零次或一次   x{0} 或 x{1}
 [^A-Za-z0-9] 匹配的是任何不是字母或数字的字符
 ```
 
-
-
-
-
 ## Demo
 
 ```java
@@ -61,11 +55,9 @@ Pattern（模板）由final修饰，构造器声明为private。只能通过 Pat
 
 Matcher（匹配器）： 根据模板pattern去匹配字符串str
 boolean isfind = pattern.matcher(str).find()
-    
+
 boolean isfind = Pattern.compile(regex).find()
 ```
-
-
 
 ```java
 package reg;
@@ -94,8 +86,8 @@ public class Demo3 {
             }
             System.out.println(stringBuilder);
         }
-        // 0: 1234567890	1: 123	2: 456	3: 7890	
-		// 0: 9876543210	1: 987	2: 654	3: 3210	
+        // 0: 1234567890    1: 123    2: 456    3: 7890    
+        // 0: 9876543210    1: 987    2: 654    3: 3210    
 
     }
 }
@@ -116,4 +108,3 @@ public static void main(String[] args) {
 
     }
 ```
-

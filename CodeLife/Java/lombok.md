@@ -2,7 +2,7 @@
 
 ### 简介
 
-Project Lombok is a java library that automatically plugs into your editor and build tools, spicing up（使更活跃） your java.Never write another getter or equals method again, with one  annotation your class has a fully featured builder, Automate your  logging variables, and much more. 		
+Project Lombok is a java library that automatically plugs into your editor and build tools, spicing up（使更活跃） your java.Never write another getter or equals method again, with one  annotation your class has a fully featured builder, Automate your  logging variables, and much more.         
 
 ### 原理
 
@@ -25,11 +25,11 @@ Maven
 
 IDEA
 
-- Go to `File > Settings > Plugins` 		
-	 Click on `Browse repositories...` 		
-	 Search for `Lombok Plugin` 		
-	 Click on `Install plugin` 		
-	 Restart IntelliJ IDEA 		
+- Go to `File > Settings > Plugins`         
+     Click on `Browse repositories...`         
+     Search for `Lombok Plugin`         
+     Click on `Install plugin`         
+     Restart IntelliJ IDEA         
 
 ### Features
 
@@ -273,7 +273,6 @@ public class User {
 
     }
 }
-
 ```
 
 ```java
@@ -420,7 +419,7 @@ public class User {
 }
 ```
 
-### @Data 
+### @Data
 
 集成了@Getter, @Setter, @ToString, @RequireArgsConstructor
 

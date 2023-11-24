@@ -46,9 +46,7 @@
 
 ### 函数
 
-SLAP：抽象层次一致性（Single Level of Abstration Principle，SLAP）。组合函数要求将一个大函数拆成多个子函数的组合，而SLAP要求函数体中的内容必须在同一个抽象层次上。如果不在同一个层次，应该再次封装函数
-
-按照代码冗余程度排序，经典类大于匿名类，匿名类大于 Lamda（匿名函数），Lamda大于方法引用
+SLAP要求函数体中的内容必须在同一个抽象层次上。如果不在同一个层次，应该再次封装函数。
 
 封装判断：使用函数将判断封装，函数名体现业务语义
 
@@ -111,6 +109,8 @@ Interface Segregation Principle（ISP）：接口隔离原则。
 Dependency Inversion Principle（DIP）：依赖倒置原则
 
 > 模块之间交互应该依赖抽象，而非实现。
+
+SLAP：抽象层次一致性（Single Level of Abstration Principle，SLAP）
 
 DRY是Don’t Repeat Yourself, 避免重复代码, 系统的每一个功能都应该有唯一的实现
 
