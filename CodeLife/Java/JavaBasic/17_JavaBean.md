@@ -14,6 +14,7 @@ JavaBean示例
 public class JavaBean {
     private String name; // 属性一般定义为private
     private int age;
+    private b
     public JavaBean() {
     }
     public int getAge() {
@@ -30,6 +31,3 @@ public class JavaBean {
     }
 }
 ```
-
-
-
