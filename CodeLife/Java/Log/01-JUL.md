@@ -16,8 +16,6 @@ Level：每条日志消息都有一个关联的日志级别。该级别粗略指
 Filters：过滤器，根据需要定制哪些信息会被记录，哪些信息会被放过。
 ```
 
-
-
 ### 日志级别
 
 ```java
@@ -26,7 +24,7 @@ import java.util.logging.*;
 日志级别，一个日志级别由一个整形数字来定义
 OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL
 
-    
+
 OFF Integer.MAX_VALUE
 INFO 800    
 ALL Integer.MIN_VALUE
@@ -69,7 +67,7 @@ public void testLogLevel()throws Exception{
 ### 文件配置
 
 ```java
-	 @Test
+     @Test
     public void testLogProperties()throws Exception{
 
         // 读取配置文件，通过类加载器
@@ -92,8 +90,6 @@ public void testLogLevel()throws Exception{
 
     }
 ```
-
-
 
 ```pr
 # RootLogger 顶级父元素指定的默认处理器为：ConsoleHandler
@@ -138,12 +134,12 @@ java.util.logging.SimpleFormatter.format = %4$s: %5$s [%1$tc]%n
 ### 原理
 
 1. 初始化LogManager
-1. LogManager加载logging.properties配置
-2. 添加Logger到LogManager
-2. 从单例LogManager获取Logger
-3. 设置级别Level，并指定日志记录LogRecord
-4. Filter提供了日志级别之外更细粒度的控制
-5. Handler是用来处理日志输出位置
-6. Formatter是用来格式化LogRecord的
+2. LogManager加载logging.properties配置
+3. 添加Logger到LogManager
+4. 从单例LogManager获取Logger
+5. 设置级别Level，并指定日志记录LogRecord
+6. Filter提供了日志级别之外更细粒度的控制
+7. Handler是用来处理日志输出位置
+8. Formatter是用来格式化LogRecord的
 
 ![image-20220305135037338](E:\GitHubNote\Note\Java\Log\JUL.assets\image-20220305135037338.png)
