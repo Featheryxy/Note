@@ -16,7 +16,7 @@ $   一般用户提示符
 
 ```shell
 command [-options] parameter1 parameter1 ...
- 指令       选项      参数1       参数2	   	
+ 指令       选项      参数1       参数2           
 
 使用反斜杠(\) 跳脱[Enter]符号，使指令连续到下一行。
 PS: \ 后立刻接特殊符号
@@ -114,11 +114,11 @@ usr是user的缩写，是曾经的HOME目录，然而现在已经被/home取代�
 ```shell
 [root@localhost ~]# ls -al
 total 28
-dr-xr-x---.  2 	 	   root    root      135      Aug  4 17:27 .
-dr-xr-xr-x. 17 	  	   root    root      224      Aug  4 16:49 ..
+dr-xr-x---.  2             root    root      135      Aug  4 17:27 .
+dr-xr-xr-x. 17              root    root      224      Aug  4 16:49 ..
 ...
--rw-r--r--.  1 	  	   root    root      100      Dec 29  2013 .cshrc
--rw-r--r--.  1 	  	   root    root      129      Dec 29  2013 .tcshrc
+-rw-r--r--.  1              root    root      100      Dec 29  2013 .cshrc
+-rw-r--r--.  1              root    root      129      Dec 29  2013 .tcshrc
 [   权限  ] [硬链接数目][拥有者] [所属用户组][文件大小]  [最后修改修改日期]    [文件名称]
 
 文件大小默认以bytes为单位
@@ -133,9 +133,9 @@ Linux 没有“文件扩展名”的概念
 文件类型：
 d 目录
 - 文件
-	1. ASSII 文件，可以使用cat查看
-	2. binary 文件，可执行文件（scripts），如cat
-	3. 数据格式文件（data）, 拥有特定格式的文件
+    1. ASSII 文件，可以使用cat查看
+    2. binary 文件，可执行文件（scripts），如cat
+    3. 数据格式文件（data）, 拥有特定格式的文件
 l 符号链接（也称为软链接或者 symlink ） 相当于Windows下的快捷方式
 b 可供存储的接口设备（可随机存取装置）
 c 串行端口设备，如键盘，鼠标（一次性读取装置）
@@ -169,7 +169,7 @@ ls [dictory1] [dictory2]# list：显示目录文件
 -d （directory）查看目录本身属性 
 -h （human） 人性化显示
 -i （iNode） 文件的id节点号
--t  (time) 按修改时间降序排列	
+-t  (time) 按修改时间降序排列    
 -r  (reverse) 反转
 ls -l /etc 查看/etc下的文件信息
 ls -ld /etc 查看/etc文件本身信息
@@ -331,9 +331,9 @@ CMD: 触发此进程的程序指令
 TIME:使用掉的CPU时间，注意，是此进程实际花费CPU运作的时间，而不是系统时间;
 
 F: 进程标志
-	- 4：此进程的权限为root
-	- 1：此子进程仅进行复制（fork）而没有实际执行（exec）
-	
+    - 4：此进程的权限为root
+    - 1：此子进程仅进行复制（fork）而没有实际执行（exec）
+
 [root@VM-0-12-centos ~]# top &
 [2] 13493
 任务控制 (job control), shell 告诉我们再后台(background)已经启动了任务号 (job number) 为 2（“［2］”），PID 为 13493 的程序
@@ -341,17 +341,14 @@ F: 进程标志
 [root@VM-0-12-centos ~]# jobs
 [1]-  Stopped                 top
 [2]+  Stopped                 top
-
 ```
 
-
-
-###  软件包管理
+### 软件包管理
 
 - RPM(RedHat Package Manage)
 - YUM(Yellow dog Updater Modified)：解决了RPM的属性依赖问题，通过依赖rpm软件包管理器，实现了rpm软件包管理器在功能上的扩展，因此yum是不能脱离rpm而独立运行的
 
-```shell 
+```shell
 yum [options] command [package ...]
 yum search package_name # 在yum服务器上查找包
 yum -y install package_name 
@@ -396,8 +393,6 @@ netstat -rn # 显示Routing Table
 wget [URL] # 非交互网络下载器
 ```
 
-
-
 ```shell
 [root@VM-0-12-centos ~]# ifconfig
 eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
@@ -417,9 +412,9 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
         RX errors 0  dropped 0  overruns 0  frame 0
         TX packets 440  bytes 56320 (55.0 KiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-        
+
  eth0，是以太网接口，和第二个，叫做 lo，是内部回环网络接口，它是一个虚拟接口 
- 
+
 [root@VM-0-12-centos ~]# netstat -rn
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
@@ -500,10 +495,7 @@ Su Mo Tu We Th Fr Sa
 dolloar .00
 [root@VM-0-12-centos /]# echo "dolloar \$5.00"
 dolloar $5.00
-
 ```
-
-
 
 ### SSH
 
@@ -533,7 +525,7 @@ FTP（它的原始形式）以明码形式发送帐号的姓名和密码
 SFTP（Secure File Transfer Protocol，安全文件传输协议） 
 
 > sftp 在OpenSSH包下?
->
+> 
 >  sftp 不需要远端系统中运行 FTP 服务端。它仅仅需要 SSH 服务端。这意味着任何一台能用 SSH 客户端连接的远端机器，也可当作类似于 FTP 的服务器来使用
 
 ```shell
@@ -565,7 +557,7 @@ stat# 显示文件或文件系统状态
 ```
 
 > locate 数据库由另一个叫做 updatedb 的程序创建。通常，这个程序作为一个定时任务（jobs）周期性运转；也就是说，一个任务在特定的时间间隔内被 cron 守护进程执行。大多数装有 locate的系统会每隔一天运行一回 updatedb 程序。因为数据库不能被持续地更新，所以当使用 locate 时，你会发现目前最新的文件不会出现。为了克服这个问题，通过更改为超级用户身份，在提示符下运行 updatedb 命令，可以手动运行 updatedb 程序。
->
+> 
 > /tmp下的文件不在文件资料库下
 
 ### tar
@@ -576,7 +568,7 @@ stat# 显示文件或文件系统状态
 解压缩：tar [-z-j-J][xv] [-f 已有的文件名] [-C 解压到指定目录]
 
 -c 打包
--x 解包
+-x 解包（extract）
 -t 查看文件的内容
 
 -v 显示详细信息
@@ -587,13 +579,9 @@ stat# 显示文件或文件系统状态
 -j 通过bzip2解压缩:*.tar.bz2
 -J 通过xz解压缩:*.tar.xz
 ps：-z-j-J只能使用一个
-
-
 ```
 
 ### 正则表达式
-
-
 
 ```shell
 grep # global regular expression prin 在文本文件中查找一个指定的正则表达式，并把匹配行输出到标准输出
@@ -607,9 +595,7 @@ grep [options] regex [file...]
 -h # 应用于多文件搜索，不输出文件名。也可用--no-filename 选项来指定。
 ```
 
-
-
-###  常用
+### 常用
 
 ```shell
 空格 翻页
@@ -618,8 +604,8 @@ q   退出
 回车 一行一行浏览
 Ctrl + f 键 （f 的英文全拼为：forward）下一页
 Ctrl + b 键 （b 的英文全拼为：backward) 上一页
-gg				 到第一行
-G				 到最后一行
+gg                 到第一行
+G                 到最后一行
 
 su - [usr]: 切换到user用户下
 
@@ -632,7 +618,6 @@ date # 日期与时间
 cal # 日历
 df # 磁盘剩余空间
 free # 内存
-
 ```
 
 ### 缩写
@@ -645,7 +630,7 @@ free # 内存
 -f # force
 -i # interface
 -r # route 
-
+-x 
 -s # state 状态信息 statistics 统计信息
 -v # verbose
 -l # listing
@@ -662,4 +647,3 @@ grep # global regular expression print
 
 ^ # Ctrl
 ```
-
