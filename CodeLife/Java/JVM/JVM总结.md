@@ -80,4 +80,4 @@ System ClassLoader 系统类加载器：搜索CLASSPATH中指明的路径和JVR�
 
 成员变量  堆内存
 
-局部变量   栈内存
+局部变量,基本数据类型   栈内存
