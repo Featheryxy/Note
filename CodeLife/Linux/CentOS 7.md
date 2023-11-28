@@ -1,5 +1,43 @@
 bash 是最初 Unix 上由 Steve Bourne 写成 shell 程序 sh 的增强版
 
+1 Linux简介
+
+### Unix
+
+**Unix的原型是文件系统**
+
+- 所有的**程序**或**系统装置**都是**文件**
+
+- 不管建构编辑器还是附属文件，所写的程序只有一个目的，且要有效的完成目标
+
+- Unix由C语言编写，收费
+
+### Linux
+
+- Linux是开源软件，源代码开放的UNIX
+
+- Linux严格**区分大小写**
+
+- Linux中所有**内容以文件形式保存，包括硬件**
+  
+  - 硬盘文件是/dev/sd[a-p]
+  - 光盘文件是/dev/sr0等
+
+- Linux不靠扩展名区分文件类型
+
+- 应用：企业服务器，嵌入式应用
+
+- Linux所有的存储设备都必须**挂载**（配置盘符，命名）之后用户才能使用，包括硬盘、 U盘和光盘
+
+### 文件系统结构
+
+- / 根目录
+- /boot 启动目录（200MB）
+- swap分区（虚拟内存，内存两倍，不超过2GB） 1G
+- /home 普通用户的家目录 2G
+
+![](C:\Users\yexiangyu5\Documents\GitHub\Note\CodeLife\Linux\Linux.assets\文件系统结构.png)
+
 ### 界面
 
 ```shell
@@ -15,13 +53,21 @@ $   一般用户提示符
 ### 命令
 
 ```shell
+命令格式
+
 command [-options] parameter1 parameter1 ...
- 指令       选项      参数1       参数2           
+ 指令       选项      参数1       参数2    
+
+command1; command2; command3... # 按顺序执行 command1，command2，command3... 如cd /; ll
 
 使用反斜杠(\) 跳脱[Enter]符号，使指令连续到下一行。
 PS: \ 后立刻接特殊符号
+1. 个别命令使用不遵循此格式
+2. 当有多个选项时， 可以写在一起 ls -a -l 等价于 ls -la
+3. 简化选项与完整选项
+   -a 等于 --all
 
-command1; command2; command3... # 按顺序执行 command1，command2，command3... 如cd /; ll
+
 
 alias # 查看所有定义在系统环境中的别名
 alias [-p] [name[=value] ...] # 为命令起别名
@@ -35,15 +81,12 @@ bin  etc  games  include  lib  lib64  libexec  local  sbin  share  src  tmp
 -bash: type: foo: 未找到
 
 uname -srm # c
-
-
-
 ```
 
 ### 帮助命令
 
 ```shell
-type [command] # 显示命令的类型， 可以寻找是否存在改命令
+type [command] # 显示命令的类型， 可以寻找是否存在该命令
 which [命令] # 显示一个可执行程序的位置, 只对可执行程序有效，不包括内建命令和命令别名
 whatis [命令] # 显示非常简洁的命令说明
 
@@ -77,36 +120,45 @@ info [命令] # 详细的介绍
 有趣的文件：
 /boot/grub/grub.conf or menu.lst，# 被用来配置启动加载程序。
 /boot/vmlinuz # Linux 内核。
+
 /dev # 包含设备结点的特殊目录
+
 /etc # 所有系统层面的配置文件 也包含一系列的 shell 脚本，在系统启动时，这些脚本会开启每个系统服务。 
 /etc/crontab，定义自动运行的任务。
 /etc/fstab # 包含存储设备的列表，以及与他们相关的挂载点
 /etc/passwd # 包含用户帐号列表
-/etc/rc.d # 的配置文件和脚本
-/home # 系统会在/home 下，给每个用户分配一个目录，如/home/user，可以用~user表示, 普通用户只能在自己的目录下写文件
+/etc/rc.d # 启动的配置文件和脚本
+
+/home # 系统会在/home 下，给每个用户分配一个目录，如/home/user，可以用~user表示,
+# 普通用户只能在自己的目录下写文件
+
 /lib # 标准程序设计库，又叫动态链接共享库，核心系统程序所使用的共享库文件, 作用类似windows里的.dll文件
 /lost+found # 目录平时是空的，系统非正常关机而留下“无家可归”的文件（windows下叫什么.chk）就在这里
-/media # 目录会包含可移动介质的挂载点，例如 USB 驱动器，CD-ROMs 等等。这些介质连接到计算机之后，会自动地挂载到这个目录结点下。
+/media # 目录会包含可移动介质的挂载点，例如 USB 驱动器，CD-ROMs 等等。
+# 这些介质连接到计算机之后，会自动地挂载到这个目录结点下。
 /mnt # 在早些的 Linux 系统中，/mnt 目录包含可移动介质的挂载点。
 /opt # 被用来安装“可选的”软件。这个主要用来存储可能安装在系统中的商业软件产品。
-/proc # 这个/proc 目录很特殊。从存储在硬盘上的文件的意义上说，它不是真正的文件系统。相反，它是一个由 Linux 内核维护的虚拟文件系统。它所包含的文件是内核的窥视孔。这些文件是可读的，它们会告诉你内核是怎样监管计算机的。
-/root # 系统管理员的主目录
+/proc # 这个/proc 目录很特殊。从存储在硬盘上的文件的意义上说，它不是真正的文件系统。
+# 相反，它是一个由 Linux 内核维护的虚拟文件系统。它所包含的文件是内核的窥视孔。
+# 这些文件是可读的，它们会告诉你内核是怎样监管计算机的。
 /sbin # 超级管理命令，这里存放的是系统管理员使用的管理程序
 /tmp # 是用来存储由各种程序创建的临时文件的地方。一些配置导致系统每次重新启动时，都会清空这个目录。
-/proc 虚拟的目录，是系统内存的映射。可直接访问这个目录来获取系统信息。
-/var 某些大文件的溢出区，比方说各种服务的日志文件
+/var # 某些大文件的溢出区，比方说各种服务的日志文件
 
 /usr # 最庞大的目录，要用到的应用程序和文件几乎都在这个目录 
 /usr/bin # 包含系统安装的可执行程序
 /usr/lib # 包含由/usr/bin 目录中的程序所用的共享库。
-/usr/local #是非系统发行版自带程序的安装目录。通常，由源码编译的程序会安装在/usr/local/bin 目录下。新安装的 Linux 系统中会存在这个目录，并且在管理员安装程序之前，这个目录是空的。
+/usr/local #是非系统发行版自带程序的安装目录。通常，由源码编译的程序会安装在/usr/local/bin 目录下。
+# 新安装的 Linux 系统中会存在这个目录，并且在管理员安装程序之前，这个目录是空的。
 /usr/sbin # 包含许多系统管理程序。
 /usr/share #包含许多由/usr/bin 目录中的程序使用的共享数据。其中包括像默认的配置文件、图标、桌面背景、音频文件等等。
 /usr/share/doc # 大多数安装在系统中的软件包会包含一些文档。在/usr/share/doc 目录下，我们可以找到按照软件包分类的文档。
+
 /var # 除了/tmp 和/home 目录之外，相对来说，目前我们看到的目录是静态的，这是说，它们的内容不会改变。/var 目录存放的是动态文件。各种数据库，假脱机文件，用户邮件等等，都位于在这里。
 /var/log # 这个/var/log 目录包含日志文件、各种系统活动的记录。这些文件非常重要，并且应该时时监测它们。其中最重要的一个文件是/var/log/messages。注意，为了系统安全，在一些系统中，你必须是超级用户才能查看这些日志文件。
 
-usr是user的缩写，是曾经的HOME目录，然而现在已经被/home取代了，现在usr被称为是Unix System Resource，即Unix系统资源的缩写。
+# usr是user的缩写，是曾经的HOME目录，
+# 然而现在已经被/home取代了，现在usr被称为是Unix System Resource，即Unix系统资源的缩写。
 ```
 
 - 软件包目录：/opt/setups
@@ -163,6 +215,8 @@ x ---- 1
 
 ### 操作文件和目录
 
+目录：特殊的文件，可以包含其他文件和目录
+
 ```shell
 pwd # print working directory: 显示当前工作目录
 
@@ -189,7 +243,7 @@ less [dictory] # 浏览文件内容
 zless [dictory] # 可以显示由 gzip 压缩的文本文件的内容
 
 mkdir [目录名1] [目录名2] # make directories
-rmdir [目录名]: remove empty directories
+rmdir [目录名] # remove empty directories
 mv [原文件或目录] [目标目录] # 移动/重命名文件和目录
 
 
@@ -205,28 +259,30 @@ rm [dictoryname] [filename]# 删除文件和目录,
 -f (force) # 就是直接强行删除，不作任何提示的意思
 rm -rf # 删除文件夹及下面所有文件
 
-ln [target] [link-name]# 创建硬链接和符号链接
-一个文件至少有一个硬链接，因为文件名就是由链接创建的
-假设文件由两部分组成：包含文件内容的数据部分和持有文件名的名字部分,我们创建文件硬链接的时候，实际上是
-为文件创建了额外的名字部分，并且这些名字都关联到相同的数据部分.这时系统会分配一连串的磁盘块给所谓的索引节点，然后索引节点与文件名字部分相关联。因此每一个硬链接都关系到一个具体的包含文件内容的索引节点。
-[root@VM-0-12-centos playgroud]# ll -i
-total 24
-658354 drwxr-xr-x 2 root root 4096 Aug 24 22:49 dir1
-658355 drwxr-xr-x 2 root root 4096 Aug 24 22:50 dir2
-658357 drwxr-xr-x 2 root root 4096 Aug 24 22:52 dir3
-658356 -rw-r--r-- 4 root root 1141 Aug 24 22:42 fun
-658356 -rw-r--r-- 4 root root 1141 Aug 24 22:42 fun-hard
-658358 -rw-r--r-- 1 root root    2 Aug 24 22:53 hello
-
-硬链接不能跨越物理设备，硬链接不能关
-联目录，只能是文件。符号链接是文件的特殊类型，它包含一个指向目标文件或目录的文本指
-针。
+touch [文件名] # 创建空文件
+cat [文件名] # 显示文件内容
+    -n 显示行号
+more [文件名]     # 分页显示文件内容
+    (Enter) 换行
+    (空格) 或f 翻页
+    q或Q 退出
+less [文件名] # 分页显示文件内容（可向上翻页）
+    h 打开帮助
+    (Enter) 换行
+    (空格) 或f 翻页
+    q或Q 退出
+    pageup 向上翻页
+    /关键词  模式匹配 n（next）N(向前查找) 泛白显示关键词
+head -n 10 [文件名]    # 显示文件前面10行
+    -n 指定行数
+tail -fn 10 # 动态显示文件后面10行
 ```
 
 ### 硬链接和符号链接
 
 ```shell
 ln [target] [link-name]# 创建硬链接和符号链接
+-s 创建软链接
 一个文件至少有一个硬链接，因为文件名就是由链接创建的
 假设文件由两部分组成：包含文件内容的数据部分和持有文件名的名字部分,我们创建文件硬链接的时候，实际上是
 为文件创建了额外的名字部分，并且这些名字都关联到相同的数据部分.这时系统会分配一连串的磁盘块给所谓的索引节点，然后索引节点与文件名字部分相关联。因此每一个硬链接都关系到一个具体的包含文件内容的索引节点。
@@ -244,7 +300,30 @@ total 24
 硬链接不能跨越物理设备，硬链接不能关联目录，只能是文件。符号链接是文件的特殊类型，它包含一个指向目标文件或目录的文本指
 针。
 
-ln -s fun fun-sym
+
+功能描述：生成链接文件
+
+范例：
+$ ln -s /etc/issue /tmp/issue.soft
+创建文件/etc/issue的软链接/tmp/issue.soft
+
+$ ln /etc/issue /tmp/issue.hard
+创建文件/etc/issue的硬链接/tmp/issue.hard
+
+软链接特征：类似Windows快捷方式
+1、 lrwxrwxrwx l 软链接
+软链接文件权限都为rwxrwxrwx
+2、文件大小-只是符号链接
+3、 /tmp/issue.soft -> /etc/issue
+箭头指向原文件
+
+
+硬链接特征：
+1、拷贝cp -p + 同步更新
+echo "this is a test" >> /etc/motd
+2、可通过i节点识别
+3、不能跨分区
+4、不能针对目录使用
 ```
 
 ### 进程管理
@@ -563,10 +642,17 @@ lls  # l = local
 
 ```shell
 locate [file_name] # 通过名字来查找文件
-find [file_name] # 在一个目录层次结构中搜索文件
 xargs # 从标准输入生成和执行命令行
 touch # 更改文件时间
 stat# 显示文件或文件系统状态
+
+
+find [搜索范围] [匹配条件] # 文件搜索
+      -name 在文件名中搜索
+      -iname 不区分大小写
+
+find / -iname test # 从根目录下查找名为test的文件，不区分大小写
+# 可以使用匹配符，如 *（匹配0或多个字符）？（匹配任意一个字符）
 ```
 
 > locate 数据库由另一个叫做 updatedb 的程序创建。通常，这个程序作为一个定时任务（jobs）周期性运转；也就是说，一个任务在特定的时间间隔内被 cron 守护进程执行。大多数装有 locate的系统会每隔一天运行一回 updatedb 程序。因为数据库不能被持续地更新，所以当使用 locate 时，你会发现目前最新的文件不会出现。为了克服这个问题，通过更改为超级用户身份，在提示符下运行 updatedb 命令，可以手动运行 updatedb 程序。
@@ -594,7 +680,7 @@ stat# 显示文件或文件系统状态
 ps：-z-j-J只能使用一个
 ```
 
-### 正则表达式
+### grep
 
 ```shell
 grep # global regular expression prin 在文本文件中查找一个指定的正则表达式，并把匹配行输出到标准输出
@@ -606,6 +692,10 @@ grep [options] regex [file...]
 -L # 相似于-l 选项，但是只是打印不包含匹配项的文件名。也可用--files-without-match 来指定。
 -n # 在每个匹配行之前打印出其位于文件中的相应行号。也可用--line-number 选项来指定。
 -h # 应用于多文件搜索，不输出文件名。也可用--no-filename 选项来指定。
+
+$ grep mysql /root/install.log
+$ grep -v ^# /etc/inittab
+# 不看inittab中以#为开头的行， #为注释行
 ```
 
 ### 常用
@@ -641,7 +731,7 @@ free # 内存
 -d # directory
 -e # extend 扩展信息
 -f # force
--i # interface
+-i # interface，ignore
 -r # route 
 -x 
 -s # state 状态信息 statistics 统计信息
