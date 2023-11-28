@@ -35,6 +35,9 @@ bin  etc  games  include  lib  lib64  libexec  local  sbin  share  src  tmp
 -bash: type: foo: 未找到
 
 uname -srm # c
+
+
+
 ```
 
 ### 帮助命令
@@ -355,9 +358,19 @@ yum -y install package_name
 yum list updates # 列出可升级的软件
 yum erase package_name # 卸载软件
 yum list installed 等于 rpm -qa # 列出已安装的软件
-rpm -qa package_name # 是否安装了一个软件包
+
 yum info package_name # 显示所安装软件包的信息
 rpm -qf file_name # 查找安装了某个文件的软件包
+
+安装软件
+rpm -ivh package_name
+-i: install
+-v: verbose
+-h: 以安装信息列显示安装进度
+
+rpm -qa package_name # 是否安装了一个软件包
+-q: 查询软件，后接软件名称
+-qa: 查询所有已安装软件
 
 [options]
 -y # 自动回答yes

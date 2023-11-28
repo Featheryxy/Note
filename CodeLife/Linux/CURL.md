@@ -189,4 +189,3 @@ curl -d "user=nickname&password=12345" http://30.40.41.126::14539
     --xattr        将元数据存储在扩展文件属性中
 -q                 .curlrc 如果作为第一个参数无效
 ```
-
