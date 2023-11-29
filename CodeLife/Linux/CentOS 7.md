@@ -1,7 +1,3 @@
-bash 是最初 Unix 上由 Steve Bourne 写成 shell 程序 sh 的增强版
-
-1 Linux简介
-
 ### Unix
 
 **Unix的原型是文件系统**
@@ -23,9 +19,7 @@ bash 是最初 Unix 上由 Steve Bourne 写成 shell 程序 sh 的增强版
   - 硬盘文件是/dev/sd[a-p]
   - 光盘文件是/dev/sr0等
 
-- Linux不靠扩展名区分文件类型
-
-- 应用：企业服务器，嵌入式应用
+- Linux不靠扩展名区分文件类型，靠文件类型
 
 - Linux所有的存储设备都必须**挂载**（配置盘符，命名）之后用户才能使用，包括硬盘、 U盘和光盘
 
@@ -50,11 +44,9 @@ bash 是最初 Unix 上由 Steve Bourne 写成 shell 程序 sh 的增强版
 $   一般用户提示符
 ```
 
-### 命令
+### 命令格式
 
 ```shell
-命令格式
-
 command [-options] parameter1 parameter1 ...
  指令       选项      参数1       参数2    
 
@@ -66,21 +58,6 @@ PS: \ 后立刻接特殊符号
 2. 当有多个选项时， 可以写在一起 ls -a -l 等价于 ls -la
 3. 简化选项与完整选项
    -a 等于 --all
-
-
-
-alias # 查看所有定义在系统环境中的别名
-alias [-p] [name[=value] ...] # 为命令起别名
-unalias # 删除别名
-[ta6@10 /]$ alias foo='cd /usr; ls; cd -'
-[ta6@10 /]$ foo
-bin  etc  games  include  lib  lib64  libexec  local  sbin  share  src  tmp
-/
-[ta6@10 /]$ unalias foo
-[ta6@10 /]$ type foo
--bash: type: foo: 未找到
-
-uname -srm # c
 ```
 
 ### 帮助命令
@@ -103,12 +80,28 @@ info [命令] # 详细的介绍
 
 1 用户命令
 2 程序接口内核系统调用
-3 C 库函数程序接口
+3 C库函数程序接口
 4 特殊文件，比如说设备结点和驱动程序
 5 文件格式
 6 游戏娱乐，如屏幕保护程序
 7 其他方面
 8 系统管理员命令
+```
+
+### alias
+
+```shell
+alias # 查看所有定义在系统环境中的别名
+alias [-p] [name[=value] ...] # 为命令起别名
+unalias # 删除别名
+
+[ta6@10 /]$ alias foo='cd /usr; ls; cd -'
+[ta6@10 /]$ foo
+bin  etc  games  include  lib  lib64  libexec  local  sbin  share  src  tmp
+/
+[ta6@10 /]$ unalias foo
+[ta6@10 /]$ type foo
+-bash: type: foo: 未找到
 ```
 
 ### 系统目录
@@ -213,113 +206,6 @@ x ---- 1
 *.tar为压缩文件
 ```
 
-### 操作文件和目录
-
-目录：特殊的文件，可以包含其他文件和目录
-
-```shell
-pwd # print working directory: 显示当前工作目录
-
-ls [dictory1] [dictory2]# list：显示目录文件
--a （all）显示所有文件，包括隐藏文件（以 . 开头）
--l （long）详细信息显示
--d （directory）查看目录本身属性 
--h （human） 人性化显示
--i （iNode） 文件的id节点号
--t  (time) 按修改时间降序排列    
--r  (reverse) 反转
-ls -l /etc 查看/etc下的文件信息
-ls -ld /etc 查看/etc文件本身信息
-
-cd # change directory
-cd [/path] # /path
-cd [./path] # . 工作目录   ./可省略 等价 cd path
-cd [..] # .. 工作目录的父目录
-cd # 回到home目录
-cd - # 更改工作目录到先前的工作目录
-
-file [dictory] # 确定文件类型
-less [dictory] # 浏览文件内容
-zless [dictory] # 可以显示由 gzip 压缩的文本文件的内容
-
-mkdir [目录名1] [目录名2] # make directories
-rmdir [目录名] # remove empty directories
-mv [原文件或目录] [目标目录] # 移动/重命名文件和目录
-
-
-cp [原文件或目录] [目标目录]# 复制文件或目录
--r 复制目录
--p 保留文件属性（文件最后一次的修改时间）
-cp /etc/passwd . # 复制文件到当前目录下
-
-
-rm [dictoryname] [filename]# 删除文件和目录, 
-删除前先使用ls 命令查看无误后再删除
--r (recursive) # 就是向下递归，不管有多少级目录，一并删除
--f (force) # 就是直接强行删除，不作任何提示的意思
-rm -rf # 删除文件夹及下面所有文件
-
-
-
-vi filename
-			 vi filename   ESC        输入a o i     输入 :
-1 命令模式     --> 1  		--> 1   
-2 插入模式					--> 1		--> 2
-3 编辑模式					--> 1					--> 3
-
-a(append) 在光标所在字符后插入
-i(insert)  在光标所在字符前插入
-
-: set nu          设置行号
-: set nonu          取消行号
-: n              到第n行
-
-gg / ctrl+home                 到第一行
-G / ctrl+end                到最后一行
-home 			到行首
-end 			到行尾
-
-pageup
-pagedown
-
-dd                  删除/截切 光标所在行
-yy					复制当前行
-p					粘贴在当前光标所在行下
-
-
-:/string           向下搜索指定字符串,搜索时忽略大小写 :set ic |:set ignorecase
-:?string          向上搜索指定字符串
-n – 寻找下一个匹配结果
-N – 寻找上一个匹配结果
-
-ZZ                  快捷键，保存修改并退出
-:w new_filename  另存为指定文件
-:q!              不保存修改退出
-:q  			离开
-```
-
-### 文本编辑
-
-```shell
-touch [文件名] # 创建空文件
-cat [文件名] # 显示文件内容
-    -n 显示行号
-more [文件名]     # 分页显示文件内容
-    (Enter) 换行
-    (空格) 或f 翻页
-    q或Q 退出
-less [文件名] # 分页显示文件内容（可向上翻页）
-    h 打开帮助
-    (Enter) 换行
-    (空格) 或f 翻页
-    q或Q 退出
-    pageup 向上翻页
-    /关键词  模式匹配 n（next）N(向前查找) 泛白显示关键词
-head -n 10 [文件名]    # 显示文件前面10行
-    -n 指定行数
-tail -fn 10 # 动态显示文件后面10行
-```
-
 ### 硬链接和符号链接
 
 ```shell
@@ -368,6 +254,133 @@ echo "this is a test" >> /etc/motd
 4、不能针对目录使用
 ```
 
+### 目录
+
+目录：特殊的文件，可以包含其他文件和目录
+
+```shell
+pwd # print working directory: 显示当前工作目录
+
+ls [dictory1] [dictory2]# list：显示目录文件
+-a （all）显示所有文件，包括隐藏文件（以 . 开头）
+-l （long）详细信息显示
+-d （directory）查看目录本身属性 
+-h （human） 人性化显示
+-i （iNode） 文件的id节点号
+-t  (time) 按修改时间降序排列    
+-r  (reverse) 反转
+ls -l /etc 查看/etc下的文件信息
+ls -ld /etc 查看/etc文件本身信息
+
+cd # change directory
+cd [/path] # /path
+cd [./path] # . 工作目录   ./可省略 等价 cd path
+cd [..] # .. 工作目录的父目录
+cd # 回到home目录
+cd - # 更改工作目录到先前的工作目录
+
+file [dictory] # 确定文件类型
+less [dictory] # 浏览文件内容
+zless [dictory] # 可以显示由 gzip 压缩的文本文件的内容
+
+mkdir [目录名1] [目录名2] # make directories
+rmdir [目录名] # remove empty directories
+mv [原文件或目录] [目标目录] # 移动/重命名文件和目录
+
+
+cp [原文件或目录] [目标目录]# 复制文件或目录
+-r 复制目录
+-p 保留文件属性（文件最后一次的修改时间）
+cp /etc/passwd . # 复制文件到当前目录下
+
+
+rm [dictoryname] [filename]# 删除文件和目录, 
+删除前先使用ls 命令查看无误后再删除
+-r (recursive) # 就是向下递归，不管有多少级目录，一并删除
+-f (force) # 就是直接强行删除，不作任何提示的意思
+rm -rf # 删除文件夹及下面所有文件
+```
+
+### 查找文件
+
+```shell
+find [搜索范围] [匹配条件] # 文件搜索
+      -name 在文件名中搜索
+      -iname 不区分大小写
+
+find / -iname test # 从根目录下查找名为test的文件，不区分大小写
+# 可以使用匹配符，如 *（匹配0或多个字符）？（匹配任意一个字符）
+
+locate [file_name] # 通过名字来查找文件
+xargs # 从标准输入生成和执行命令行
+touch # 更改文件时间
+stat# 显示文件或文件系统状态
+```
+
+> locate 数据库由另一个叫做 updatedb 的程序创建。通常，这个程序作为一个定时任务（jobs）周期性运转；也就是说，一个任务在特定的时间间隔内被 cron 守护进程执行。大多数装有 locate的系统会每隔一天运行一回 updatedb 程序。因为数据库不能被持续地更新，所以当使用 locate 时，你会发现目前最新的文件不会出现。为了克服这个问题，通过更改为超级用户身份，在提示符下运行 updatedb 命令，可以手动运行 updatedb 程序。
+> 
+> /tmp下的文件不在文件资料库下
+
+### 文本编辑
+
+```shell
+vi filename
+             vi filename   ESC        输入a o i     输入 :
+1 命令模式     --> 1          --> 1   
+2 插入模式                    --> 1        --> 2
+3 编辑模式                    --> 1                    --> 3
+
+a(append) 在光标所在字符后插入
+i(insert)  在光标所在字符前插入
+
+: set nu          设置行号
+: set nonu          取消行号
+: n              到第n行
+
+gg / ctrl+home                 到第一行
+G / ctrl+end                到最后一行
+home             到行首
+end             到行尾
+
+pageup
+pagedown
+
+dd                  删除/截切 光标所在行
+yy                    复制当前行
+p                    粘贴在当前光标所在行下
+u                 撤销
+ctrl+r            恢复撤销
+
+:/string           向下搜索指定字符串,搜索时忽略大小写 :set ic |:set ignorecase
+:?string          向上搜索指定字符串
+n – 寻找下一个匹配结果
+N – 寻找上一个匹配结果
+
+ZZ                  快捷键，保存修改并退出
+:w new_filename  另存为指定文件
+:q!              不保存修改退出
+:q              离开
+
+
+touch [文件名] # 创建空文件
+cat [文件名] # 显示文件内容
+    -n 显示行号
+more [文件名]     # 分页显示文件内容
+    (Enter) 换行
+    (空格) 或f 翻页
+    q或Q 退出
+less [文件名] # 分页显示文件内容（可向上翻页）
+    h 打开帮助
+    (Enter) 换行
+    (空格) 或f 翻页
+    q或Q 退出
+    pageup 向上翻页
+    /关键词  模式匹配 n（next）N(向前查找) 泛白显示关键词
+head -n 10 [文件名]    # 显示文件前面10行
+    -n 指定行数
+tail -fn 10 # 动态显示文件后面10行
+```
+
 ### 进程管理
 
 当系统启动的时候，内核先把一些它自己的活动初始化为进程，然后运行一个叫做 init 的程序。init，依次地，再运行一系列的称为 init 脚本的 shell 脚本（位于/etc），它们可以启动所有的系统服务。其中许多系统服务以守护（daemon）程序的形式实现，守护程序仅在后台运行，没有任何用户接口 (User Interface)。这样，即使我们没有登录系统，至少系统也在忙于执行一些例行事务。一个程序可以发动另一个程序被表述为一个父进程可以产生一个子进程。系统分配给每个进程一个数字，这个数字叫做进程 (process) ID 或 PID。PID 号按升序分配，init 进程的 PID 总是 1.内核也对分配给每个进程的内存和就绪状态进行跟踪以便继续执行这个进程。像文件一样，进程也有所有者和用户 ID，有效用户 ID，等等。
@@ -384,15 +397,21 @@ echo "this is a test" >> /etc/motd
 
 一个service需要一个daemon进程，通常以{xxx}d命名
 
+一个程序可以有多个进程，一个进程可以占有多个端口，但是一个端口一个时刻只能被一个进程占有
+
 ```shell
 ps  # (process status) 查看进程,只是列出与当前终端会话相关的进程
+ps -ef # 显示属于每个用户的进程信息.
+
 ps x # 展示所有进程，不管它们由什么终端（如果有的话）控制
 ps aux # 显示属于每个用户的进程信息.
-ps -ef # 显示属于每个用户的进程信息.
+
+
 top # 以进程活动顺序显示连续更新的系统进程列表。（默认情况下，每三秒钟更新一次）
 Ctrl-c # 终止一个程序. 终端发送一个叫做 INT（Interrupt, 中断）的信号给程序
 Ctrl-z # 停止一个进程, 隐藏到后端. 终端发送一个叫做 TSTP（Terminal Stop,终端停止）的信号给程序
 command & # 在后端启动任务
+
 jobs # 
 fg [jobspec] # foreground 前台 显示到前台 jobspec = %1
 kill %1 jobspec
@@ -404,7 +423,11 @@ killall [-u user] [-signal] name...# 给匹配特定程序或用户名的多个�
 信号是操作系统与程序之间进行通信时所采用的几种方式中的一种
 1 # HUP 挂起（Hangup）。这是美好往昔的残留部分，那时候终端机通过电话线和调制解调器连接到远端的计算机。这个信号被用来告诉程序，控制的终端机已经“挂断”。通过关闭一个终端会话，可以展示这个信号的作用。在当前终端运行的前台程序将会收到这个信号并终止。许多守护进程也使用这个信号，来重新初始化。这意味着，当一个守护进程收到这个信号后，这个进程会重新启动，并且重新读取它的配置文件。Apache网络服务器守护进程就是一个例子。
 2 # INT 中断。实现和 Ctrl-c 一样的功能，由终端发送。通常，它会终止一个程序。
-9 # KILL 杀死。这个信号很特别。尽管程序可能会选择不同的方式来处理发送给它的信号，其中也包含忽略信号，但是 KILL 信号从不被发送到目标程序。而是内核立即终止这个进程。当一个进程以这种方式终止的时候，它没有机会去做些“清理”工作，或者是保存工作。因为这个原因，把 KILL 信号看作最后一招，当其它终止信号失败后，再使用它。
+9 # KILL 杀死。这个信号很特别。尽管程序可能会选择不同的方式来处理发送给它的信号，
+  # 其中也包含忽略信号，但是 KILL 信号从不被发送到目标程序。
+  # 而是内核立即终止这个进程。当一个进程以这种方式终止的时候，
+  # 它没有机会去做些“清理”工作，或者是保存工作。
+  # 因为这个原因，把 KILL 信号看作最后一招，当其它终止信号失败后，再使用它。
 15 # TERM 终止。这是 kill 命令发送的默认信号。如果程序仍然“活着”，可以接受信号，那么这个它会终止。
 18 #CONT 继续。在一个停止信号后，这个信号会恢复进程的运行。
 19 # STOP 停止。这个信号导致进程停止运行，而不是终止。像KILL 信号，它不被发送到目标进程，因此它不能被忽略。
@@ -435,11 +458,12 @@ R # 运行中。这意味着，进程正在运行或准备运行。
 S # 正在睡眠。进程没有运行，而是，正在等待一个事件，比如说，一个按键或者网络分组。
 D # 不可中断睡眠。进程正在等待 I/O，比方说，一个磁盘驱动器的 I/O。
 T # 已停止. 已经指示进程停止运行。稍后介绍更多。
-Z # 一个死进程或“僵尸”进程。这是一个已经终止的子进程，但是它的父进程还没有清空它。（父进程没有把子进程从进程表中删除）
+Z # 一个死进程或“僵尸”进程。这是一个已经终止的子进程，但是它的父进程还没有清空它。
+  #（父进程没有把子进程从进程表中删除）
 < # 一个高优先级进程。这可能会授予一个进程更多重要的资源，给它更多的 CPU 时间。进程的这种属性叫做 niceness。具有高优先级的进程据说是不好的（less nice），因为它占用了比较多的 CPU 时间，这样就给其它进程留下很少时间。
 N # 低优先级进程。一个低优先级进程（一个“nice”进程）只有当其它高优先级进程被服务了之后，才会得到处理器时间。
 
-只查阅当前bash的进程
+# 只查阅当前bash的进程
 [milo@localhost /]$ ps -l
 F S   UID    PID   PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
 0 S  1000  22764  22762  0  80   0 - 28886 do_wai pts/1    00:00:00 bash
@@ -460,7 +484,9 @@ F: 进程标志
 
 [root@VM-0-12-centos ~]# top &
 [2] 13493
-任务控制 (job control), shell 告诉我们再后台(background)已经启动了任务号 (job number) 为 2（“［2］”），PID 为 13493 的程序
+任务控制 (job control), 
+shell 告诉我们在后台(background)已经启动了
+任务号 (job number) 为 2（“［2］”），PID 为 13493 的程序
 
 [root@VM-0-12-centos ~]# jobs
 [1]-  Stopped                 top
@@ -562,6 +588,8 @@ Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
 
 ### SHELL环境
 
+shell 命令解释器，用户可以通过shell向Linux内核发送请求
+
 shell 在 shell 会话中保存着大量信息， 这些信息被称为环境变量。一些程序会根据环境变量来调整他们的行为。可以使用`echo $环境变量命` 来打印变量值。
 
 环境存放下面两种信息
@@ -570,7 +598,8 @@ shell 在 shell 会话中保存着大量信息， 这些信息被称为环境变
 - 环境变量
 
 ```shell
-printenv # 只显示环境变量
+env/printenv # 只显示环境变量
+
 set # 可以显示shell 变量和环境变量
 export [-fnp][变量名称]=[变量设置值] # 设置或显示环境变量,仅限于该次登陆操作
 source FILENAME # 用于保留、更改当前shell中的环境变量,在当前shell中运行execute命令。
@@ -680,27 +709,6 @@ lls  # l = local
 ![command]
 ```
 
-### 查找文件
-
-```shell
-locate [file_name] # 通过名字来查找文件
-xargs # 从标准输入生成和执行命令行
-touch # 更改文件时间
-stat# 显示文件或文件系统状态
-
-
-find [搜索范围] [匹配条件] # 文件搜索
-      -name 在文件名中搜索
-      -iname 不区分大小写
-
-find / -iname test # 从根目录下查找名为test的文件，不区分大小写
-# 可以使用匹配符，如 *（匹配0或多个字符）？（匹配任意一个字符）
-```
-
-> locate 数据库由另一个叫做 updatedb 的程序创建。通常，这个程序作为一个定时任务（jobs）周期性运转；也就是说，一个任务在特定的时间间隔内被 cron 守护进程执行。大多数装有 locate的系统会每隔一天运行一回 updatedb 程序。因为数据库不能被持续地更新，所以当使用 locate 时，你会发现目前最新的文件不会出现。为了克服这个问题，通过更改为超级用户身份，在提示符下运行 updatedb 命令，可以手动运行 updatedb 程序。
-> 
-> /tmp下的文件不在文件资料库下
-
 ### tar
 
 ```shell
@@ -728,7 +736,7 @@ ps：-z-j-J只能使用一个
 grep # global regular expression prin 在文本文件中查找一个指定的正则表达式，并把匹配行输出到标准输出
 grep [options] regex [file...]
 -i # 忽略大小写。不会区分大小写字符。也可用--ignore-case 来指定。
--v # 不匹配。通常，grep 程序会打印包含匹配项的文本行。这个选项导致 grep 程序只会打印不包含匹配项的文本行。也可用--invert-match 来指定。
+-v # 不匹配，排除指定字串。通常，grep 程序会打印包含匹配项的文本行。这个选项导致 grep 程序只会打印不包含匹配项的文本行。也可用--invert-match 来指定。
 -c # 打印匹配的数量（或者是不匹配的数目，若指定了-v 选项），而不是文本行本身。也可用--count 选项来指定。
 -l # 打印包含匹配项的文件名，而不是文本行本身，也可用--files-with-matches 选项来指定。
 -L # 相似于-l 选项，但是只是打印不包含匹配项的文件名。也可用--files-without-match 来指定。
@@ -740,27 +748,28 @@ $ grep -v ^# /etc/inittab
 # 不看inittab中以#为开头的行， #为注释行
 ```
 
+### FireWall
+
+1 查看防火墙状态
+
+[root@lvxinghao ~]# **systemctl status firewalld**
+
+2 查看开机是否启动防火墙服务
+ [root@lvxinghao ~]# **systemctl is-enabled firewalld**
+
+3 关闭防火墙
+ [root@lvxinghao ~]# **systemctl stop firewalld** [root@lvxinghao ~]# **systemctl status firewalld**
+
+4 禁用防火墙（系统启动时不启动防火墙服务）
+ [root@lvxinghao ~]# **systemctl disable firewalld** [root@lvxinghao ~]# **systemctl is-enabled firewalld**
+
 ### 常用
 
 ```shell
-空格 翻页
-q   退出
-
-回车 一行一行浏览
-Ctrl + f 键 （f 的英文全拼为：forward）下一页
-Ctrl + b 键 （b 的英文全拼为：backward) 上一页
-gg                 到第一行
-G                 到最后一行
-
 su - [usr]: 切换到user用户下
 
-grep [option] [指定字串] [文件]: 在文件中搜寻字串匹配的行并输出
--i: 不区分大小写
--v: 排除指定字串
 
 
-date # 日期与时间
-cal # 日历
 df # 磁盘剩余空间
 free # 内存
 ```
