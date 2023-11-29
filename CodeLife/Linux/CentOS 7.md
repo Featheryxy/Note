@@ -259,6 +259,48 @@ rm [dictoryname] [filename]# 删除文件和目录,
 -f (force) # 就是直接强行删除，不作任何提示的意思
 rm -rf # 删除文件夹及下面所有文件
 
+
+
+vi filename
+			 vi filename   ESC        输入a o i     输入 :
+1 命令模式     --> 1  		--> 1   
+2 插入模式					--> 1		--> 2
+3 编辑模式					--> 1					--> 3
+
+a(append) 在光标所在字符后插入
+i(insert)  在光标所在字符前插入
+
+: set nu          设置行号
+: set nonu          取消行号
+: n              到第n行
+
+gg / ctrl+home                 到第一行
+G / ctrl+end                到最后一行
+home 			到行首
+end 			到行尾
+
+pageup
+pagedown
+
+dd                  删除/截切 光标所在行
+yy					复制当前行
+p					粘贴在当前光标所在行下
+
+
+:/string           向下搜索指定字符串,搜索时忽略大小写 :set ic |:set ignorecase
+:?string          向上搜索指定字符串
+n – 寻找下一个匹配结果
+N – 寻找上一个匹配结果
+
+ZZ                  快捷键，保存修改并退出
+:w new_filename  另存为指定文件
+:q!              不保存修改退出
+:q  			离开
+```
+
+### 文本编辑
+
+```shell
 touch [文件名] # 创建空文件
 cat [文件名] # 显示文件内容
     -n 显示行号
