@@ -720,7 +720,6 @@ shell 在 shell 会话中保存着大量信息， 这些信息被称为环境变
 - 全局环境变量：使用env命令或printenv命令来查看，环境变量均使用大写字母命名
 
 ```shell
-
 set # 显示特定进程的所有环境变量，既包括局部变量、全局变量，也包括用户自定义变量，以及局部shell函数
 export [-fnp][变量名称]=[变量设置值] # 设置或显示环境变量,仅限于该次登陆操作
 source FILENAME # 用于保留、更改当前shell中的环境变量,在当前shell中运行execute命令。
@@ -733,7 +732,6 @@ $ my_variable=Hello
 $ echo $my_variable
 Hello
 环境。
-
 ```
 
 $
