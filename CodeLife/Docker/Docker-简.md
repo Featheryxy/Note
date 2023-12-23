@@ -65,6 +65,7 @@ docker run [options]  IMAGE [COMMAND]   # 新建并启动容器
       containerPort
 -e, --env list                       Set environment variables
 
+docker run -d --name rabbitmqDemo -p 15672:15672 -p 5672:5672 rabbitmq
 
  docker ps [OPTIONS]  # 列出当前所有正在运行的容器
 -a : 列出当前所有正在运行的容器+历史上运行过的
