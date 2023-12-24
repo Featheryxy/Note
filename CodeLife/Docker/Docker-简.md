@@ -65,7 +65,7 @@ docker run [options]  IMAGE [COMMAND]   # 新建并启动容器
       containerPort
 -e, --env list                       Set environment variables
 
-docker run -d --name rabbitmqDemo -p 15672:15672 -p 5672:5672 rabbitmq
+
 
  docker ps [OPTIONS]  # 列出当前所有正在运行的容器
 -a : 列出当前所有正在运行的容器+历史上运行过的
@@ -118,3 +118,24 @@ docker inspect   <container id>  查看是否挂载成功
 ##  Dockerfile
 
 Dockerfile是用来构建Docker镜像的构建文件
+
+
+
+##  安装RabbitMQ
+
+```
+
+docker run -d --name rabbitmqDemo -p 15672:15672 -p 5672:5672 -v /opt/rabbitMqDataVolume:/etc/rabbitmq/conf.d rabbitmq 
+
+通过 docker exec -it 容器id /bin/bash 进入容器内部在运行：rabbitmq-plugins enable rabbitmq_management
+
+
+cd  /etc/rabbitmq/conf.d/
+echo management_agent.disable_metrics_collector = false > management_agent.disable_metrics_collector.conf 
+```
+
+## BUG
+
+### docker 中没有vi
+
+https://juejin.cn/post/7233217900650741817
