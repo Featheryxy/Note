@@ -29,7 +29,7 @@ categories:
 
 ### 1.2 引入
 
-#### 1. 将JavaScript代码放到文档\<head>标签中的\<script>标签之间
+1. 将JavaScript代码放到文档\<head>标签中的\<script>标签之间
 
 ```html
 <!DOCTYPE html>
@@ -268,7 +268,7 @@ Object.method()
 
 ```
 
-#### 2.6.2 内建对象 
+#### 2.6.2 内建对象
 
 内建对象(native object)：JavaScript预先定义好的对象
 
