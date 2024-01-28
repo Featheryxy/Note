@@ -1,4 +1,14 @@
-Node.js 有着强大而灵活的包管理器（node package manager，npm）  Node.js 是一个让 JavaScript 运行在服务端的开发平台  JavaScript 是由 ECMAScript、文档对象模型（DOM）和浏览器对象模型（BOM）组成的，而 Mozilla 则指出 JavaScript 由  Core JavaScript 和 Client JavaScript 组成  Node.js 中所谓的 JavaScript 只是 Core JavaScript，或者说是 ECMAScript 的一个实现，不包含 DOM、BOM 或者 Client JavaScript。  这是因为 Node.js 不运行在浏览器中，所以不需要使用浏览器中的许多特性    
+
+
+npm: (node package manager)
+
+Node.js: 让 JavaScriptde运行在服务端的开发平台
+
+JavaScript 由  Core JavaScript 和 Client JavaScript 组成
+
+JavaScript 是由 ECMAScript、文档对象模型（DOM）和浏览器对象模型（BOM）组成的
+
+Node.js 中所谓的 JavaScript 只是 Core JavaScript，或者说是 ECMAScript 的一个实现，不包含 DOM、BOM 或者 Client JavaScript。  这是因为 Node.js 不运行在浏览器中，所以不需要使用浏览器中的许多特性    
 
 
 
@@ -9,6 +19,9 @@ node --help
 $ node -e "console.log('Hello World');"
 Hello World
 
+$ node helloworld.js
+hello world
+
 ```
 
 
@@ -16,6 +29,8 @@ Hello World
 REPL （Read-eval-print loop），即输入—求值—输出循环
 
 运行无参数的 node 将会启动一个 JavaScript的交互式 shell：
+
+ctrl+C 退出
 
 ```bash
 $ node
@@ -29,11 +44,7 @@ undefined // undefined 就是 console.log 的返回值
 
 
 
-热部署
 
-npm install -g supervisor
-
-supervisor app.js
 
 
 
@@ -50,8 +61,7 @@ supervisor app.js
 事件。为了处理异步 I/O，线程必须有事件循环，不断地检查有没有未处理的事件，依次予
 以处理。
 
-Node.js 使用了单
-线程、非阻塞的事件编程模式
+Node.js 使用了单线程、非阻塞的事件编程模式
 
 创建一个线程的代价是十分昂贵的，
 需要给它分配内存、列入调度，同时在线程切换的时候还要执行内存换页，CPU 的缓存被
@@ -218,6 +228,14 @@ MVC （Model-View-Controller，模型视图控制器）是一种软件的�
 可通过命令 npm config get prefix 查看 npm 安装路径（npm config set prefix 可设置 npm 安装路径）； 
 
 ### Web实战
+
+热部署
+
+npm install -g supervisor
+
+supervisor app.js
+
+
 
 express：一个轻量级的 Web 框架
 
