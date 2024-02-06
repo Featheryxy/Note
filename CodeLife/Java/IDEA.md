@@ -57,31 +57,48 @@ import的包无法调用 or 已使用的变量提示未使用，可以进行缓�
 - Drop Frame：步入方法体之后，想回退到方法体外，点这个按钮后，断点重新回到方法体之外。在继续还是可以再次进到方法内
 - Evaluate Expression：根据输入，执行得到结果
 
+## 常用快捷键
+
+Ctrl+Alt+T：Surround With
+
+Ctrl+Alt+M：抽取方法
+
+F2：光标定位到错误地方
+
 ## 常用插件
 
-1. Rainbow Brackets
-2. String Manipulation
-3. Translation
-4. Easy Code 根据数据库自动生成dao, entity
-5. key promoter 
-6. Maven Helper
-7. Alibaba java coding 代码规范
-8. Gsonformat json转化实体类 
-9. javadoc  生成注释文档  
-10. generateallsetter 自动生成set代码 
-11. stopcoding
-12. Grep Console: 日志着色控制台显示 
-13. SonarLint  扫描代码的问题，例如 性能，安全和重复问题。新手必备！显著提升代码质量
-14. Theme: Cyan Light Theme
-15. ,
 
-## 代码模板
+
+1. Alibaba Java Coding Guidelines
+2. String Manipulation
+3. MyBatis Log Plugin
+4. MyBatisX
+5. Easy Code 根据数据库自动生成dao, entity
+6. key promoter 
+7. Maven Helper
+8. Alibaba java coding 代码规范
+9. Gsonformat json转化实体类 
+10. javadoc  生成注释文档  
+11. generateallsetter 自动生成set代码 
+12. stopcoding
+13. Grep Console: 日志着色控制台显示 
+14. SonarLint  扫描代码的问题，例如 性能，安全和重复问题。新手必备！显著提升代码质量
+15. Theme: Cyan Light Theme
+16. ,
+
+##  Live Templates
+
+代码模板
 
 Settings --> Live Templates
 
 导出: 在菜单栏选择 `File` | `Manage IDE Settings` | `Export Settings`
 
 导入：在菜单栏选择 `File` | `Manage IDE Settings` | `Import Settings`
+
+## PostFix
+
+Settings→Editor→General→PostFix Completion
 
 ## IDEA创建文件添加作者及时间信息
 

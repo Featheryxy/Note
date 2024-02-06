@@ -39,8 +39,7 @@ Maven 的正确发音是[ˈmevən]，而不是“马瘟”以及其他什么瘟�
 Maven 是一个项目管理工具，
 
 - 它包含了一**个项目对象模型 (POM： Project Object Model)**
-  - 一个 maven 工程都有一个 pom.xml 文件，通过 **pom.xml 文件定义项目的坐标、项目依赖、项目信息、**
-    **插件目标**等。  
+  - 一个 maven 工程都有一个 pom.xml 文件，通过 **pom.xml 文件定义项目的坐标、项目依赖、项目信息、插件目标**等。  
 - 一组标准集合
   - 通过 maven 构建工程有标准的目录结构，有标准的生命周期阶段、依赖管理有标准的坐标定义  
 - 一个**项目生命周期(Project Lifecycle)**
@@ -49,6 +48,18 @@ Maven 是一个项目管理工具，
   - 通过 maven 的依赖管理对项目所依赖的 jar 包进行统一管理。  
 - 用来运行定义在生命周期阶段(phase)中插件(plugin)目标(goal)的逻辑。 
   - maven 管理项目生命周期过程都是基于插件完成的。
+
+坐标：
+
+- groupId：项目的所属组信息，通常是公司或者组织；
+- artifactId: 项目在组内的唯一标识
+- version: 项目的版本
+
+依赖：通过坐标来引用其他的Jar包或pom文件，项目依赖的所有Jar都需要通过如下格式放到<dependencies>标签下
+
+继承：通过\<parent>标签来继承
+
+构建（Build），也就是我们所说的编译打包的过程
 
 ### 1.2 作用
 
@@ -272,13 +283,13 @@ A 依赖 B，需要在 A 的 pom.xml 文件中添加 B 的坐标，添加坐标�
 - **compile：**编译范围，指 A 在编译时依赖 B，此范围为默认依赖范围。 编译范围的依赖会用在
   编译、测试、运行，由于运行时需要所以编译范围的依赖会被打包。**default**
 -  **provided：** provided 依赖只有在当 JDK 或者一个容器已提供该依赖之后才使用， provided 依
-  赖在编译和测试时需要，在运行时不需要，比如： servlet api 被 tomcat 容器提供。
+    赖在编译和测试时需要，在运行时不需要，比如： servlet api 被 tomcat 容器提供。
 -  **runtime：** runtime 依赖在运行和测试系统的时候需要，但在编译的时候不需要。 比如： jdbc
-  的驱动包。由于运行时需要所以 runtime 范围的依赖会被打包。
+    的驱动包。由于运行时需要所以 runtime 范围的依赖会被打包。
 -  **test：** test 范围依赖 在编译和运行时都不需要，它们只有在测试编译和测试运行阶段可用，
-  比如： junit。由于运行时不需要所以 test范围依赖不会被打包。
+    比如： junit。由于运行时不需要所以 test范围依赖不会被打包。
 -  **system：** system 范围依赖与 provided 类似，但是你必须显式的提供一个对于本地系统中 JAR
-  文件的路径， 需要指定 systemPath 磁盘路径， system依赖不推荐使用。  
+    文件的路径， 需要指定 systemPath 磁盘路径， system依赖不推荐使用。  
 - **import：**它只使用在\<dependencyManagement>中,类似于继承父类中的pom，表示从其它的pom中导入dependency的配置。
 
 依赖范围由强到弱的顺序是：compile>provided>runtime>test

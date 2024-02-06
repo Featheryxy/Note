@@ -423,21 +423,17 @@ Spring AOP 的应用场景包括：
 
 ## MVC
 
-Model、View、Controller即模型、视图、控制器
+View 层: 视图, 前端
 
-**MVC要实现的目标是将软件用户界面和业务逻辑分离以使代码可扩展性、可复用性、可维护性、灵活性加强。**
+Controller 层：控制器，在Spring MVC中，控制器的核心是DispatcherServlet。
 
-View层是界面，Model层是业务逻辑，Controller层用来调度View层和Model层，将用户界面和业务逻辑合理的组织在一起，起粘合剂的效果。所以Controller中的内容能少则少，这样才能提供最大的灵活性。**用来将不同的View和不同的Model组织在一起，顺便替双方传递消息**
+Service 层：业务层，在该层书写业务逻辑
 
-View层，单独实现了组合模式
+Model 层: 模型, 由一个实体Bean实现的，是数据的载体。
 
-Model层和View层，实现了观察者模式
+目标是将软件**用户界面和业务逻辑分离**
 
-View层和Controller层，实现了策咯模式
 
-**Model是被观察的对象，View是观察者，Model层一旦发生变化，View层即被通知更新**
-
-一个View被多个Controller引用
 
 策略模式中的策略通常都很小很薄，不会包含太多的内容， Controller是一个策略， 自然不应该在里面放置过多的内容
 

@@ -48,6 +48,10 @@ thirdpartyproject-spring-boot-starter：第三方提供的starter
 
 
 
+Starters是一组方便的依赖描述。你可以将其添加到你的应用中，将会得到Spring及相关技术的一站式服务，使你不必再将那些样板代码进行反复的复制、粘贴操作。
+
+
+
 在pom.xml文件中，右击鼠标点击diagrams 展示依赖树
 
 
@@ -74,7 +78,7 @@ Spring Boot 是一个基于 Spring 框架的开源框架，它简化了 Spring�
 
  自动配置：
  独立运行：Spring Boot应用程序可以独立运行，不需要外部容器支持。它内嵌了Tomcat、Jetty、Undertow等Web容器，可以通过运行一个可执行的JAR文件来启动应用程序，使得部署和运行变得非常简单。
- 约定优于配置：Spring Boot采用约定优于配置的方式来配置应用程序，即通过默认的配置和约定，来避免开发者手动配置所带来的繁琐和错误。例如，Spring Boot默认会扫描应用程序的类路径，自动加载并配置所依赖的各种组件。
+ 约定优于配置：Spring Boot采用约定优于配置的方式来配置应用程序，**即通过默认的配置和约定，来避免开发者手动配置所带来的繁琐和错误**。例如，Spring Boot默认会扫描应用程序的类路径，自动加载并配置所依赖的各种组件。
  组件化：Spring Boot将应用程序分解成若干个组件，每个组件都可以独立开发、测试和部署，具有良好的复用性和可维护性。组件化的设计也使得Spring Boot应用程序具有良好的可扩展性和可定制性。
  面向生产环境：Spring Boot设计之初就考虑了应用程序在生产环境下的部署和运行。它提供了丰富的健康检查、监控、日志记录等功能，可以帮助开发者快速定位和解决问题。
 
@@ -106,6 +110,80 @@ Spring Boot 是一个基于 Spring 框架的开源框架，它简化了 Spring�
 - 基于注解开发
 
 
+
+
+
+### YAML
+
+相对于properties配置文件，YAML具有各个配置项之间的层级关系
+
+基本规则
+
+- 大小写敏感
+- 使用空格缩进表示层级关系· 对缩进的空格数目没有要求，只要同级元素左侧对齐即可
+- 使用＃注释，只有行注释，没有块注释· key与value用（英文冒号）加上空格来分割
+
+
+
+
+
+基本组件YAML的基本组件主要有两种。
+
+- 对象（映射/字典）
+- 数组（列表）对象：
+
+
+
+```yaml
+# 对象
+person:
+	name: John
+	age: 33
+# 数组
+- apple
+- banana
+
+# 数据类型
+## 字符串
+string: hello
+## 数值（整数，浮点）
+number: 123
+## 布尔值
+boolean: true
+## null 值
+null: ~
+## 日期/时间
+date: 2024-0203
+
+```
+
+### Spring MVC 常用注解
+
+@Controller：修饰类，是个
+
+@RequestMapping：修饰类或方法，设置接口的访问路径。在修饰类时，一般用于设置该类下所有接口路径的前缀。
+
+@RequestParam用来修饰参数，可以根据名字与参数进行绑定，相当于ServletRequest.getParameter()。
+
+@RequestBody用来修饰参数，接收JSON格式的参数，经常应用于AJAX请求，前/后端分离的场景下。
+
+@ResponseBody用来修饰类或方法。在修饰方法时，该方法以JSON格式返回数据；在修饰类时，该类下的所有方法默认都以JSON格式返回数据。
+
+@PathVariable用来修饰参数，用于获取URL上的值。
+
+组合注解
+
+@RestController=@Controller+@ResponseBody
+
+@GetMapping=@RequestMapping(method=RequestMethod.GET)
+
+@PostMapping=@RequestMapping(method=RequestMethod.POST)
+
+
+
+URI 全小写，因为浏览器发送请求是会转化为小写字母
+
+方法名驼峰
 
 自动配置：Auto-Configuration
 
