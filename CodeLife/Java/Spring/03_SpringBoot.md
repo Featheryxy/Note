@@ -159,6 +159,42 @@ date: 2024-0203
 
 ### Spring MVC 常用注解
 
+请求：请求方式, 请求路径，请求参数
+
+响应：响应格式
+
+Get请求：@RequestMapping
+
+- 请求方式与请求路径：GetMapping
+
+  > @GetMapping=@RequestMapping(method=RequestMethod.GET)
+
+- 请求参数获取
+  - 从请求中获取：@RequestParam
+  - 从请求路径上获取： @PathVariable
+
+
+
+Post请求：
+
+- 请求方式与路径路由：@PostMapping
+
+  > @PostMapping=@RequestMapping(method=RequestMethod.POST)
+
+- 请求参数获取：@RequestBody
+
+
+
+响应：
+
+- 响应格式：@ResponseBody
+
+  > @RestController=@Controller+@ResponseBody
+
+
+
+
+
 @Controller：修饰类，是个
 
 @RequestMapping：修饰类或方法，设置接口的访问路径。在修饰类时，一般用于设置该类下所有接口路径的前缀。
@@ -171,17 +207,53 @@ date: 2024-0203
 
 @PathVariable用来修饰参数，用于获取URL上的值。
 
-组合注解
-
-@RestController=@Controller+@ResponseBody
-
-@GetMapping=@RequestMapping(method=RequestMethod.GET)
-
-@PostMapping=@RequestMapping(method=RequestMethod.POST)
 
 
 
-URI 全小写，因为浏览器发送请求是会转化为小写字母
+
+
+
+handle: 标注了@RequestMapping的方法
+
+
+
+ Spring MVC核心组件DispatcherServlet及处理请求的七步流程
+
+ Spring MVC的3个核心对象：Handler、HandlerMapping和HandlerAdapter
+
+
+
+REST Representational State Transfer
+
+RESTful风格的API要满足以下要求：
+
+· 用URI定位资源
+
+· URI由名词组成
+
+· 使用HTTP方法操作资源
+
+![image-20240209111136999](03_SpringBoot.assets/image-20240209111136999.png)
+
+
+
+
+
+JDBC（Java Database Connectivity） MyBatis（基于JDBC的轻量级持久层框架，前身是iBatis）
+
+
+
+JPA（Java Persistence API）规范 Hibernate
+
+Hibernate更关注实体，而MyBatis则更关注表。Hibernate对数据库的操作封装得极好，几乎完全屏蔽了不同数据库之间的差异，如果需要进行数据库迁移，也毫不费力。MyBatis则更加灵活多变，对于SQL优化更加友好
+
+
+
+MyBatis Plus（简称MP）是一个MyBatis的增强工具
+
+
+
+URI全小写
 
 方法名驼峰
 
@@ -253,7 +325,7 @@ SpringFactorisLoader中的找到jar包下的"META-INF/spring.factories"的配置
 
 
 
-#### @Bean
+### @Bean
 
 ```java
 @Bean注解用于定义一个bean。通过@Bean注解，我们可以将一个方法返回的对象注册为一个Spring应用程序上下文中的bean。
@@ -279,7 +351,7 @@ public DataSource dataSource() {
 }    
 ```
 
-#### @Import
+### @Import
 
 @Import注解是一个用于引入其他配置类的注解。它允许我们将其他配置类加载到当前配置类中，从而实现对其他配置类的重用和组合。除了使用@Import注解引入其他的配置类外，还可以使用它来引入其他的普通Java类、XML配置文件等等
 
