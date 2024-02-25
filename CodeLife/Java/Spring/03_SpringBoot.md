@@ -253,6 +253,50 @@ MyBatis Plus（简称MP）是一个MyBatis的增强工具
 
 
 
+
+
+事务：
+
+1. REQUIRES_NEW：新建事务，如果当前存在事务，就把当前事务挂起
+2. REQUIRED：如果当前没有事务，新建一个事务；如果有，则加入当前事务
+3. NESTED：保存点
+
+
+
+Service层的单元测试不能依赖Dao层
+
+@Mock
+
+@InjectMocks
+
+```
+@SpringBootTest
+class UserServiceImplTest {
+
+    @InjectMocks
+    UserServiceImpl userService;
+
+    @Mock
+    UserMapper userMapper;
+
+    @Test
+    @DisplayName("Test Service getById")
+    void getById() {
+        Mockito.when(userMapper.selectById(1)).thenReturn(new User().setName("刘水镜").setEmail("liushuijing@mail.com"));
+        User user = userService.getById(1);
+        Assertions.assertEquals("刘水镜", user.getName());
+    }
+}
+```
+
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-test</artifactId>
+    <scope>test</scope>
+</dependency>
+```
+
 URI全小写
 
 方法名驼峰
@@ -260,6 +304,12 @@ URI全小写
 自动配置：Auto-Configuration
 
 自动装配：Autowire
+
+
+
+
+
+
 
 
 
