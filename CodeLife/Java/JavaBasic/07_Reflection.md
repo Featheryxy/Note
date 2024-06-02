@@ -1,5 +1,7 @@
 # Reflection
 
+反射机制：程序在运行时可以通过给定类名获取实例的信息
+
 反射：可以通过Class对象来获取java类中的各种成分对象（如Fields，Constructor对象）。Class是一个普通的类，这个类描述的是所有类的公共特性，其构造方法为private，所以Class对象的由JVM来创建，将class文件读入内存，并为之创建一个Class对象。
 
 
