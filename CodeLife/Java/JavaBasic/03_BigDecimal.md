@@ -1,5 +1,9 @@
 # BigDecimal
 
+
+
+
+
 BigDecimal用来对超过16位有效位的数进行精确的运算。
 
 双精度浮点型变量double可以处理16位有效数 
