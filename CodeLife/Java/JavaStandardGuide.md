@@ -16,6 +16,8 @@
 
 限定词后置：revenueAverage（平均收入），customerNum表示的是当前客户的序号，最好使用customerId来替代
 
+
+
 对数据库操作时，函数命名
 
 新增：create
@@ -33,6 +35,8 @@
 分页查询：page
 
 统计：count
+
+
 
 安装 onlinesearch 命名工具
 

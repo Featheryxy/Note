@@ -1,9 +1,15 @@
 # Enum
 
+每个枚举类型以及枚举变量在JVM中都是唯一的，i.e., 每个枚举项都是单例的，所以使用枚举是实现单列模式的最好方式，并且该方式不会被反序列化破坏
+
+> double check 实现单例模式，无法解决反序列化破坏单例模式
+
 Enum 定义的枚举类默认继承了 java.lang.Enum 类。
 
 每个枚举值都是一个枚举对象
 
+>Enum 是一个抽象类
+>
 >Enum 类中定义了`private final String name `，`private final int ordinal;`
 >
 >name为枚举变量的名称
