@@ -1,12 +1,15 @@
 # Annontation
 
-注解可以类比于标签，
+注解：代码的标注
 
-注解是一系列元数据，用来解释程序代码，但是并非是代码本身的一部分，对于代码的运行效果没有直接影响。
+分类：
 
-使用@interface来定义，有属性值，可以使用default来指定默认值。
+- 元注解：描述注解的注解，有5种元注解@Retention, @Target, @Documented, @Inherited, @Repeatable  
+- 自定义注解：基于元注解定义的注解
 
-有5种元注解@Retention，@Target, @Documented, @Inherited, @Repeatable  
+使用：使用@interface来定义，有属性值，可以使用default来指定默认值。
+
+
 
 ```java
 public @interface TestAnnotation {
@@ -18,7 +21,7 @@ public @interface TestAnnotation {
 @Retention：Retention 的英文意为保留期的意思。它解释说明了这个注解的的存活时间。 
 
 - RetentionPolicy.SOURCE 注解只在源码阶段保留，在编译器进行编译时它将被丢弃忽视。
-- RetentionPolicy.CLASS 注解只被保留到编译进行的时候，它并不会被加载到 JVM 中。
+- RetentionPolicy.CLASS 注解只被保留到编译进行的时候，它并不会被加载到 JVM 中。Default
 - RetentionPolicy.RUNTIME 注解可以保留到程序运行的时候，它会被加载进入到 JVM 中，所以在程序运行时可以获取到它们。
 
 @Documented：将注解中的元素包含到 Javadoc 中 
@@ -34,14 +37,19 @@ public @interface TestAnnotation {
 - ElementType.PARAMETER 可以给一个方法内的参数进行注解
 - ElementType.TYPE 可以给一个类型进行注解，比如类、接口、枚举
 
-@Inherited：注解 Test 被 @Inherited 修饰，之后类 A 被 Test 注解，类 B 继承 A,类 B 也拥有 Test 这个注解。 
+@Inherited： 被@Inherited标注的注解在修饰一个类后，其子类也继承该注解
 
 ```
+注解 Test 被 @Inherited 修饰，之后类 A 被 Test 注解，类 B 继承 A,类 B 也拥有 Test 这个注解。
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @interface Test {}
+
+
 @Test
 public class A {}
+
+
 public class B extends A {}
 ```
 
@@ -92,16 +100,12 @@ public <A extends Annotation> A getAnnotation(Class<A> annotationClass) {}
 public Annotation[] getAnnotations() {}
 ```
 
+自定义注解+AOP
+
 使用场景：
 
-1. 检查
-2. 
-
-
-
-> 注解：注解是一系列元数据，它提供数据用来解释程序代码，但是注解并非是所解释的代码本身的一部分。注解对于代码的运行效果没有直接影响 
->
-> 元注解：注解的注解，用注解修饰注解
+1. 校验入参
+2. 打印
 
 
 
