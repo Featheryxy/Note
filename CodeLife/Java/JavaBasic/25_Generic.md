@@ -1,4 +1,10 @@
-type, parameter
+泛型（Generic）程序设计是一种编程范式
+
+允许在定义类和接口及方法时使用类型参数 type parameter
+
+提高代码复用，
+
+
 
 - 
 
