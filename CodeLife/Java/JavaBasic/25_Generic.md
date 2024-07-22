@@ -1,12 +1,27 @@
 泛型（Generic）程序设计是一种编程范式
 
-允许在定义类和接口及方法时使用类型参数 type parameter
+允许在定义类和接口及方法时使用类型参数 type parameter，提高代码复用
 
-提高代码复用，
+泛型在编译器处理后会被擦除
+
+分类：
+
+```
+泛型接口
+public interface Generator<T, E> {}
+
+泛型类
+public class Generator<T, E> {}
+
+泛型方法
+[public] [static] <T> 返回值类型 方法名(参数类型 参数列表)
+```
 
 
 
-- 
+
+
+
 
 - String：实际类型参数
 
