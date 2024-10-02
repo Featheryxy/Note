@@ -2024,6 +2024,109 @@ MyISAM
 - test.MYD 数据文件
 - test.MYI 索引文件
 
+### 单表访问方式
+
+```sql
+CREATE TABLE single_table(
+	id INT NOT NULL AUTO_INCREMENT,
+	key1 VARCHAR(100),
+	key2 INT,
+	key3 VARCHAR(100),
+	key_part1 VARCHAR(100),
+	key_part2 VARCHAR(100),
+	key_part3 VARCHAR(100),
+	common_field VARCHAR(100),
+	PRIMARY KEY(id),
+	KEY idx_key1(key1),
+	UNIQUE KEY uk_key2(key2),
+	KEY idx_key3(key3),
+	KEY idx_key_part(key_part1, key_part2, key_part3)
+)
+```
+
+访问方法：使用哪种方式查询记录由优化器决定
+
+- const：主键或唯一二级索引列（unique key）与常数的等值比较来定位**一条**记录 
+
+  > `select * from single_table where id=1`
+  >
+  > `select * from single_table where key2=1`
+
+- ref: 普通二级索引列与常数的等值比较来定位记录（可能多条）
+
+  > `select * from single_table where key1='like';`
+  >
+  > `select * from single_table where key_part1='1' and key_part2='2'  ` 左连续
+  >
+  > 
+
+- ref_or_null: 普通二级索引列与常数的等值且找出值为null的记录
+
+  > `select * from single_table where key1='like' and key is null`
+
+- range: 索引查询时，搜索条件为区间，并且不是 （-无穷，+正无穷）
+
+  > `select * from single_table where key2 in(123,456) or (key2>38 and key2<40)`
+
+- index: 扫描全部二级索引
+
+  > `select key_part1 from single_table where  key_part2='2'`
+
+- all：
+
+- index_merge
+
+索引合并
+
+1. intersection 索引合并：二级索引记录按照主键值排序
+
+   > `select * from single_table where key1='a' and key3 = 'b';`
+   >
+   > 利用idx_key1 扫描key1值在['a','a']区间的二级索引记录，同时在idx_key3 扫描key3值在['b','b]区间的二级索引记录，在两个结果集中找出id列值相同的记录进行回表操作（求两个有序记录的交集）
+   >
+   > A：1 3 5
+   >
+   > B：2 5 7
+   >
+   > 1 \< 2 丢弃1, 
+   >
+   > 3\>2, 丢弃 2 
+   >
+   > 3<5，丢弃 3
+   >
+   > 5 = 5 保留
+   >
+   > 7 > 5 丢弃5 
+   >
+   > 最终结果为5
+
+2. Union 索引合并
+
+3. sort-Union 索引合并
+
+
+
+### 连接
+
+根据驱动表的结果一条条带入到被驱动表中查询。该方式称为 嵌套循环连接（Nested-Loop Join）
+
+> 1. 选取驱动表，由优化器选取代价最小的方式查询(const, ref, ...)
+> 2. 对步骤1中获取驱动表中的记录，每获取到一条，就到被驱动表中寻找匹配的记录。如果不怎么做，会需要一片很大的存储空间。
+
+由于被驱动表要访问多次，可以为被驱动表建立索引，从而加快查询速度。
+
+如果被驱动表很大，多次访问被驱动表可能导致多次磁盘I/O, 查询前申请一块固定大小的内存 称为Jion Buffer，**Jion Buffer 保存驱动表的结果**，最好能容纳驱动表的所有记录，这样只要访问一次被驱动表就可以完成连接操作，该方式称为基于块的嵌套循环连接算法（Block Nested-Loop Join）
+
+外连接：如果驱动表的记录没有在被驱动表中匹配到，仍将结果加入到结果集中
+
+左外连接：选取左侧的表作为驱动表
+
+where子句过滤：不符合where子句中的过滤条件的记录都不会加入到最终的结果集中
+
+on子句过滤：不符合on子句中的过滤条件的记录,驱动表中的记录会加入到结果集中，但是被驱动表记录的各个字段使用null值填充
+
+ps: 使用on子句的前提是 外连接驱动表中的记录在被驱动表中匹配不到记录时，是否应该将该驱动表中的记录加入到结果集中。在内连接中where 和on等价
+
 
 
 ### 事务
