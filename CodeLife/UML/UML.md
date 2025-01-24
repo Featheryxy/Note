@@ -100,7 +100,11 @@ UML（Unified Modeling Language，统⼀建模语⾔）
 
 **箭头和实线**
 
-关联关系可分为依赖关联、聚合关联和组合关联
+关联关系可分为依赖关联、聚合关联和组合关联，根据语义区分
+
+- 依赖关系  use a
+- 聚合关系 has a
+- 组合关系 contains a
 
 Association: 在类A中使用类B来作为一个**成员变量**。
 

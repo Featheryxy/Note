@@ -153,7 +153,7 @@ public class PrintBanner extends Print{
 
 ### 2.3 相关设计模式
 
-- Bridge: Adapter 用于连接接口（API）不同的类，而Bridge模式用于连接类的功能层次结构于实现层次结构
+- Bridge: **Adapter 用于连接接口（API）不同的类，而Bridge模式用于连接类的功能层次结构于实现层次结构**
 - Decorator: Adapter 用于填补不同接口API之间的缝隙，而Decorator则是在不改变接口API的前提下增加功能
 
 ## 3 Template Method -- 将具体处理交给子类
