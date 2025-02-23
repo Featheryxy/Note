@@ -6,24 +6,6 @@
 
 如果正向求解比较麻烦，可以使用逆向思维
 
-数据结构：
-
-1. int [n]：保存只有两种状态的集合
-2. ArrayList
-3. HashMap
-4. Set
-   - HashSet
-   - TreeSet， 默认正序，可以用`Collections.reverse(treeSet)`倒序
-5. Stack：
-
-数据结构：
-
-1. if
-2. A?B:C, 代替if
-3. Switch：多分支使用
-4. for 知道循环次数时使用
-5. while 知道循环停止条件时使用
-
 ## 解题过程
 
 算法 = 数据结构+控制结构
@@ -35,25 +17,25 @@
 5. 循环体：执行操作
 6. 返回
 
-## while，for
+
+
+### while，for
 
 循环不变量：在循环的过程中保持不变的性质, 可以用于证明算法的正确性
 
 > 循环不变量是一个断言，在初始化，保持，终止这三个阶段都为真时，则循环正确
 >
-> 初始化：循环的第一次迭代之前，它为正
+> 初始化：循环的第一次迭代之前，它为真
 >
 > 保持：循环的某次迭代之前它为真，那么下次迭代之前它仍为真
 >
 > 终止：在循环终止时，
 
-区间 nums[left...right]的长度  = right-left +1
 
-区间 nums[left...right)的长度  = right-left 
 
-- for ：知道要**循环的次数**时使用
+- for ：知道要**循环的次数**时使用，且**查找方向是固定**的场景，如数组。 
   - 可以当做一个指针来使用
-- while：知道**循环停止的时机**时使用
+- while：知道**循环停止的时机**时使用，可以改变查找方向 
 
 ```java
 while(l<r && nums[r] == nums[--r]);
@@ -79,6 +61,98 @@ for(int j=0; j<n; j++){
 
 ```
 
+
+
+## 序列
+
+一组按**特定顺序排列**的元素。每个元素在序列中都有一个**确定的位置**（或索引），并且序列通常具有**一定的长度**。序列是很多数据结构的基础概念之一，它可以表示为**线性结构或有序集合** 
+
+1. 数组（Array） ：长度固定，元素按索引排列，可以通过索引访问
+2. 链表（LinkedList） ：通过节点连接起来的序列 
+3. 字符串（String）： 元素是字符，并且通常是不可变的 
+4. 栈（Stack）后进先出（LIFO）
+5. 队列（Queue）：先进先出（FIFO）
+6.  动态数组（如 ArrayList）：与普通数组不同，动态数组能够根据需要扩展大小 
+
+
+
+区间 nums[left...right]的长度  = right-left +1
+
+区间 nums[left...right)的长度  = right-left 
+
+
+
+## 循环/搜索
+
+**线性搜索**：无序数据，效率不高
+
+**二分搜索**：有序数据，效率较高。
+
+**图的搜索算法（DFS、BFS）**：适用于图或树的遍历和路径查找。
+
+**哈希表**：适用于需要快速查找的数据，通常是 O(1)O(1)O(1) 时间复杂度。
+
+**字符串匹配（KMP）**：用于高效的字符串搜索。
+
+
+
+1. 一个指针，分阶段多次循环
+2. 每个循环中的语义尽量简短
+3. 
+
+
+
+### 循环方向-一维数组
+
+```
+// 正序
+for(int i=0; i<arr.length; i++) {
+    
+}
+
+// 倒序
+for(int i=arr.length-1; i>=0; i--) {
+    
+}
+```
+
+### 循环方向-二维数组
+
+```
+		int len = matrix.length;
+        // 行不变，遍历列。先遍历行，再遍历列
+        for (int row = 0; row < len; row++) {
+            for (int col = 0; col < len; col++) {
+                int tem = matrix[row][col];
+                System.out.println(tem);
+            }
+        }
+
+        //  列不变，遍历行。先遍历列，再遍历行
+        for (int col = 0; col < len; col++) {
+            for (int row = 0; row < len; row++) {
+                int tem = matrix[row][col];
+                System.out.println(tem);
+            }
+        }
+        
+        // 行不变，遍历列，列的起始点为对角线上的下一列。i.e.:遍历数组右上角
+        for(int i=0; i<len; i++){
+            for(int j=i+1; j<len; j++){
+         
+         
+         // 九宫格的
+         for (int i = 0; i < 9; i += 3) {
+            for (int j = 0; j < 9; j += 3) {
+                Set<Character> set = new HashSet<>();
+                for (int x = 0; x < 3; x++) {
+                    for (int y = 0; y < 3; y++) {     
+```
+
+
+
+
+
 ## 指针
 
 指针作用
@@ -90,40 +164,31 @@ for(int j=0; j<n; j++){
 快慢指针: 一般情况下，慢指针维护了[0, r]位满足条件的区间， 快指针使用for循环用来遍历整个数组，寻找满足条件的元素
 
 - 快指针：可以使用`for(int j=0; j<nums.length; j++)`循环
-- 慢指针：`int i=0` 当满足条件时，移动指针
+- 慢指针：`int i=0` 当满足条件时，移动指针, **注意慢指针是先更新数据还是先移动指针** 
 
-滑动窗口：维护一个满足条件的窗口, 题目中通常会出现连续两个字，如连续子数组，连续字符串等。
+滑动窗口：维护一个满足条件的窗口, 题目中通常会出现**连续**两个字，如连续子数组，连续字符串等。
 
-- 
-
-指针碰撞
+指针碰撞：从两端向中间移动，当指针碰撞时停止循环
 
 ## 数组
 
 二分查找前提：数组有序，数组中无重复元素
 
-数组属性：位置，值，前后，组，排序
+int mid = left + (right - left) / 2;  // 防止int溢出 
+
+index + 1 = len  
+
+
+
+arr\[i]\[j\]  ,  第i行，第j列，第四象限代表二维数组 
 
 ```java
-// 正序
-for(int i=0; i<arr.length; i++) {
-    
-}
 
-// 倒序
-for(int i=arr.length-1; i>=0; i--) {
-    
-}
-
-// 三角遍历, j只遍历i后面的值
-for(int i=0; i<arr.length; i++) {
-    for (int j=i; j<arr.length; j++) {
-        
-    }
-}
+ System.arraycopy(nums2, 0, nums1, 0, j + 1);
+ System.arraycopy(Object src, int srcPos, Object dest, int destPos,int length)
 ```
 
-### 二叉树
+## 二叉树
 
 ```
 二叉树递归时，一个节点会被访问三次，分别时第一次进入节点A时，遍历节点A的左子树后，遍历节点A的右子树后。
@@ -201,6 +266,12 @@ PS:
 
 
 
+##  TreeSet
+
+ 默认正序，可以用`Collections.reverse(treeSet)`倒序
+
+
+
 ## Map
 
  * 添加：put(Object key,Object value)
@@ -235,13 +306,42 @@ stack.push(ch);
 // 查看此堆栈顶部的对象，而不从堆栈中删除它。
 stack.peek();
 
-// 删除此堆栈顶部的对象，并将该对象作为此函数的值返回。
+// 删除此堆栈顶部的对象，并将该对象作为此函数的值返回。栈为空时报错
 stack.pop();
 
 stack.isEmpty();
 ```
 
 ## ArrayDeque
+
+```
+动态数组：ArrayDeque 使用动态数组作为底层数据结构，可以根据需要自动扩展大小。
+双端操作：支持从队列的两端进行操作（即插入、删除元素）。
+性能：相较于 LinkedList，ArrayDeque 在某些操作上（如访问元素、在两端插入和删除元素）通常更高效。
+不允许空元素：不能向 ArrayDeque 中添加 null 元素，如果尝试添加 null，将抛出 NullPointerException。
+线程不安全：ArrayDeque 是非线程安全的。如果需要线程安全的队列，可以使用 Collections.synchronizedDeque() 包装 ArrayDeque。
+
+添加元素：
+
+addFirst(E e)：将元素添加到队列的头部。
+addLast(E e)：将元素添加到队列的尾部。
+offerFirst(E e)：将元素添加到队列的头部（如果添加成功，返回 true；否则返回 false）。
+offerLast(E e)：将元素添加到队列的尾部（如果添加成功，返回 true；否则返回 false）。
+删除元素：
+
+removeFirst()：移除并返回队列头部的元素。如果队列为空，将抛出 NoSuchElementException。
+removeLast()：移除并返回队列尾部的元素。如果队列为空，将抛出 NoSuchElementException。
+pollFirst()：移除并返回队列头部的元素，如果队列为空，返回 null。
+pollLast()：移除并返回队列尾部的元素，如果队列为空，返回 null。
+访问元素：
+
+getFirst()：获取队列头部的元素（不移除）。
+getLast()：获取队列尾部的元素（不移除）。
+peekFirst()：获取队列头部的元素（不移除），如果队列为空，返回 null。
+peekLast()：获取队列尾部的元素（不移除），如果队列为空，返回 null。
+```
+
+
 
 ## String
 
@@ -560,13 +660,6 @@ class Solution {
 }
 ```
 
-## 常用函数
-
-```java
- System.arraycopy(nums2, 0, nums1, 0, j + 1);
- System.arraycopy(Object src, int srcPos, Object dest, int destPos,int length)
-```
-
 
 
 ## 表达式
@@ -631,8 +724,6 @@ a=2+2-3 +(a--); 此时去 a-- 到temp=2 然后 a内存值 -1 为 1*/
 a=2+2-3+2=3;
 
 ```
-
-
 
 ## 位运算
 
